@@ -1,0 +1,28 @@
+<ion-content>
+  <button ion-button block color="danger" (click)="dismiss()">Close</button>  
+  <h2 text-center>{{song.name}}</h2>
+  <p>{{song.description}}</p>
+
+  <h4 text-center>Full Video:</h4>
+  <ion-list>
+    <button ion-item *ngFor="let video of videoFull | async" (click)="openVideo(video)" detail-none>
+      <ion-thumbnail item-start>
+      <img *ngIf="video.snippet.thumbnails.default" [src]="video.snippet.thumbnails.default.url">
+    </ion-thumbnail>
+    <h2>{{ video.snippet.title }}</h2>
+    <p>{{ video.snippet.description }}</p>
+    </button>
+  </ion-list>
+
+  <h4 text-center>Supporting Videos:</h4>
+  <ion-list>
+    <button ion-item *ngFor="let video of videos | async" (click)="openListVideo(video)" detail-none>
+      <ion-thumbnail item-start>
+      <img *ngIf="video.snippet.thumbnails.default" [src]="video.snippet.thumbnails.default.url">
+    </ion-thumbnail>
+    <h2>{{ video.snippet.title }}</h2>
+    <p>{{ video.snippet.description }}</p>
+    </button>
+  </ion-list>
+
+</ion-content>

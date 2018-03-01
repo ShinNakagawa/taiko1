@@ -209,12 +209,15 @@ ionic-conference-app/
 ## Add by Shin
 1. youtube player
 install youtube-video-player
->ionic cordova plugin add cordova-plugin-youtube-video-player
->npm install --save @ionic-native/youtube-video-player
+$ ionic cordova plugin add cordova-plugin-youtube-video-player
+$ npm install --save @ionic-native/youtube-video-player
+
+add the following into config.xml	
+<preference name="YouTubeDataApiKey" value="[YOUR YOUTUBE API]" />
 
 2. add firebase
->npm install --save firebase angularfire2
->npm install promise-polyfill --save-exact
+$ npm install --save firebase angularfire2
+$ npm install promise-polyfill --save-exact
 
 
 ===============================================
@@ -224,12 +227,11 @@ platforms/*
 !platforms/browser/
 !platforms/browser/www
 !platforms/browser/www/plugins
-!dist/
 
 2. Run the followings to add these 3 libraries
-$npm install --save connect
-$npm install --save serve-static
-$npm install express --save --save-exact
+$ npm install --save connect
+$ npm install --save serve-static
+$ npm install express --save --save-exact
 
 3. Add a start to your npm scripts in package.json
 "start": "node web.js"
@@ -243,6 +245,11 @@ var app = connect();
 app.use(serveStatic("platforms/browser/www"))
 app.listen(process.env.PORT || 5000);
 ----------------------------------
+
+4. Add platform browser and build.
+Run Bash:
+$ ionic cordova platform add browser
+$ ionic cordova build browser
 
 Run Bash:
 $ heroku login

@@ -1,0 +1,39 @@
+<ion-content>
+  <h3>Create a song</h3>
+  <form [formGroup]="songForm" (ngSubmit)="submit()" novalidate>      
+    <ion-row>
+      <ion-item>
+        <ion-label for="name"></ion-label>
+        <ion-input type="name" value="" placeholder="Name" formControlName="name"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label for="imageUrl"></ion-label>
+        <ion-input type="imageUrl" value="" placeholder="ImageUrl" formControlName="imageUrl"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label for="description"></ion-label>
+        <ion-input type="description" value="" placeholder="Description" formControlName="description"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label for="fullVideoID"></ion-label>
+        <ion-input type="fullVideoID" value="" placeholder="FullVideoID" formControlName="fullVideoID"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label for="playListID"></ion-label>
+        <ion-input type="playListID" value="" placeholder="PlayListID" formControlName="playListID"></ion-input>
+      </ion-item>
+    </ion-row>
+  </form>
+  <ion-row no-padding>
+    <ion-col>
+      <button ion-button block (click)="create()">
+        Create
+      </button>
+    </ion-col>
+    <ion-col text-right>
+      <button ion-button block color="danger" (click)="dismiss()">
+        Cancel
+      </button>
+    </ion-col>
+  </ion-row>
+</ion-content>

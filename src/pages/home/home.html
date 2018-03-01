@@ -1,17 +1,32 @@
 <ion-header>
   <ion-navbar>
-    <ion-title>Home</ion-title>
+    <ion-title>Song List</ion-title>
+    <ion-buttons end>
+      <button ion-button icon-only (click)="createSong()">
+        <ion-icon name="add"></ion-icon>
+      </button>
+    </ion-buttons>
   </ion-navbar>
 </ion-header>
 
-<ion-content padding>
-  <h2>Welcome to Ionic!</h2>
-  <p>
-    This starter project comes with simple tabs-based layout for apps
-    that are going to primarily use a Tabbed UI.
-  </p>
-  <p>
-    Take a look at the <code>src/pages/</code> directory to add or change tabs,
-    update any existing page or create new pages.
-  </p>
+<ion-content>
+  <ion-list>
+    <ion-item-sliding *ngFor="let song of songs | async">
+      <button ion-item (click)="songTapped($event, song)">
+        <ion-avatar item-start>
+          <img *ngIf="song.imageUrl" [src]="song.imageUrl" />
+        </ion-avatar>
+        <h2>{{song.name}}</h2>
+        <!-- <p item-end>{{song.description}}</p> -->
+      </button>
+      <ion-item-options>
+        <button ion-button clear small color="danger" icon-left (click)="deleteSong(song)">
+          <ion-icon name='trash'></ion-icon>
+        </button>
+        <button ion-button clear small color="secondary" icon-left (click)="editSong(song)">
+          <ion-icon name='create'></ion-icon>
+        </button>
+      </ion-item-options>
+    </ion-item-sliding>
+  </ion-list>
 </ion-content>

@@ -1,0 +1,39 @@
+<ion-content>
+  <h3>Edit a song</h3>
+  <form [formGroup]="songEditForm" (ngSubmit)="submit()" novalidate>      
+    <ion-row>
+      <ion-item>
+        <ion-label for="name"></ion-label>
+        <ion-input type="name" value="{{song.name}}" placeholder="Name" formControlName="name"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label for="imageUrl"></ion-label>
+        <ion-input type="imageUrl" value="{{song.imageUrl}}" placeholder="ImageUrl" formControlName="imageUrl"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label for="description"></ion-label>
+        <ion-input type="description" value="{{song.description}}" placeholder="Description" formControlName="description"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label for="fullVideoID"></ion-label>
+        <ion-input type="fullVideoID" value="{{song.fullVideoID}}" placeholder="FullVideoID" formControlName="fullVideoID"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label for="playListID"></ion-label>
+        <ion-input type="playListID" value="{{song.playListID}}" placeholder="PlayListID" formControlName="playListID"></ion-input>
+      </ion-item>
+    </ion-row>
+  </form>
+  <ion-row no-padding>
+    <ion-col>
+      <button ion-button block (click)="edit()">
+        Edit
+      </button>
+    </ion-col>
+    <ion-col text-right>
+      <button ion-button block color="danger" (click)="dismiss()">
+        Cancel
+      </button>
+    </ion-col>
+  </ion-row>
+</ion-content>

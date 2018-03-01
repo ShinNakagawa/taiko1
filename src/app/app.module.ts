@@ -11,6 +11,24 @@ import { TabsPage } from '../pages/tabs/tabs';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 
+//firebase
+import { AngularFireModule } from 'angularfire2';
+import { AngularFireDatabaseModule } from 'angularfire2/database';
+import { AngularFireAuthModule } from 'angularfire2/auth';
+export const firebaseConfig = {  
+  apiKey: "AIzaSyCEo24FMxTyU8IemGPVY8-XRXuO_ZkZVn4",
+  authDomain: "base-gallery.firebaseapp.com",
+  databaseURL: "https://base-gallery.firebaseio.com",
+  projectId: "base-gallery",
+  storageBucket: "base-gallery.appspot.com",
+  messagingSenderId: "103599334911"
+};
+import { AuthProvider } from '../providers/auth/auth';
+//youtube
+import { HttpModule } from '@angular/http';
+import { YoutubeVideoPlayer } from '@ionic-native/youtube-video-player';
+import { YtProvider } from '../providers/yt/yt';
+
 @NgModule({
   declarations: [
     MyApp,
@@ -21,6 +39,11 @@ import { SplashScreen } from '@ionic-native/splash-screen';
   ],
   imports: [
     BrowserModule,
+    HttpModule,
+    AngularFireModule,
+    AngularFireDatabaseModule,
+    AngularFireAuthModule,
+    AngularFireModule.initializeApp(firebaseConfig),
     IonicModule.forRoot(MyApp)
   ],
   bootstrap: [IonicApp],
@@ -34,7 +57,10 @@ import { SplashScreen } from '@ionic-native/splash-screen';
   providers: [
     StatusBar,
     SplashScreen,
-    {provide: ErrorHandler, useClass: IonicErrorHandler}
+    {provide: ErrorHandler, useClass: IonicErrorHandler},
+    YoutubeVideoPlayer,
+    AuthProvider,
+    YtProvider
   ]
 })
 export class AppModule {}

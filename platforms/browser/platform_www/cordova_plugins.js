@@ -27,6 +27,14 @@ module.exports = [
         "id": "cordova-plugin-splashscreen.SplashScreenProxy",
         "pluginId": "cordova-plugin-splashscreen",
         "runs": true
+    },
+    {
+        "file": "plugins/cordova-plugin-youtube-video-player/plugins/com.bunkerpalace.cordova.YoutubeVideoPlayer/www/YoutubeVideoPlayer.js",
+        "id": "cordova-plugin-youtube-video-player.YoutubeVideoPlayer",
+        "pluginId": "cordova-plugin-youtube-video-player",
+        "clobbers": [
+            "YoutubeVideoPlayer"
+        ]
     }
 ];
 module.exports.metadata = 
@@ -36,7 +44,8 @@ module.exports.metadata =
     "cordova-plugin-device": "2.0.1",
     "cordova-plugin-splashscreen": "5.0.2",
     "cordova-plugin-ionic-webview": "1.1.16",
-    "cordova-plugin-ionic-keyboard": "2.0.5"
+    "cordova-plugin-ionic-keyboard": "2.0.5",
+    "cordova-plugin-youtube-video-player": "1.0.6"
 }
 // BOTTOM OF METADATA
 });
