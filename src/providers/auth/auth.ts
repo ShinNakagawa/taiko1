@@ -20,7 +20,7 @@ export class AuthProvider {
       .then((user) => {
         this.authState = user;
         this.setUserStatus('online');        
-      //  console.log("success to log in");
+        console.log("success to log in: uid=", this.authState.uid);
       }).catch((error) => {
         console.log(error);
       });
@@ -28,6 +28,7 @@ export class AuthProvider {
 
   logout() {
     this.af.auth.signOut();
+    this.setUserStatus('offline');
   //  console.log("success to log out");
   }
 
@@ -41,24 +42,20 @@ export class AuthProvider {
         observer.next(authData);
         this.authState = authData;
         const status = 'online';
-        this.setUserData(credentials.email, credentials.username, status);        
+        this.setUserData(credentials.email, credentials.username, status, authData.uid);        
       }).catch(error => {
         observer.error(error);
       });
     });
   }
 
-  setUserData(email: string, displayName: string, status: string): void {
+  setUserData(email: string, displayName: string, status: string, uid: string): void {
     const path = `users/${this.currentUserId}`;
     const data = {
       email: email,
       displayName: displayName,
       status: status,
-      'Rate': {
-        bad: 1,
-        good: 10,
-        never: 100
-      }
+      uid: uid
     };
 
     this.db.object(path).update(data)

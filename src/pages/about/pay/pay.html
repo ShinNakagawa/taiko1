@@ -1,0 +1,54 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>Monthly Pay</ion-title>
+    <ion-buttons end>
+      <button ion-button icon-only (click)="dismiss()">
+        <ion-icon name='close'></ion-icon>
+      </button>
+    </ion-buttons>
+  </ion-navbar>
+</ion-header>
+
+<ion-content>
+  <h3>user is {{user.displayName}}</h3>     
+
+  <ion-item>
+    <ion-icon name="calendar" item-start></ion-icon>
+    <ion-label>Year</ion-label>
+    <ion-datetime displayFormat="YYYY" max="2050" [(ngModel)]="yearPay"></ion-datetime>
+  </ion-item>
+  
+  <div>
+    <ion-grid>
+      <ion-row>
+        <ion-col>
+          <ion-avatar>
+            <img [src]="'assets/img/speakers/bear.jpg'" />
+          </ion-avatar>  
+          <ion-row><button ion-button full>Jan</button></ion-row>
+          <ion-row><button ion-button full>Feb</button></ion-row>
+          <ion-row><button ion-button full>Mar</button></ion-row>
+          <ion-row><button ion-button full>Apr</button></ion-row>
+          <ion-row><button ion-button full>May</button></ion-row>
+          <ion-row><button ion-button full>Jun</button></ion-row>
+          <ion-row><button ion-button full>Jul</button></ion-row>
+          <ion-row><button ion-button full>Aug</button></ion-row>
+          <ion-row><button ion-button full>Sep</button></ion-row>
+          <ion-row><button ion-button full>Oct</button></ion-row>
+          <ion-row><button ion-button full>Nov</button></ion-row>
+          <ion-row><button ion-button full>Dec</button></ion-row>
+        </ion-col>      
+        <ion-col>
+          <ion-avatar>
+            <img [src]="user.imageUrl" />
+          </ion-avatar>
+          <ion-row *ngFor="let item of months">
+            <button ion-button [color]="item.date ? 'danger' : 'light'" full (click)="clickStar(item)">
+              <ion-icon name="star"> {{item.date}}</ion-icon>
+            </button>
+          </ion-row>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </div>
+</ion-content>

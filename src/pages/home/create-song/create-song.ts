@@ -1,8 +1,7 @@
 import { Component } from '@angular/core';
-import { ViewController, IonicPage, ToastController } from 'ionic-angular';
+import { ViewController, IonicPage } from 'ionic-angular';
 import { FormGroup, FormBuilder, Validators, AbstractControl } from '@angular/forms';
 import { AngularFireDatabase } from 'angularfire2/database';
-//import { AuthProvider } from '../../../providers/auth/auth';
 
 @IonicPage()
 @Component({
@@ -22,23 +21,7 @@ export class CreateSongPage {
   constructor(
     public viewCtrl: ViewController, 
     public fb: FormBuilder,
-    private db: AngularFireDatabase,
-    public toastCtrl: ToastController,
-    //private auth: AuthProvider
-  ) {
-      // if (this.auth.currentUser) {       
-      //   console.log('this.auth.currentUser=', this.auth.currentUser);
-      //   console.log('this.auth.currentUserId=', this.auth.currentUserId);
-      //   this.userid = this.auth.currentUserId;
-      // } else {
-      //   console.log('Unable to read userID, so add timer to wait for user ID');       
-      //   let toast = this.toastCtrl.create({
-      //     message: 'Please wait for a second.',
-      //     duration: 3000,
-      //     position: 'top'
-      //   });
-      //   toast.present();
-      // }
+    private db: AngularFireDatabase) {
       this.userid = '';
       this.songForm = this.fb.group({  
         'name': ['', Validators.compose([Validators.required, Validators.minLength(1)])],

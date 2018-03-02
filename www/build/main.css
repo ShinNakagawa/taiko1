@@ -25678,6 +25678,10 @@ ion-navbar.toolbar {
   min-height: calc(46px + env(safe-area-inset-bottom));
 }
 
+page-pay .col {
+  border: thin solid black;
+}
+
 page-paylist .col {
   border: thin solid black;
 }

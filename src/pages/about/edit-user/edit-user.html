@@ -1,0 +1,27 @@
+<ion-content>
+  <h3>Edit a User</h3>
+  <form [formGroup]="editUserForm" (ngSubmit)="submit()" novalidate>      
+    <ion-row>
+      <ion-item>
+        <ion-label for="displayName"></ion-label>
+        <ion-input type="displayName" value="{{user.displayName}}" placeholder="Display Name" formControlName="displayName"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label for="imageUrl"></ion-label>
+        <ion-input type="imageUrl" value="{{user.imageUrl}}" placeholder="ImageUrl" formControlName="imageUrl"></ion-input>
+      </ion-item>
+    </ion-row>
+  </form>
+  <ion-row no-padding>
+    <ion-col>
+      <button ion-button block (click)="edit()">
+        Edit
+      </button>
+    </ion-col>
+    <ion-col text-right>
+      <button ion-button block color="danger" (click)="dismiss()">
+        Cancel
+      </button>
+    </ion-col>
+  </ion-row>
+</ion-content>
