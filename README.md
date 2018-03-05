@@ -219,6 +219,8 @@ add the following into config.xml
 $ npm install --save firebase angularfire2
 $ npm install promise-polyfill --save-exact
 
+3. ## Parse, validate, manipulate, and display dates and times in JavaScript.
+$ npm install --save moment
 
 ===============================================
 Publish to Heroku:

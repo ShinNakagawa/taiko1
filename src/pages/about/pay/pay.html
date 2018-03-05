@@ -2,6 +2,9 @@
   <ion-navbar>
     <ion-title>Monthly Pay</ion-title>
     <ion-buttons end>
+      <button ion-button icon-only (click)="addList()">
+        <ion-icon name='add'></ion-icon>
+      </button>
       <button ion-button icon-only (click)="dismiss()">
         <ion-icon name='close'></ion-icon>
       </button>
@@ -42,7 +45,7 @@
           <ion-avatar>
             <img [src]="user.imageUrl" />
           </ion-avatar>
-          <ion-row *ngFor="let item of months">
+          <ion-row *ngFor="let item of months | async">
             <button ion-button [color]="item.date ? 'danger' : 'light'" full (click)="clickStar(item)">
               <ion-icon name="star"> {{item.date}}</ion-icon>
             </button>

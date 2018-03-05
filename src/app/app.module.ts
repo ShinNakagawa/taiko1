@@ -28,6 +28,8 @@ import { AuthProvider } from '../providers/auth/auth';
 import { HttpModule } from '@angular/http';
 import { YoutubeVideoPlayer } from '@ionic-native/youtube-video-player';
 import { YtProvider } from '../providers/yt/yt';
+//pipes
+import { MomentPipe } from '../pipes/moment/moment';
 
 @NgModule({
   declarations: [
@@ -35,7 +37,8 @@ import { YtProvider } from '../providers/yt/yt';
     AboutPage,
     ContactPage,
     HomePage,
-    TabsPage
+    TabsPage,
+    MomentPipe
   ],
   imports: [
     BrowserModule,
@@ -61,6 +64,9 @@ import { YtProvider } from '../providers/yt/yt';
     YoutubeVideoPlayer,
     AuthProvider,
     YtProvider
+  ],
+  exports: [
+    MomentPipe
   ]
 })
 export class AppModule {}
