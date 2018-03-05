@@ -15,14 +15,12 @@ export class CreateSongPage {
   description: AbstractControl;
   fullVideoID: AbstractControl;
   playListID: AbstractControl;
-  userid: string;
   basePath = 'songs';
 
   constructor(
     public viewCtrl: ViewController, 
     public fb: FormBuilder,
     private db: AngularFireDatabase) {
-      this.userid = '';
       this.songForm = this.fb.group({  
         'name': ['', Validators.compose([Validators.required, Validators.minLength(1)])],
         'imageUrl': ['', Validators.compose([Validators.required, Validators.minLength(1)])],
@@ -50,8 +48,7 @@ export class CreateSongPage {
       description: this.description.value,
       fullVideoID: this.fullVideoID.value,
       playListID: this.playListID.value,
-      date: timestamp,
-      userid: this.userid
+      date: timestamp
     };
     let key = this.db.list(path).push(data).key;
     //update id as key

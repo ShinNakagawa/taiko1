@@ -1,12 +1,12 @@
 webpackJsonp([1],{
 
-/***/ 448:
+/***/ 451:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "EditSongPageModule", function() { return EditSongPageModule; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__edit_song__ = __webpack_require__(454);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "SongPageModule", function() { return SongPageModule; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__song__ = __webpack_require__(460);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_ionic_angular__ = __webpack_require__(42);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -18,38 +18,37 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 
 
 
-var EditSongPageModule = (function () {
-    function EditSongPageModule() {
+var SongPageModule = (function () {
+    function SongPageModule() {
     }
-    EditSongPageModule = __decorate([
+    SongPageModule = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_1__angular_core__["I" /* NgModule */])({
             declarations: [
-                __WEBPACK_IMPORTED_MODULE_0__edit_song__["a" /* EditSongPage */],
+                __WEBPACK_IMPORTED_MODULE_0__song__["a" /* SongPage */],
             ],
             imports: [
-                __WEBPACK_IMPORTED_MODULE_2_ionic_angular__["e" /* IonicPageModule */].forChild(__WEBPACK_IMPORTED_MODULE_0__edit_song__["a" /* EditSongPage */]),
+                __WEBPACK_IMPORTED_MODULE_2_ionic_angular__["e" /* IonicPageModule */].forChild(__WEBPACK_IMPORTED_MODULE_0__song__["a" /* SongPage */]),
             ],
             exports: [
-                __WEBPACK_IMPORTED_MODULE_0__edit_song__["a" /* EditSongPage */]
+                __WEBPACK_IMPORTED_MODULE_0__song__["a" /* SongPage */]
             ]
         })
-    ], EditSongPageModule);
-    return EditSongPageModule;
+    ], SongPageModule);
+    return SongPageModule;
 }());
 
-//# sourceMappingURL=edit-song.module.js.map
+//# sourceMappingURL=song.module.js.map
 
 /***/ }),
 
-/***/ 454:
+/***/ 460:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return EditSongPage; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return SongPage; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(42);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__angular_forms__ = __webpack_require__(23);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_angularfire2_database__ = __webpack_require__(57);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__providers_yt_yt__ = __webpack_require__(284);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -62,57 +61,38 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 
 
 
-
-var EditSongPage = (function () {
-    function EditSongPage(viewCtrl, navParams, fb, db) {
+var SongPage = (function () {
+    function SongPage(viewCtrl, navParams, ytProvider) {
         this.viewCtrl = viewCtrl;
         this.navParams = navParams;
-        this.fb = fb;
-        this.db = db;
-        this.basePath = 'songs';
+        this.ytProvider = ytProvider;
         this.song = navParams.get('song');
-        this.songEditForm = this.fb.group({
-            'name': ['', __WEBPACK_IMPORTED_MODULE_2__angular_forms__["f" /* Validators */].compose([__WEBPACK_IMPORTED_MODULE_2__angular_forms__["f" /* Validators */].required, __WEBPACK_IMPORTED_MODULE_2__angular_forms__["f" /* Validators */].minLength(1)])],
-            'imageUrl': ['', __WEBPACK_IMPORTED_MODULE_2__angular_forms__["f" /* Validators */].compose([__WEBPACK_IMPORTED_MODULE_2__angular_forms__["f" /* Validators */].required, __WEBPACK_IMPORTED_MODULE_2__angular_forms__["f" /* Validators */].minLength(1)])],
-            'description': ['', __WEBPACK_IMPORTED_MODULE_2__angular_forms__["f" /* Validators */].compose([__WEBPACK_IMPORTED_MODULE_2__angular_forms__["f" /* Validators */].required, __WEBPACK_IMPORTED_MODULE_2__angular_forms__["f" /* Validators */].minLength(1)])],
-            'fullVideoID': ['', __WEBPACK_IMPORTED_MODULE_2__angular_forms__["f" /* Validators */].compose([__WEBPACK_IMPORTED_MODULE_2__angular_forms__["f" /* Validators */].required, __WEBPACK_IMPORTED_MODULE_2__angular_forms__["f" /* Validators */].minLength(1)])],
-            'playListID': ['', __WEBPACK_IMPORTED_MODULE_2__angular_forms__["f" /* Validators */].compose([__WEBPACK_IMPORTED_MODULE_2__angular_forms__["f" /* Validators */].required, __WEBPACK_IMPORTED_MODULE_2__angular_forms__["f" /* Validators */].minLength(1)])],
-        });
-        this.name = this.songEditForm.controls['name'];
-        this.imageUrl = this.songEditForm.controls['imageUrl'];
-        this.description = this.songEditForm.controls['description'];
-        this.fullVideoID = this.songEditForm.controls['fullVideoID'];
-        this.playListID = this.songEditForm.controls['playListID'];
+        this.videoFull = this.ytProvider.getVideoSnippet(this.song.fullVideoID);
+        this.videos = this.ytProvider.getListVideos(this.song.playListID);
     }
-    EditSongPage.prototype.dismiss = function () {
+    SongPage.prototype.dismiss = function () {
         this.viewCtrl.dismiss();
     };
-    EditSongPage.prototype.edit = function () {
-        var path = this.basePath + "/" + this.song.id;
-        var data = {
-            name: this.name.value,
-            imageUrl: this.imageUrl.value,
-            description: this.description.value,
-            fullVideoID: this.fullVideoID.value,
-            playListID: this.playListID.value
-        };
-        this.db.object(path).update(data)
-            .catch(function (error) { return console.log(error); });
-        this.viewCtrl.dismiss({ title: "updated a song" });
+    SongPage.prototype.openVideo = function (video) {
+        console.log(video);
+        window.open('https://www.youtube.com/watch?v=' + video.id);
     };
-    EditSongPage = __decorate([
+    SongPage.prototype.openListVideo = function (video) {
+        console.log(video);
+        window.open('https://www.youtube.com/watch?v=' + video.snippet.resourceId.videoId);
+    };
+    SongPage = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
-            selector: 'page-edit-song',template:/*ion-inline-start:"E:\ionic\taiko1\src\pages\home\edit-song\edit-song.html"*/'<ion-content>\n  <h3>Edit a song</h3>\n  <form [formGroup]="songEditForm" (ngSubmit)="submit()" novalidate>      \n    <ion-row>\n      <ion-item>\n        <ion-label for="name"></ion-label>\n        <ion-input type="name" value="{{song.name}}" placeholder="Name" formControlName="name"></ion-input>\n      </ion-item>\n      <ion-item>\n        <ion-label for="imageUrl"></ion-label>\n        <ion-input type="imageUrl" value="{{song.imageUrl}}" placeholder="ImageUrl" formControlName="imageUrl"></ion-input>\n      </ion-item>\n      <ion-item>\n        <ion-label for="description"></ion-label>\n        <ion-input type="description" value="{{song.description}}" placeholder="Description" formControlName="description"></ion-input>\n      </ion-item>\n      <ion-item>\n        <ion-label for="fullVideoID"></ion-label>\n        <ion-input type="fullVideoID" value="{{song.fullVideoID}}" placeholder="FullVideoID" formControlName="fullVideoID"></ion-input>\n      </ion-item>\n      <ion-item>\n        <ion-label for="playListID"></ion-label>\n        <ion-input type="playListID" value="{{song.playListID}}" placeholder="PlayListID" formControlName="playListID"></ion-input>\n      </ion-item>\n    </ion-row>\n  </form>\n  <ion-row no-padding>\n    <ion-col>\n      <button ion-button block (click)="edit()">\n        Edit\n      </button>\n    </ion-col>\n    <ion-col text-right>\n      <button ion-button block color="danger" (click)="dismiss()">\n        Cancel\n      </button>\n    </ion-col>\n  </ion-row>\n</ion-content>\n'/*ion-inline-end:"E:\ionic\taiko1\src\pages\home\edit-song\edit-song.html"*/
+            selector: 'page-song',template:/*ion-inline-start:"E:\ionic\taiko1\src\pages\home\song\song.html"*/'<ion-content>\n  <button ion-button block color="danger" (click)="dismiss()">Close</button>  \n  <h2 text-center>{{song.name}}</h2>\n  <p>{{song.description}}</p>\n\n  <h4 text-center>Full Video:</h4>\n  <ion-list>\n    <button ion-item *ngFor="let video of videoFull | async" (click)="openVideo(video)" detail-none>\n      <ion-thumbnail item-start>\n      <img *ngIf="video.snippet.thumbnails.default" [src]="video.snippet.thumbnails.default.url">\n    </ion-thumbnail>\n    <h2>{{ video.snippet.title }}</h2>\n    <p>{{ video.snippet.description }}</p>\n    </button>\n  </ion-list>\n\n  <h4 text-center>Supporting Videos:</h4>\n  <ion-list>\n    <button ion-item *ngFor="let video of videos | async" (click)="openListVideo(video)" detail-none>\n      <ion-thumbnail item-start>\n      <img *ngIf="video.snippet.thumbnails.default" [src]="video.snippet.thumbnails.default.url">\n    </ion-thumbnail>\n    <h2>{{ video.snippet.title }}</h2>\n    <p>{{ video.snippet.description }}</p>\n    </button>\n  </ion-list>\n\n</ion-content>'/*ion-inline-end:"E:\ionic\taiko1\src\pages\home\song\song.html"*/
         }),
-        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["j" /* ViewController */],
-            __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["h" /* NavParams */],
-            __WEBPACK_IMPORTED_MODULE_2__angular_forms__["a" /* FormBuilder */],
-            __WEBPACK_IMPORTED_MODULE_3_angularfire2_database__["a" /* AngularFireDatabase */]])
-    ], EditSongPage);
-    return EditSongPage;
+        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["i" /* ViewController */],
+            __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["g" /* NavParams */],
+            __WEBPACK_IMPORTED_MODULE_2__providers_yt_yt__["a" /* YtProvider */]])
+    ], SongPage);
+    return SongPage;
 }());
 
-//# sourceMappingURL=edit-song.js.map
+//# sourceMappingURL=song.js.map
 
 /***/ })
 

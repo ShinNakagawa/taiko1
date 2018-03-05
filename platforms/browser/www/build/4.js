@@ -1,14 +1,14 @@
 webpackJsonp([4],{
 
-/***/ 445:
+/***/ 448:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "PayPageModule", function() { return PayPageModule; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "PayListPageModule", function() { return PayListPageModule; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(42);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__pay__ = __webpack_require__(451);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__paylist__ = __webpack_require__(457);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -18,37 +18,37 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 
 
 
-var PayPageModule = (function () {
-    function PayPageModule() {
+var PayListPageModule = (function () {
+    function PayListPageModule() {
     }
-    PayPageModule = __decorate([
+    PayListPageModule = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["I" /* NgModule */])({
             declarations: [
-                __WEBPACK_IMPORTED_MODULE_2__pay__["a" /* PayPage */],
+                __WEBPACK_IMPORTED_MODULE_2__paylist__["a" /* PayListPage */],
             ],
             imports: [
-                __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["e" /* IonicPageModule */].forChild(__WEBPACK_IMPORTED_MODULE_2__pay__["a" /* PayPage */]),
+                __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["e" /* IonicPageModule */].forChild(__WEBPACK_IMPORTED_MODULE_2__paylist__["a" /* PayListPage */]),
             ],
             exports: [
-                __WEBPACK_IMPORTED_MODULE_2__pay__["a" /* PayPage */]
+                __WEBPACK_IMPORTED_MODULE_2__paylist__["a" /* PayListPage */]
             ]
         })
-    ], PayPageModule);
-    return PayPageModule;
+    ], PayListPageModule);
+    return PayListPageModule;
 }());
 
-//# sourceMappingURL=pay.module.js.map
+//# sourceMappingURL=paylist.module.js.map
 
 /***/ }),
 
-/***/ 451:
+/***/ 457:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return PayPage; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return PayListPage; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(42);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_angularfire2_database__ = __webpack_require__(57);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_angularfire2_database__ = __webpack_require__(43);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -61,39 +61,41 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 
 
 
-var PayPage = (function () {
-    function PayPage(db, viewCtrl, navParams, alertCtrl) {
+var PayListPage = (function () {
+    function PayListPage(db, viewCtrl, alertCtrl) {
         this.db = db;
         this.viewCtrl = viewCtrl;
-        this.navParams = navParams;
         this.alertCtrl = alertCtrl;
         this.yearPay = '2018';
         this.payPath = 'pays';
-        this.user = navParams.get('user');
+        this.userPath = 'users';
+        this.userid = '';
+        this.showType = 'all';
+        this.users = this.db.list(this.userPath + "/").valueChanges();
         this.pays = this.db.list(this.payPath + "/" + this.yearPay + "/").valueChanges();
         this.months = [];
-        this.months.push({ month: 'January', date: 'Jan/22/2018' });
-        this.months.push({ month: 'February', date: 'Feb/1/2018' });
-        this.months.push({ month: 'March', date: '' });
-        this.months.push({ month: 'April', date: '' });
-        this.months.push({ month: 'May', date: '' });
-        this.months.push({ month: 'June', date: '' });
-        this.months.push({ month: 'July', date: '' });
-        this.months.push({ month: 'August', date: '' });
-        this.months.push({ month: 'September', date: '' });
-        this.months.push({ month: 'October', date: '' });
-        this.months.push({ month: 'November', date: '' });
-        this.months.push({ month: 'December', date: '' });
+        this.months.push({ month: 'January', userid: this.userid, date: 'Jan/22/2018' });
+        this.months.push({ month: 'February', userid: this.userid, date: 'Feb/1/2018' });
+        this.months.push({ month: 'March', userid: this.userid, date: '' });
+        this.months.push({ month: 'April', userid: this.userid, date: '' });
+        this.months.push({ month: 'May', userid: this.userid, date: '' });
+        this.months.push({ month: 'June', userid: this.userid, date: '' });
+        this.months.push({ month: 'July', userid: this.userid, date: '' });
+        this.months.push({ month: 'August', userid: this.userid, date: '' });
+        this.months.push({ month: 'September', userid: this.userid, date: '' });
+        this.months.push({ month: 'October', userid: this.userid, date: '' });
+        this.months.push({ month: 'November', userid: this.userid, date: '' });
+        this.months.push({ month: 'December', userid: this.userid, date: '' });
     }
-    PayPage.prototype.ionViewDidLoad = function () {
+    PayListPage.prototype.ionViewDidLoad = function () {
     };
-    PayPage.prototype.dismiss = function () {
+    PayListPage.prototype.dismiss = function () {
         this.viewCtrl.dismiss();
     };
-    PayPage.prototype.clickStar = function (item) {
+    PayListPage.prototype.clickStar = function (item) {
         if (item.datePay) {
             // delete payment record
-            var path = this.payPath + "/" + this.yearPay + "/" + this.user.uid;
+            var path = this.payPath + "/" + this.yearPay + "/" + item.id;
             this.db.object(path).remove()
                 .catch(function (error) { return console.log(error); });
             var alert_1 = this.alertCtrl.create({
@@ -108,7 +110,7 @@ var PayPage = (function () {
             var path = this.payPath + "/" + this.yearPay;
             var timestamp = new Date();
             var data = {
-                userid: this.user.uid,
+                userid: item.userid,
                 month: item.month,
                 date: timestamp
             };
@@ -128,19 +130,18 @@ var PayPage = (function () {
             alert_2.present();
         }
     };
-    PayPage = __decorate([
+    PayListPage = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
-            selector: 'page-pay',template:/*ion-inline-start:"E:\ionic\taiko1\src\pages\about\pay\pay.html"*/'<ion-header>\n  <ion-navbar>\n    <ion-title>Monthly Pay</ion-title>\n    <ion-buttons end>\n      <button ion-button icon-only (click)="dismiss()">\n        <ion-icon name=\'close\'></ion-icon>\n      </button>\n    </ion-buttons>\n  </ion-navbar>\n</ion-header>\n\n<ion-content>\n  <h3>user is {{user.displayName}}</h3>     \n\n  <ion-item>\n    <ion-icon name="calendar" item-start></ion-icon>\n    <ion-label>Year</ion-label>\n    <ion-datetime displayFormat="YYYY" max="2050" [(ngModel)]="yearPay"></ion-datetime>\n  </ion-item>\n  \n  <div>\n    <ion-grid>\n      <ion-row>\n        <ion-col>\n          <ion-avatar>\n            <img [src]="\'assets/img/speakers/bear.jpg\'" />\n          </ion-avatar>  \n          <ion-row><button ion-button full>Jan</button></ion-row>\n          <ion-row><button ion-button full>Feb</button></ion-row>\n          <ion-row><button ion-button full>Mar</button></ion-row>\n          <ion-row><button ion-button full>Apr</button></ion-row>\n          <ion-row><button ion-button full>May</button></ion-row>\n          <ion-row><button ion-button full>Jun</button></ion-row>\n          <ion-row><button ion-button full>Jul</button></ion-row>\n          <ion-row><button ion-button full>Aug</button></ion-row>\n          <ion-row><button ion-button full>Sep</button></ion-row>\n          <ion-row><button ion-button full>Oct</button></ion-row>\n          <ion-row><button ion-button full>Nov</button></ion-row>\n          <ion-row><button ion-button full>Dec</button></ion-row>\n        </ion-col>      \n        <ion-col>\n          <ion-avatar>\n            <img [src]="user.imageUrl" />\n          </ion-avatar>\n          <ion-row *ngFor="let item of months">\n            <button ion-button [color]="item.date ? \'danger\' : \'light\'" full (click)="clickStar(item)">\n              <ion-icon name="star"> {{item.date}}</ion-icon>\n            </button>\n          </ion-row>\n        </ion-col>\n      </ion-row>\n    </ion-grid>\n  </div>\n</ion-content>\n'/*ion-inline-end:"E:\ionic\taiko1\src\pages\about\pay\pay.html"*/
+            selector: 'page-paylist',template:/*ion-inline-start:"E:\ionic\taiko1\src\pages\contact\paylist\paylist.html"*/'<ion-header>\n  <ion-navbar>\n    <ion-title>Monthly Pay</ion-title>\n  </ion-navbar>\n</ion-header>\n\n<ion-content>\n  <ion-row no-padding>\n    <ion-col>\n      <button ion-button block color="danger" (click)="dismiss()">\n        Cancel\n      </button>\n    </ion-col>\n  </ion-row>\n\n  <ion-item>\n    <ion-icon name="calendar" item-start></ion-icon>\n    <ion-label>Year</ion-label>\n    <ion-datetime displayFormat="YYYY" max="2050" [(ngModel)]="yearPay"></ion-datetime>\n  </ion-item>\n\n  <!-- <ion-scroll scrollY="true"> -->\n  <ion-segment [(ngModel)]="showType" color="primary">\n    <ion-segment-button value="you">\n      YOU\n    </ion-segment-button>\n    <ion-segment-button value="all">\n      ALL\n    </ion-segment-button>\n  </ion-segment>\n   \n  <div [ngSwitch]="showType">\n    <ion-grid *ngSwitchCase="\'you\'">\n      <ion-row>\n        <ion-col>\n          <ion-avatar>\n            <img [src]="\'assets/img/speakers/bear.jpg\'" />\n          </ion-avatar>  \n          <ion-row><button ion-button full>Jan</button></ion-row>\n          <ion-row><button ion-button full>Feb</button></ion-row>\n          <ion-row><button ion-button full>Mar</button></ion-row>\n          <ion-row><button ion-button full>Apr</button></ion-row>\n          <ion-row><button ion-button full>May</button></ion-row>\n          <ion-row><button ion-button full>Jun</button></ion-row>\n          <ion-row><button ion-button full>Jul</button></ion-row>\n          <ion-row><button ion-button full>Aug</button></ion-row>\n          <ion-row><button ion-button full>Sep</button></ion-row>\n          <ion-row><button ion-button full>Oct</button></ion-row>\n          <ion-row><button ion-button full>Nov</button></ion-row>\n          <ion-row><button ion-button full>Dec</button></ion-row>\n        </ion-col>      \n        <ion-col>\n          <ion-avatar>\n            <img [src]="\'assets/img/speakers/lion.jpg\'" />\n          </ion-avatar>\n          <ion-row *ngFor="let item of months">\n            <button ion-button [color]="item.date ? \'danger\' : \'light\'" full (click)="clickStar(item)">\n              <ion-icon name="star"> {{item.date}}</ion-icon>\n            </button>\n          </ion-row>\n        </ion-col>\n      </ion-row>\n    </ion-grid>\n   \n   \n      <!-- More Pinterest floating gallery style -->\n    <ion-grid *ngSwitchCase="\'all\'">\n      <ion-row>\n        <ion-col>\n          <ion-avatar>\n            <img [src]="\'assets/img/speakers/bear.jpg\'" />\n          </ion-avatar>  \n          <button ion-button full>Jan</button>\n          <button ion-button full>Feb</button>\n          <button ion-button full>Mar</button>\n          <button ion-button full>Apr</button>\n          <button ion-button full>May</button>\n          <button ion-button full>Jun</button>\n          <button ion-button full>Jul</button>\n          <button ion-button full>Aug</button>\n          <button ion-button full>Sep</button>\n          <button ion-button full>Oct</button>\n          <button ion-button full>Nov</button>\n          <button ion-button full>Dec</button>\n        </ion-col>      \n        <ion-col>\n          <ion-avatar>\n            <img [src]="\'assets/img/speakers/lion.jpg\'" />\n          </ion-avatar>\n          <button ion-button color="light" full (click)="clickStar()">\n            <ion-icon name="star"></ion-icon>\n          </button>\n          <button ion-button color="light" full (click)="clickStar()">\n            <ion-icon name="star"></ion-icon>\n          </button>\n          <button ion-button color="light" full (click)="clickStar()">\n            <ion-icon name="star"></ion-icon>\n          </button>\n          <button ion-button color="light" full (click)="clickStar()">\n            <ion-icon name="star"></ion-icon>\n          </button>\n          <button ion-button color="light" full (click)="clickStar()">\n            <ion-icon name="star"></ion-icon>\n          </button>\n          <button ion-button color="light" full (click)="clickStar()">\n            <ion-icon name="star"></ion-icon>\n          </button>\n          <button ion-button color="light" full (click)="clickStar()">\n            <ion-icon name="star"></ion-icon>\n          </button>\n          <button ion-button color="light" full (click)="clickStar()">\n            <ion-icon name="star"></ion-icon>\n          </button>\n          <button ion-button color="light" full (click)="clickStar()">\n            <ion-icon name="star"></ion-icon>\n          </button>\n          <button ion-button color="light" full (click)="clickStar()">\n            <ion-icon name="star"></ion-icon>\n          </button>\n          <button ion-button color="light" full (click)="clickStar()">\n            <ion-icon name="star"></ion-icon>\n          </button>\n          <button ion-button color="light" full (click)="clickStar()">\n            <ion-icon name="star"></ion-icon>\n          </button>\n        </ion-col>\n        <ion-col>\n          <ion-avatar>\n            <img [src]="\'assets/img/speakers/kitten.jpg\'" />\n          </ion-avatar>\n          <button ion-button color="danger" full (click)="clickStar()">\n            <ion-icon name="star"></ion-icon>\n          </button>\n          <button ion-button color="danger" full (click)="clickStar()">\n            <ion-icon name="star"></ion-icon>\n          </button>\n          <button ion-button color="danger" full (click)="clickStar()">\n            <ion-icon name="star"></ion-icon>\n          </button>\n          <button ion-button color="danger" full (click)="clickStar()">\n            <ion-icon name="star"></ion-icon>\n          </button>\n          <button ion-button color="danger" full (click)="clickStar()">\n            <ion-icon name="star"></ion-icon>\n          </button>\n          <button ion-button color="danger" full (click)="clickStar()">\n            <ion-icon name="star"></ion-icon>\n          </button>\n          <button ion-button color="danger" full (click)="clickStar()">\n            <ion-icon name="star"></ion-icon>\n          </button>\n          <button ion-button color="danger" full (click)="clickStar()">\n            <ion-icon name="star"></ion-icon>\n          </button>\n          <button ion-button color="danger" full (click)="clickStar()">\n            <ion-icon name="star"></ion-icon>\n          </button>\n          <button ion-button color="danger" full (click)="clickStar()">\n            <ion-icon name="star"></ion-icon>\n          </button>\n          <button ion-button color="danger" full (click)="clickStar()">\n            <ion-icon name="star"></ion-icon>\n          </button>\n          <button ion-button color="danger" full (click)="clickStar()">\n            <ion-icon name="star"></ion-icon>\n          </button>\n        </ion-col>\n  \n        <ion-col>\n          <ion-avatar>\n            <img [src]="\'assets/img/speakers/duck.jpg\'" />\n          </ion-avatar>\n          <button ion-button color="secondary" full (click)="clickStar()">\n            <ion-icon name="star"></ion-icon>\n          </button>\n          <button ion-button color="secondary" full (click)="clickStar()">\n            <ion-icon name="star"></ion-icon>\n          </button>\n          <button ion-button color="secondary" full (click)="clickStar()">\n            <ion-icon name="star"></ion-icon>\n          </button>\n          <button ion-button color="secondary" full (click)="clickStar()">\n            <ion-icon name="star"></ion-icon>\n          </button>\n          <button ion-button color="secondary" full (click)="clickStar()">\n            <ion-icon name="star"></ion-icon>\n          </button>\n          <button ion-button color="secondary" full (click)="clickStar()">\n            <ion-icon name="star"></ion-icon>\n          </button>\n          <button ion-button color="secondary" full (click)="clickStar()">\n            <ion-icon name="star"></ion-icon>\n          </button>\n          <button ion-button color="secondary" full (click)="clickStar()">\n            <ion-icon name="star"></ion-icon>\n          </button>\n          <button ion-button color="secondary" full (click)="clickStar()">\n            <ion-icon name="star"></ion-icon>\n          </button>\n          <button ion-button color="secondary" full (click)="clickStar()">\n            <ion-icon name="star"></ion-icon>\n          </button>\n          <button ion-button color="secondary" full (click)="clickStar()">\n            <ion-icon name="star"></ion-icon>\n          </button>\n          <button ion-button color="secondary" full (click)="clickStar()">\n            <ion-icon name="star"></ion-icon>\n          </button>\n        </ion-col>\n  \n        <ion-col>\n          <ion-avatar>\n            <img [src]="\'assets/img/speakers/puppy.jpg\'" />\n          </ion-avatar>\n          <button ion-button color="dark" full (click)="clickStar()">\n            <ion-icon name="star"></ion-icon>\n          </button>\n          <button ion-button color="dark" full (click)="clickStar()">\n            <ion-icon name="star"></ion-icon>\n          </button>\n          <button ion-button color="dark" full (click)="clickStar()">\n            <ion-icon name="star"></ion-icon>\n          </button>\n          <button ion-button color="dark" full (click)="clickStar()">\n            <ion-icon name="star"></ion-icon>\n          </button>\n          <button ion-button color="dark" full (click)="clickStar()">\n            <ion-icon name="star"></ion-icon>\n          </button>\n          <button ion-button color="dark" full (click)="clickStar()">\n            <ion-icon name="star"></ion-icon>\n          </button>\n          <button ion-button color="dark" full (click)="clickStar()">\n            <ion-icon name="star"></ion-icon>\n          </button>\n          <button ion-button color="dark" full (click)="clickStar()">\n            <ion-icon name="star"></ion-icon>\n          </button>\n          <button ion-button color="dark" full (click)="clickStar()">\n            <ion-icon name="star"></ion-icon>\n          </button>\n          <button ion-button color="dark" full (click)="clickStar()">\n            <ion-icon name="star"></ion-icon>\n          </button>\n          <button ion-button color="dark" full (click)="clickStar()">\n            <ion-icon name="star"></ion-icon>\n          </button>\n          <button ion-button color="dark" full (click)="clickStar()">\n            <ion-icon name="star"></ion-icon>\n          </button>\n        </ion-col>\n\n\n        <ion-col>\n          <ion-avatar>\n            <img [src]="\'assets/img/speakers/puppy.jpg\'" />\n          </ion-avatar>\n          <button ion-button color="dark" full (click)="clickStar()">\n            <ion-icon name="star"></ion-icon>\n          </button>\n          <button ion-button color="dark" full (click)="clickStar()">\n            <ion-icon name="star"></ion-icon>\n          </button>\n          <button ion-button color="dark" full (click)="clickStar()">\n            <ion-icon name="star"></ion-icon>\n          </button>\n          <button ion-button color="dark" full (click)="clickStar()">\n            <ion-icon name="star"></ion-icon>\n          </button>\n          <button ion-button color="dark" full (click)="clickStar()">\n            <ion-icon name="star"></ion-icon>\n          </button>\n          <button ion-button color="dark" full (click)="clickStar()">\n            <ion-icon name="star"></ion-icon>\n          </button>\n          <button ion-button color="dark" full (click)="clickStar()">\n            <ion-icon name="star"></ion-icon>\n          </button>\n          <button ion-button color="dark" full (click)="clickStar()">\n            <ion-icon name="star"></ion-icon>\n          </button>\n          <button ion-button color="dark" full (click)="clickStar()">\n            <ion-icon name="star"></ion-icon>\n          </button>\n          <button ion-button color="dark" full (click)="clickStar()">\n            <ion-icon name="star"></ion-icon>\n          </button>\n          <button ion-button color="dark" full (click)="clickStar()">\n            <ion-icon name="star"></ion-icon>\n          </button>\n          <button ion-button color="dark" full (click)="clickStar()">\n            <ion-icon name="star"></ion-icon>\n          </button>\n        </ion-col>\n        <ion-col>\n          <ion-avatar>\n            <img [src]="\'assets/img/speakers/puppy.jpg\'" />\n          </ion-avatar>\n          <button ion-button color="dark" full (click)="clickStar()">\n            <ion-icon name="star"></ion-icon>\n          </button>\n          <button ion-button color="dark" full (click)="clickStar()">\n            <ion-icon name="star"></ion-icon>\n          </button>\n          <button ion-button color="dark" full (click)="clickStar()">\n            <ion-icon name="star"></ion-icon>\n          </button>\n          <button ion-button color="dark" full (click)="clickStar()">\n            <ion-icon name="star"></ion-icon>\n          </button>\n          <button ion-button color="dark" full (click)="clickStar()">\n            <ion-icon name="star"></ion-icon>\n          </button>\n          <button ion-button color="dark" full (click)="clickStar()">\n            <ion-icon name="star"></ion-icon>\n          </button>\n          <button ion-button color="dark" full (click)="clickStar()">\n            <ion-icon name="star"></ion-icon>\n          </button>\n          <button ion-button color="dark" full (click)="clickStar()">\n            <ion-icon name="star"></ion-icon>\n          </button>\n          <button ion-button color="dark" full (click)="clickStar()">\n            <ion-icon name="star"></ion-icon>\n          </button>\n          <button ion-button color="dark" full (click)="clickStar()">\n            <ion-icon name="star"></ion-icon>\n          </button>\n          <button ion-button color="dark" full (click)="clickStar()">\n            <ion-icon name="star"></ion-icon>\n          </button>\n          <button ion-button color="dark" full (click)="clickStar()">\n            <ion-icon name="star"></ion-icon>\n          </button>\n        </ion-col>\n\n        <ion-col>\n          <ion-avatar>\n            <img [src]="\'assets/img/speakers/puppy.jpg\'" />\n          </ion-avatar>\n          <button ion-button color="dark" full (click)="clickStar()">\n            <ion-icon name="star"></ion-icon>\n          </button>\n          <button ion-button color="dark" full (click)="clickStar()">\n            <ion-icon name="star"></ion-icon>\n          </button>\n          <button ion-button color="dark" full (click)="clickStar()">\n            <ion-icon name="star"></ion-icon>\n          </button>\n          <button ion-button color="dark" full (click)="clickStar()">\n            <ion-icon name="star"></ion-icon>\n          </button>\n          <button ion-button color="dark" full (click)="clickStar()">\n            <ion-icon name="star"></ion-icon>\n          </button>\n          <button ion-button color="dark" full (click)="clickStar()">\n            <ion-icon name="star"></ion-icon>\n          </button>\n          <button ion-button color="dark" full (click)="clickStar()">\n            <ion-icon name="star"></ion-icon>\n          </button>\n          <button ion-button color="dark" full (click)="clickStar()">\n            <ion-icon name="star"></ion-icon>\n          </button>\n          <button ion-button color="dark" full (click)="clickStar()">\n            <ion-icon name="star"></ion-icon>\n          </button>\n          <button ion-button color="dark" full (click)="clickStar()">\n            <ion-icon name="star"></ion-icon>\n          </button>\n          <button ion-button color="dark" full (click)="clickStar()">\n            <ion-icon name="star"></ion-icon>\n          </button>\n          <button ion-button color="dark" full (click)="clickStar()">\n            <ion-icon name="star"></ion-icon>\n          </button>\n        </ion-col>\n        <ion-col>\n          <ion-avatar>\n            <img [src]="\'assets/img/speakers/puppy.jpg\'" />\n          </ion-avatar>\n          <button ion-button color="dark" full (click)="clickStar()">\n            <ion-icon name="star"></ion-icon>\n          </button>\n          <button ion-button color="dark" full (click)="clickStar()">\n            <ion-icon name="star"></ion-icon>\n          </button>\n          <button ion-button color="dark" full (click)="clickStar()">\n            <ion-icon name="star"></ion-icon>\n          </button>\n          <button ion-button color="dark" full (click)="clickStar()">\n            <ion-icon name="star"></ion-icon>\n          </button>\n          <button ion-button color="dark" full (click)="clickStar()">\n            <ion-icon name="star"></ion-icon>\n          </button>\n          <button ion-button color="dark" full (click)="clickStar()">\n            <ion-icon name="star"></ion-icon>\n          </button>\n          <button ion-button color="dark" full (click)="clickStar()">\n            <ion-icon name="star"></ion-icon>\n          </button>\n          <button ion-button color="dark" full (click)="clickStar()">\n            <ion-icon name="star"></ion-icon>\n          </button>\n          <button ion-button color="dark" full (click)="clickStar()">\n            <ion-icon name="star"></ion-icon>\n          </button>\n          <button ion-button color="dark" full (click)="clickStar()">\n            <ion-icon name="star"></ion-icon>\n          </button>\n          <button ion-button color="dark" full (click)="clickStar()">\n            <ion-icon name="star"></ion-icon>\n          </button>\n          <button ion-button color="dark" full (click)="clickStar()">\n            <ion-icon name="star"></ion-icon>\n          </button>\n        </ion-col>\n\n      </ion-row>\n    </ion-grid>\n  </div>\n\n\n\n\n  <!-- <ion-list>\n      <ion-item-sliding *ngFor="let item of months">\n        <button ion-item (click)="addItem(item)">         \n          <ion-thumbnail item-start>\n            <img [src]="item.imageUrl">\n          </ion-thumbnail>\n          <h2>{{item.name}}</h2>\n          <ion-note item-end *ngIf="item.datePay">{{item.datePay}}</ion-note>\n        </button>\n        <ion-item-options *ngIf="item.datePay">\n          <button ion-button color="danger" (click)="deleteItem(item)">\n            {{ \'DELETE_BUTTON\' | translate }}\n          </button>\n        </ion-item-options>\n      </ion-item-sliding>\n    </ion-list> -->\n\n</ion-content>'/*ion-inline-end:"E:\ionic\taiko1\src\pages\contact\paylist\paylist.html"*/
         }),
         __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_2_angularfire2_database__["a" /* AngularFireDatabase */],
-            __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["j" /* ViewController */],
-            __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["h" /* NavParams */],
+            __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["i" /* ViewController */],
             __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["a" /* AlertController */]])
-    ], PayPage);
-    return PayPage;
+    ], PayListPage);
+    return PayListPage;
 }());
 
-//# sourceMappingURL=pay.js.map
+//# sourceMappingURL=paylist.js.map
 
 /***/ })
 

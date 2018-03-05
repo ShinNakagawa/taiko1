@@ -1,20 +1,35 @@
 <ion-header>
   <ion-navbar>
-    <ion-title>
-      Contact
-    </ion-title>
+    <ion-title>Event List</ion-title>
+    <ion-buttons end>
+      <button ion-button icon-only (click)="createItem()">
+        <ion-icon name="add"></ion-icon>
+      </button>
+    </ion-buttons>
   </ion-navbar>
 </ion-header>
 
 <ion-content>
-  <button ion-button icon-only (click)="payMonth()">
-    <ion-icon name="list"></ion-icon>
-  </button>
+  <ion-item>
+    <ion-icon name="calendar" item-start></ion-icon>
+    <ion-label>Year</ion-label>
+    <ion-datetime displayFormat="YYYY" max="2050" [(ngModel)]="yearPay"></ion-datetime>
+  </ion-item>
+
   <ion-list>
-    <ion-list-header>Follow us on Twitter</ion-list-header>
-    <ion-item>
-      <ion-icon name="ionic" item-start></ion-icon>
-      @ionicframework
-    </ion-item>
+    <ion-item-sliding *ngFor="let item of items | async">
+      <button ion-item (click)="itemTapped($event, item)">
+        <ion-avatar item-start>
+          <img *ngIf="item.imageUrl" [src]="item.imageUrl" />
+        </ion-avatar>
+        <h2>{{item.name}}</h2>
+        <!-- <p item-end>{{item.description}}</p> -->
+      </button>
+      <ion-item-options>
+        <button ion-button clear small color="danger" icon-left (click)="deleteItem(item)">
+          <ion-icon name='trash'></ion-icon>
+        </button>
+      </ion-item-options>
+    </ion-item-sliding>
   </ion-list>
 </ion-content>
