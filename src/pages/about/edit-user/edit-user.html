@@ -8,7 +8,20 @@
       </ion-item>
       <ion-item>
         <ion-label for="imageUrl"></ion-label>
-        <ion-input type="imageUrl" value="{{user.imageUrl}}" placeholder="ImageUrl" formControlName="imageUrl"></ion-input>
+        <ion-select formControlName="imageUrl">
+          <ion-option value="assets/img/speakers/bear.jpg">Bear</ion-option>
+          <ion-option value="assets/img/speakers/cheetah.jpg">Cheetah</ion-option>
+          <ion-option value="assets/img/speakers/duck.jpg">Duck</ion-option>
+          <ion-option value="assets/img/speakers/eagle.jpg">Eagle</ion-option>
+          <ion-option value="assets/img/speakers/elephant.jpg">Elephant</ion-option>
+          <ion-option value="assets/img/speakers/giraffe.jpg">Giraffe</ion-option>
+          <ion-option value="assets/img/speakers/iguana.jpg">Iguana</ion-option>
+          <ion-option value="assets/img/speakers/lion.jpg">Lion</ion-option>
+          <ion-option value="assets/img/speakers/mouse.jpg">Mouse</ion-option>
+          <ion-option value="assets/img/speakers/puppy.jpg">Puppy</ion-option>
+          <ion-option value="assets/img/speakers/rabbit.jpg">Rabbit</ion-option>
+          <ion-option value="assets/img/speakers/turtle.jpg">Turtle</ion-option>
+        </ion-select>
       </ion-item>
     </ion-row>
   </form>

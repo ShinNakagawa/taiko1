@@ -11,6 +11,10 @@
         <ion-input type="imageUrl" value="{{event.imageUrl}}" placeholder="ImageUrl" formControlName="imageUrl"></ion-input>
       </ion-item>
       <ion-item>
+        <ion-label for="date"></ion-label>
+        <ion-datetime displayFormat="MMM DD YYYY" max="2050" formControlName="date"></ion-datetime>
+      </ion-item>
+      <ion-item>
         <ion-label for="description"></ion-label>
         <ion-input type="description" value="{{event.description}}" placeholder="Description" formControlName="description"></ion-input>
       </ion-item>

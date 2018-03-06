@@ -1,6 +1,15 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>{{song.name}}</ion-title>
+    <ion-buttons end>
+      <button ion-button icon-only (click)="dismiss()">
+        <ion-icon name='close'></ion-icon>
+      </button>
+    </ion-buttons>
+  </ion-navbar>
+</ion-header>
+
 <ion-content>
-  <button ion-button block color="danger" (click)="dismiss()">Close</button>  
-  <h2 text-center>{{song.name}}</h2>
   <p>{{song.description}}</p>
 
   <h4 text-center>Full Video:</h4>

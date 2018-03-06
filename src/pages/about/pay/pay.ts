@@ -12,7 +12,7 @@ import moment from 'moment';
 })
 export class PayPage {
   months: Observable<any[]>;
-  yearPay = '2018';
+  yearPay;
   payPath = 'pays';
   userPath = 'users';
   user: any;
@@ -24,7 +24,17 @@ export class PayPage {
               private alertCtrl: AlertController
             ) {
     this.user = navParams.get('user');
+    this.yearPay = moment(new Date()).format('YYYY');
+    this.loadingData();
+  }
+
+  loadingData() {
     this.months = this.db.list(`${this.payPath}/${this.yearPay}/`, ref => ref.orderByChild('userid').equalTo(this.user.uid)).valueChanges();
+    this.months.subscribe(res => {
+      if ( res.length < 1 ) {
+        this.addList();
+      }
+    })
   }
 
   dismiss() {

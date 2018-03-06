@@ -1,9 +1,9 @@
 <ion-header>
   <ion-navbar>
-    <ion-title>Monthly Pay</ion-title>
+    <ion-title>{{user.displayName}} : Pay List</ion-title>
     <ion-buttons end>
-      <button ion-button icon-only (click)="addList()">
-        <ion-icon name='add'></ion-icon>
+      <button ion-button icon-only (click)="loadingData()">
+        <ion-icon name='star'></ion-icon>
       </button>
       <button ion-button icon-only (click)="dismiss()">
         <ion-icon name='close'></ion-icon>
@@ -13,14 +13,12 @@
 </ion-header>
 
 <ion-content>
-  <h3>user is {{user.displayName}}</h3>     
-
   <ion-item>
     <ion-icon name="calendar" item-start></ion-icon>
     <ion-label>Year</ion-label>
     <ion-datetime displayFormat="YYYY" max="2050" [(ngModel)]="yearPay"></ion-datetime>
   </ion-item>
-  
+
   <div>
     <ion-grid>
       <ion-row>
