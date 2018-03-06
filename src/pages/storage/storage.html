@@ -1,0 +1,42 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>Storage</ion-title>
+  </ion-navbar>
+</ion-header>
+
+
+<ion-content padding>
+  <div class="container">
+    <div *ngIf="upload">
+      <div class="progress">
+        <div class="progress-bar progress-bar-animated" 
+        [ngStyle]="{ 'width': upload?.progress + '%' }"></div>
+      </div>
+      Progress: {{upload?.progress}}% Complete
+    </div>
+    <div class="container">
+      <input type="file" (change)="handleFiles($event)" multiple>
+      <button ion-button color="secondary" small (click)="uploadFiles()">
+        <ion-icon name="cloud-upload"></ion-icon>
+      </button>
+    </div>
+  </div>
+
+  <ion-list>
+    <ion-item-sliding *ngFor="let item of uploadItems | async">
+      <ion-item>
+        <ion-avatar item-start>
+          <img [src]="item.url" />
+        </ion-avatar>
+        <ion-icon name="download"></ion-icon>
+        <a href="{{item.url}}" download>{{item.name}}</a>
+      </ion-item>
+      <ion-item-options>
+        <button ion-button color="danger" (click)="deleteItem(item)">
+          <ion-icon name="trash"></ion-icon>
+        </button>
+      </ion-item-options>
+    </ion-item-sliding>
+  </ion-list>
+
+</ion-content>

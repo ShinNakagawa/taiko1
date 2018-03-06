@@ -27,12 +27,12 @@ export class AboutPage {
   }
 
   userEdit(user) {
-    let editModel = this.modalCtrl.create('EditUserPage', {user: user}, { cssClass: 'inset-modal' });
-    editModel.onDidDismiss(data => {
+    let editUserModel = this.modalCtrl.create('EditUserPage', {user: user}, { cssClass: 'inset-modal' });
+    editUserModel.onDidDismiss(data => {
       if (data) {
         //console.log("test1111");
       }
     });
-    editModel.present();
+    editUserModel.present();
   }
 }

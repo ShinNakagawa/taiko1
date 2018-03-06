@@ -35,12 +35,11 @@ export class EditUserPage {
   }
 
   edit(): void{
-    const path = `${this.basePath}/${this.user.uid}`;
     const data = {
       displayName: this.displayName.value,
       imageUrl: this.imageUrl.value
     };
-    this.db.object(path).update(data)
+    this.db.object(`${this.basePath}/${this.user.uid}`).update(data)
       .catch(error => console.log(error));
     this.viewCtrl.dismiss({title: "updated a user"});    
   }
