@@ -1,12 +1,12 @@
 webpackJsonp([2],{
 
-/***/ 620:
+/***/ 622:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "CreateSongPageModule", function() { return CreateSongPageModule; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__create_song__ = __webpack_require__(629);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "LoginPageModule", function() { return LoginPageModule; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__login__ = __webpack_require__(634);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_ionic_angular__ = __webpack_require__(44);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -18,38 +18,38 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 
 
 
-var CreateSongPageModule = (function () {
-    function CreateSongPageModule() {
+var LoginPageModule = (function () {
+    function LoginPageModule() {
     }
-    CreateSongPageModule = __decorate([
+    LoginPageModule = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_1__angular_core__["I" /* NgModule */])({
             declarations: [
-                __WEBPACK_IMPORTED_MODULE_0__create_song__["a" /* CreateSongPage */],
+                __WEBPACK_IMPORTED_MODULE_0__login__["a" /* LoginPage */],
             ],
             imports: [
-                __WEBPACK_IMPORTED_MODULE_2_ionic_angular__["e" /* IonicPageModule */].forChild(__WEBPACK_IMPORTED_MODULE_0__create_song__["a" /* CreateSongPage */]),
+                __WEBPACK_IMPORTED_MODULE_2_ionic_angular__["e" /* IonicPageModule */].forChild(__WEBPACK_IMPORTED_MODULE_0__login__["a" /* LoginPage */]),
             ],
             exports: [
-                __WEBPACK_IMPORTED_MODULE_0__create_song__["a" /* CreateSongPage */]
+                __WEBPACK_IMPORTED_MODULE_0__login__["a" /* LoginPage */]
             ]
         })
-    ], CreateSongPageModule);
-    return CreateSongPageModule;
+    ], LoginPageModule);
+    return LoginPageModule;
 }());
 
-//# sourceMappingURL=create-song.module.js.map
+//# sourceMappingURL=login.module.js.map
 
 /***/ }),
 
-/***/ 629:
+/***/ 634:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return CreateSongPage; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return LoginPage; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(44);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__angular_forms__ = __webpack_require__(25);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_angularfire2_database__ = __webpack_require__(45);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__providers_auth_auth__ = __webpack_require__(147);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -63,61 +63,43 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 
 
 
-var CreateSongPage = (function () {
-    function CreateSongPage(viewCtrl, fb, db) {
+var LoginPage = (function () {
+    function LoginPage(viewCtrl, fb, auth) {
         this.viewCtrl = viewCtrl;
         this.fb = fb;
-        this.db = db;
-        this.basePath = 'songs';
-        this.songForm = this.fb.group({
-            'name': ['', __WEBPACK_IMPORTED_MODULE_2__angular_forms__["f" /* Validators */].compose([__WEBPACK_IMPORTED_MODULE_2__angular_forms__["f" /* Validators */].required, __WEBPACK_IMPORTED_MODULE_2__angular_forms__["f" /* Validators */].minLength(1)])],
-            'imageUrl': ['', __WEBPACK_IMPORTED_MODULE_2__angular_forms__["f" /* Validators */].compose([__WEBPACK_IMPORTED_MODULE_2__angular_forms__["f" /* Validators */].required, __WEBPACK_IMPORTED_MODULE_2__angular_forms__["f" /* Validators */].minLength(1)])],
-            'description': ['', __WEBPACK_IMPORTED_MODULE_2__angular_forms__["f" /* Validators */].compose([__WEBPACK_IMPORTED_MODULE_2__angular_forms__["f" /* Validators */].required, __WEBPACK_IMPORTED_MODULE_2__angular_forms__["f" /* Validators */].minLength(1)])],
-            'fullVideoID': ['', __WEBPACK_IMPORTED_MODULE_2__angular_forms__["f" /* Validators */].compose([__WEBPACK_IMPORTED_MODULE_2__angular_forms__["f" /* Validators */].required, __WEBPACK_IMPORTED_MODULE_2__angular_forms__["f" /* Validators */].minLength(1)])],
-            'playListID': ['', __WEBPACK_IMPORTED_MODULE_2__angular_forms__["f" /* Validators */].compose([__WEBPACK_IMPORTED_MODULE_2__angular_forms__["f" /* Validators */].required, __WEBPACK_IMPORTED_MODULE_2__angular_forms__["f" /* Validators */].minLength(1)])],
+        this.auth = auth;
+        this.loginForm = this.fb.group({
+            'email': ['', __WEBPACK_IMPORTED_MODULE_2__angular_forms__["f" /* Validators */].compose([__WEBPACK_IMPORTED_MODULE_2__angular_forms__["f" /* Validators */].required, __WEBPACK_IMPORTED_MODULE_2__angular_forms__["f" /* Validators */].pattern(/[a-z0-9!#$%&amp;'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&amp;'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/)])],
+            'password': ['', __WEBPACK_IMPORTED_MODULE_2__angular_forms__["f" /* Validators */].compose([__WEBPACK_IMPORTED_MODULE_2__angular_forms__["f" /* Validators */].required, __WEBPACK_IMPORTED_MODULE_2__angular_forms__["f" /* Validators */].minLength(1)])]
         });
-        this.name = this.songForm.controls['name'];
-        this.imageUrl = this.songForm.controls['imageUrl'];
-        this.description = this.songForm.controls['description'];
-        this.fullVideoID = this.songForm.controls['fullVideoID'];
-        this.playListID = this.songForm.controls['playListID'];
+        this.email = this.loginForm.controls['email'];
+        this.password = this.loginForm.controls['password'];
     }
-    CreateSongPage.prototype.dismiss = function () {
+    LoginPage.prototype.login = function () {
+        var _this = this;
+        //console.log('login() called from Login Pge [' + this.email.value + "][" + this.password.value + "]");
+        this.auth.login(this.email.value, this.password.value).then(function (res) {
+            _this.viewCtrl.dismiss({ title: "login" });
+        })
+            .catch(function (error) {
+            console.log(error);
+        });
+    };
+    LoginPage.prototype.dismiss = function () {
         this.viewCtrl.dismiss();
     };
-    CreateSongPage.prototype.create = function () {
-        var timestamp = new Date();
-        var path = "" + this.basePath;
-        var data = {
-            name: this.name.value,
-            imageUrl: this.imageUrl.value,
-            description: this.description.value,
-            fullVideoID: this.fullVideoID.value,
-            playListID: this.playListID.value,
-            date: timestamp
-        };
-        var key = this.db.list(path).push(data).key;
-        //update id as key
-        var pathKey = this.basePath + "/" + key;
-        var dataKey = {
-            id: key
-        };
-        this.db.object(pathKey).update(dataKey)
-            .catch(function (error) { return console.log(error); });
-        this.viewCtrl.dismiss({ title: "created a song" });
-    };
-    CreateSongPage = __decorate([
+    LoginPage = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
-            selector: 'page-create-song',template:/*ion-inline-start:"E:\ionic\taiko1\src\pages\home\create-song\create-song.html"*/'<ion-content>\n  <h3>Create a song</h3>\n  <form [formGroup]="songForm" (ngSubmit)="submit()" novalidate>      \n    <ion-row>\n      <ion-item>\n        <ion-label for="name"></ion-label>\n        <ion-input type="name" value="" placeholder="Name" formControlName="name"></ion-input>\n      </ion-item>\n      <ion-item>\n        <ion-label for="imageUrl"></ion-label>\n        <ion-input type="imageUrl" value="" placeholder="ImageUrl" formControlName="imageUrl"></ion-input>\n      </ion-item>\n      <ion-item>\n        <ion-label for="description"></ion-label>\n        <ion-input type="description" value="" placeholder="Description" formControlName="description"></ion-input>\n      </ion-item>\n      <ion-item>\n        <ion-label for="fullVideoID"></ion-label>\n        <ion-input type="fullVideoID" value="" placeholder="FullVideoID" formControlName="fullVideoID"></ion-input>\n      </ion-item>\n      <ion-item>\n        <ion-label for="playListID"></ion-label>\n        <ion-input type="playListID" value="" placeholder="PlayListID" formControlName="playListID"></ion-input>\n      </ion-item>\n    </ion-row>\n  </form>\n  <ion-row no-padding>\n    <ion-col>\n      <button ion-button block (click)="create()">\n        Create\n      </button>\n    </ion-col>\n    <ion-col text-right>\n      <button ion-button block color="danger" (click)="dismiss()">\n        Cancel\n      </button>\n    </ion-col>\n  </ion-row>\n</ion-content>\n'/*ion-inline-end:"E:\ionic\taiko1\src\pages\home\create-song\create-song.html"*/
+            selector: 'page-login',template:/*ion-inline-start:"E:\ionic\taiko1\src\pages\home\login\login.html"*/'<ion-content>\n  <form [formGroup]="loginForm" (ngSubmit)="submit()" novalidate>      \n    <ion-row>\n      <ion-item>\n        <ion-label for="email"></ion-label>\n          <ion-input type="email" value="" placeholder="Email" formControlName="email"></ion-input>\n        </ion-item>\n    </ion-row>\n    <ion-row>\n      <ion-item>\n        <ion-label for="password"></ion-label>\n        <ion-input type="password" placeholder="Password" formControlName="password"></ion-input>\n      </ion-item>\n    </ion-row>\n  </form>\n  <ion-row no-padding>\n    <ion-col>\n      <button ion-button block (click)="login()">\n        Log in\n      </button>\n    </ion-col>\n    <ion-col text-right>\n      <button ion-button block color="danger" (click)="dismiss()">\n        Cancel\n      </button>\n    </ion-col>\n  </ion-row>\n</ion-content>\n'/*ion-inline-end:"E:\ionic\taiko1\src\pages\home\login\login.html"*/
         }),
         __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["k" /* ViewController */],
             __WEBPACK_IMPORTED_MODULE_2__angular_forms__["a" /* FormBuilder */],
-            __WEBPACK_IMPORTED_MODULE_3_angularfire2_database__["a" /* AngularFireDatabase */]])
-    ], CreateSongPage);
-    return CreateSongPage;
+            __WEBPACK_IMPORTED_MODULE_3__providers_auth_auth__["a" /* AuthProvider */]])
+    ], LoginPage);
+    return LoginPage;
 }());
 
-//# sourceMappingURL=create-song.js.map
+//# sourceMappingURL=login.js.map
 
 /***/ })
 

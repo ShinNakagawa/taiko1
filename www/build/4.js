@@ -1,12 +1,12 @@
 webpackJsonp([4],{
 
-/***/ 619:
+/***/ 620:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "EditEventPageModule", function() { return EditEventPageModule; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__edit_event__ = __webpack_require__(628);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "CreateSongPageModule", function() { return CreateSongPageModule; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__create_song__ = __webpack_require__(632);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_ionic_angular__ = __webpack_require__(44);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -18,34 +18,34 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 
 
 
-var EditEventPageModule = (function () {
-    function EditEventPageModule() {
+var CreateSongPageModule = (function () {
+    function CreateSongPageModule() {
     }
-    EditEventPageModule = __decorate([
+    CreateSongPageModule = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_1__angular_core__["I" /* NgModule */])({
             declarations: [
-                __WEBPACK_IMPORTED_MODULE_0__edit_event__["a" /* EditEventPage */],
+                __WEBPACK_IMPORTED_MODULE_0__create_song__["a" /* CreateSongPage */],
             ],
             imports: [
-                __WEBPACK_IMPORTED_MODULE_2_ionic_angular__["e" /* IonicPageModule */].forChild(__WEBPACK_IMPORTED_MODULE_0__edit_event__["a" /* EditEventPage */]),
+                __WEBPACK_IMPORTED_MODULE_2_ionic_angular__["e" /* IonicPageModule */].forChild(__WEBPACK_IMPORTED_MODULE_0__create_song__["a" /* CreateSongPage */]),
             ],
             exports: [
-                __WEBPACK_IMPORTED_MODULE_0__edit_event__["a" /* EditEventPage */]
+                __WEBPACK_IMPORTED_MODULE_0__create_song__["a" /* CreateSongPage */]
             ]
         })
-    ], EditEventPageModule);
-    return EditEventPageModule;
+    ], CreateSongPageModule);
+    return CreateSongPageModule;
 }());
 
-//# sourceMappingURL=edit-event.module.js.map
+//# sourceMappingURL=create-song.module.js.map
 
 /***/ }),
 
-/***/ 628:
+/***/ 632:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return EditEventPage; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return CreateSongPage; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(44);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__angular_forms__ = __webpack_require__(25);
@@ -63,53 +63,61 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 
 
 
-var EditEventPage = (function () {
-    function EditEventPage(viewCtrl, navParams, fb, db) {
+var CreateSongPage = (function () {
+    function CreateSongPage(viewCtrl, fb, db) {
         this.viewCtrl = viewCtrl;
-        this.navParams = navParams;
         this.fb = fb;
         this.db = db;
-        this.basePath = 'events';
-        this.yearPay = navParams.get('yearPay');
-        this.event = navParams.get('item');
-        this.eventEditForm = this.fb.group({
+        this.basePath = 'songs';
+        this.songForm = this.fb.group({
             'name': ['', __WEBPACK_IMPORTED_MODULE_2__angular_forms__["f" /* Validators */].compose([__WEBPACK_IMPORTED_MODULE_2__angular_forms__["f" /* Validators */].required, __WEBPACK_IMPORTED_MODULE_2__angular_forms__["f" /* Validators */].minLength(1)])],
             'imageUrl': ['', __WEBPACK_IMPORTED_MODULE_2__angular_forms__["f" /* Validators */].compose([__WEBPACK_IMPORTED_MODULE_2__angular_forms__["f" /* Validators */].required, __WEBPACK_IMPORTED_MODULE_2__angular_forms__["f" /* Validators */].minLength(1)])],
-            'date': ['', __WEBPACK_IMPORTED_MODULE_2__angular_forms__["f" /* Validators */].compose([__WEBPACK_IMPORTED_MODULE_2__angular_forms__["f" /* Validators */].required, __WEBPACK_IMPORTED_MODULE_2__angular_forms__["f" /* Validators */].minLength(1)])],
-            'description': ['', __WEBPACK_IMPORTED_MODULE_2__angular_forms__["f" /* Validators */].compose([__WEBPACK_IMPORTED_MODULE_2__angular_forms__["f" /* Validators */].required, __WEBPACK_IMPORTED_MODULE_2__angular_forms__["f" /* Validators */].minLength(1)])]
+            'description': ['', __WEBPACK_IMPORTED_MODULE_2__angular_forms__["f" /* Validators */].compose([__WEBPACK_IMPORTED_MODULE_2__angular_forms__["f" /* Validators */].required, __WEBPACK_IMPORTED_MODULE_2__angular_forms__["f" /* Validators */].minLength(1)])],
+            'fullVideoID': ['', __WEBPACK_IMPORTED_MODULE_2__angular_forms__["f" /* Validators */].compose([__WEBPACK_IMPORTED_MODULE_2__angular_forms__["f" /* Validators */].required, __WEBPACK_IMPORTED_MODULE_2__angular_forms__["f" /* Validators */].minLength(1)])],
+            'playListID': ['', __WEBPACK_IMPORTED_MODULE_2__angular_forms__["f" /* Validators */].compose([__WEBPACK_IMPORTED_MODULE_2__angular_forms__["f" /* Validators */].required, __WEBPACK_IMPORTED_MODULE_2__angular_forms__["f" /* Validators */].minLength(1)])],
         });
-        this.name = this.eventEditForm.controls['name'];
-        this.imageUrl = this.eventEditForm.controls['imageUrl'];
-        this.date = this.eventEditForm.controls['date'];
-        this.description = this.eventEditForm.controls['description'];
+        this.name = this.songForm.controls['name'];
+        this.imageUrl = this.songForm.controls['imageUrl'];
+        this.description = this.songForm.controls['description'];
+        this.fullVideoID = this.songForm.controls['fullVideoID'];
+        this.playListID = this.songForm.controls['playListID'];
     }
-    EditEventPage.prototype.dismiss = function () {
+    CreateSongPage.prototype.dismiss = function () {
         this.viewCtrl.dismiss();
     };
-    EditEventPage.prototype.edit = function () {
+    CreateSongPage.prototype.create = function () {
+        var timestamp = new Date();
+        var path = "" + this.basePath;
         var data = {
             name: this.name.value,
             imageUrl: this.imageUrl.value,
-            date: this.date.value,
-            description: this.description.value
+            description: this.description.value,
+            fullVideoID: this.fullVideoID.value,
+            playListID: this.playListID.value,
+            date: timestamp
         };
-        this.db.object(this.basePath + "/" + this.yearPay + "/" + this.event.id).update(data)
+        var key = this.db.list(path).push(data).key;
+        //update id as key
+        var pathKey = this.basePath + "/" + key;
+        var dataKey = {
+            id: key
+        };
+        this.db.object(pathKey).update(dataKey)
             .catch(function (error) { return console.log(error); });
-        this.viewCtrl.dismiss({ title: "updated an event" });
+        this.viewCtrl.dismiss({ title: "created a song" });
     };
-    EditEventPage = __decorate([
+    CreateSongPage = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
-            selector: 'page-edit-event',template:/*ion-inline-start:"E:\ionic\taiko1\src\pages\contact\edit-event\edit-event.html"*/'<ion-content>\n  <h3>Edit an event</h3>\n  <form [formGroup]="eventEditForm" (ngSubmit)="submit()" novalidate>      \n    <ion-row>\n      <ion-item>\n        <ion-label for="name"></ion-label>\n        <ion-input type="name" value="{{event.name}}" placeholder="Name" formControlName="name"></ion-input>\n      </ion-item>\n      <ion-item>\n        <ion-label for="imageUrl"></ion-label>\n        <ion-input type="imageUrl" value="{{event.imageUrl}}" placeholder="ImageUrl" formControlName="imageUrl"></ion-input>\n      </ion-item>\n      <ion-item>\n        <ion-label for="date"></ion-label>\n        <ion-datetime displayFormat="MMM DD YYYY" max="2050" formControlName="date"></ion-datetime>\n      </ion-item>\n      <ion-item>\n        <ion-label for="description"></ion-label>\n        <ion-input type="description" value="{{event.description}}" placeholder="Description" formControlName="description"></ion-input>\n      </ion-item>\n    </ion-row>\n  </form>\n  <ion-row no-padding>\n    <ion-col>\n      <button ion-button block (click)="edit()">\n        Edit\n      </button>\n    </ion-col>\n    <ion-col text-right>\n      <button ion-button block color="danger" (click)="dismiss()">\n        Cancel\n      </button>\n    </ion-col>\n  </ion-row>\n</ion-content>\n'/*ion-inline-end:"E:\ionic\taiko1\src\pages\contact\edit-event\edit-event.html"*/
+            selector: 'page-create-song',template:/*ion-inline-start:"E:\ionic\taiko1\src\pages\home\create-song\create-song.html"*/'<ion-content>\n  <h3>Create a song</h3>\n  <form [formGroup]="songForm" (ngSubmit)="submit()" novalidate>      \n    <ion-row>\n      <ion-item>\n        <ion-label for="name"></ion-label>\n        <ion-input type="name" value="" placeholder="Name" formControlName="name"></ion-input>\n      </ion-item>\n      <ion-item>\n        <ion-label for="imageUrl"></ion-label>\n        <ion-input type="imageUrl" value="" placeholder="ImageUrl" formControlName="imageUrl"></ion-input>\n      </ion-item>\n      <ion-item>\n        <ion-label for="description"></ion-label>\n        <ion-input type="description" value="" placeholder="Description" formControlName="description"></ion-input>\n      </ion-item>\n      <ion-item>\n        <ion-label for="fullVideoID"></ion-label>\n        <ion-input type="fullVideoID" value="" placeholder="FullVideoID" formControlName="fullVideoID"></ion-input>\n      </ion-item>\n      <ion-item>\n        <ion-label for="playListID"></ion-label>\n        <ion-input type="playListID" value="" placeholder="PlayListID" formControlName="playListID"></ion-input>\n      </ion-item>\n    </ion-row>\n  </form>\n  <ion-row no-padding>\n    <ion-col>\n      <button ion-button block (click)="create()">\n        Create\n      </button>\n    </ion-col>\n    <ion-col text-right>\n      <button ion-button block color="danger" (click)="dismiss()">\n        Cancel\n      </button>\n    </ion-col>\n  </ion-row>\n</ion-content>\n'/*ion-inline-end:"E:\ionic\taiko1\src\pages\home\create-song\create-song.html"*/
         }),
         __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["k" /* ViewController */],
-            __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["i" /* NavParams */],
             __WEBPACK_IMPORTED_MODULE_2__angular_forms__["a" /* FormBuilder */],
             __WEBPACK_IMPORTED_MODULE_3_angularfire2_database__["a" /* AngularFireDatabase */]])
-    ], EditEventPage);
-    return EditEventPage;
+    ], CreateSongPage);
+    return CreateSongPage;
 }());
 
-//# sourceMappingURL=edit-event.js.map
+//# sourceMappingURL=create-song.js.map
 
 /***/ })
 

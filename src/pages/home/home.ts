@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { ModalController } from 'ionic-angular';
 import { Observable } from 'rxjs/Observable';
 import { AngularFireDatabase } from 'angularfire2/database';
+import { AuthProvider } from './../../providers/auth/auth';
 
 @Component({
   selector: 'page-home',
@@ -13,9 +14,9 @@ export class HomePage {
   basePath = 'songs';
 
   constructor(private modalCtrl: ModalController,
+              private auth: AuthProvider,
               private db: AngularFireDatabase) {
-    const path = `${this.basePath}`;
-    this.songs = this.db.list(path).valueChanges();
+    this.songs = this.db.list(`${this.basePath}`).valueChanges();
   }
 
   createSong() {
@@ -49,8 +50,45 @@ export class HomePage {
   }
 
   deleteSong(song) {
-    const path = `${this.basePath}/${song.id}`;
-    this.db.object(path).remove()
+    this.db.object(`${this.basePath}/${song.id}`).remove()
       .catch(error => console.log(error));
   }
+
+
+//==========================================================
+//Shinichi : shinichi0719@hotmail.com
+//James Bykowy  : shin234@example.com
+//April Sora : test@example.com
+//Ann DeVito : test2@example.com
+//Kristie Muzyka : test3@example.com
+//Bryan Bock : test4@example.com
+//Jeff : test5@example.com
+//Audra Balion : test6@example.com
+  openModalLogin() {
+    let loginModel = this.modalCtrl.create('LoginPage', null, { cssClass: 'inset-modal' });
+    loginModel.onDidDismiss(data => {
+      if (data) {
+        console.log("HomePage::openModalLogin login");
+        window.location.reload();
+      }
+    });
+    loginModel.present();
+  }
+
+  openModalSignup() {
+    let signupModel = this.modalCtrl.create('SignupPage', null, { cssClass: 'inset-modal' });
+    signupModel.onDidDismiss(data => {
+      if (data) {
+        console.log("HomePage::openModalSignup signup");
+        window.location.reload();        
+      }
+    });
+    signupModel.present();
+  }
+
+  logout(): void {
+    this.auth.logout();
+    window.location.reload();    
+  }
+
 }

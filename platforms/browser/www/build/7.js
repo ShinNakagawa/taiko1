@@ -1,12 +1,12 @@
 webpackJsonp([7],{
 
-/***/ 615:
+/***/ 619:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "EditUserPageModule", function() { return EditUserPageModule; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__edit_user__ = __webpack_require__(624);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "CreateEventPageModule", function() { return CreateEventPageModule; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__create_event__ = __webpack_require__(631);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_ionic_angular__ = __webpack_require__(44);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -18,34 +18,34 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 
 
 
-var EditUserPageModule = (function () {
-    function EditUserPageModule() {
+var CreateEventPageModule = (function () {
+    function CreateEventPageModule() {
     }
-    EditUserPageModule = __decorate([
+    CreateEventPageModule = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_1__angular_core__["I" /* NgModule */])({
             declarations: [
-                __WEBPACK_IMPORTED_MODULE_0__edit_user__["a" /* EditUserPage */],
+                __WEBPACK_IMPORTED_MODULE_0__create_event__["a" /* CreateEventPage */],
             ],
             imports: [
-                __WEBPACK_IMPORTED_MODULE_2_ionic_angular__["e" /* IonicPageModule */].forChild(__WEBPACK_IMPORTED_MODULE_0__edit_user__["a" /* EditUserPage */]),
+                __WEBPACK_IMPORTED_MODULE_2_ionic_angular__["e" /* IonicPageModule */].forChild(__WEBPACK_IMPORTED_MODULE_0__create_event__["a" /* CreateEventPage */]),
             ],
             exports: [
-                __WEBPACK_IMPORTED_MODULE_0__edit_user__["a" /* EditUserPage */]
+                __WEBPACK_IMPORTED_MODULE_0__create_event__["a" /* CreateEventPage */]
             ]
         })
-    ], EditUserPageModule);
-    return EditUserPageModule;
+    ], CreateEventPageModule);
+    return CreateEventPageModule;
 }());
 
-//# sourceMappingURL=edit-user.module.js.map
+//# sourceMappingURL=create-event.module.js.map
 
 /***/ }),
 
-/***/ 624:
+/***/ 631:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return EditUserPage; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return CreateEventPage; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(44);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__angular_forms__ = __webpack_require__(25);
@@ -63,46 +63,57 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 
 
 
-var EditUserPage = (function () {
-    function EditUserPage(viewCtrl, navParams, fb, db) {
+var CreateEventPage = (function () {
+    function CreateEventPage(viewCtrl, fb, navParams, db) {
         this.viewCtrl = viewCtrl;
-        this.navParams = navParams;
         this.fb = fb;
+        this.navParams = navParams;
         this.db = db;
-        this.basePath = 'users';
-        this.user = navParams.get('user');
-        this.editUserForm = this.fb.group({
-            'displayName': ['', __WEBPACK_IMPORTED_MODULE_2__angular_forms__["f" /* Validators */].compose([__WEBPACK_IMPORTED_MODULE_2__angular_forms__["f" /* Validators */].required, __WEBPACK_IMPORTED_MODULE_2__angular_forms__["f" /* Validators */].minLength(1)])],
-            'imageUrl': ['', __WEBPACK_IMPORTED_MODULE_2__angular_forms__["f" /* Validators */].compose([__WEBPACK_IMPORTED_MODULE_2__angular_forms__["f" /* Validators */].required, __WEBPACK_IMPORTED_MODULE_2__angular_forms__["f" /* Validators */].minLength(1)])]
+        this.basePath = 'events';
+        this.yearPay = navParams.get('yearPay');
+        this.eventCreateForm = this.fb.group({
+            'name': ['', __WEBPACK_IMPORTED_MODULE_2__angular_forms__["f" /* Validators */].compose([__WEBPACK_IMPORTED_MODULE_2__angular_forms__["f" /* Validators */].required, __WEBPACK_IMPORTED_MODULE_2__angular_forms__["f" /* Validators */].minLength(1)])],
+            'imageUrl': ['', __WEBPACK_IMPORTED_MODULE_2__angular_forms__["f" /* Validators */].compose([__WEBPACK_IMPORTED_MODULE_2__angular_forms__["f" /* Validators */].required, __WEBPACK_IMPORTED_MODULE_2__angular_forms__["f" /* Validators */].minLength(1)])],
+            'date': ['', __WEBPACK_IMPORTED_MODULE_2__angular_forms__["f" /* Validators */].compose([__WEBPACK_IMPORTED_MODULE_2__angular_forms__["f" /* Validators */].required, __WEBPACK_IMPORTED_MODULE_2__angular_forms__["f" /* Validators */].minLength(1)])],
+            'description': ['', __WEBPACK_IMPORTED_MODULE_2__angular_forms__["f" /* Validators */].compose([__WEBPACK_IMPORTED_MODULE_2__angular_forms__["f" /* Validators */].required, __WEBPACK_IMPORTED_MODULE_2__angular_forms__["f" /* Validators */].minLength(1)])]
         });
-        this.displayName = this.editUserForm.controls['displayName'];
-        this.imageUrl = this.editUserForm.controls['imageUrl'];
+        this.name = this.eventCreateForm.controls['name'];
+        this.imageUrl = this.eventCreateForm.controls['imageUrl'];
+        this.date = this.eventCreateForm.controls['date'];
+        this.description = this.eventCreateForm.controls['description'];
     }
-    EditUserPage.prototype.dismiss = function () {
+    CreateEventPage.prototype.dismiss = function () {
         this.viewCtrl.dismiss();
     };
-    EditUserPage.prototype.edit = function () {
+    CreateEventPage.prototype.create = function () {
         var data = {
-            displayName: this.displayName.value,
-            imageUrl: this.imageUrl.value
+            name: this.name.value,
+            imageUrl: this.imageUrl.value,
+            date: this.date.value,
+            description: this.description.value
         };
-        this.db.object(this.basePath + "/" + this.user.uid).update(data)
+        var key = this.db.list(this.basePath + "/" + this.yearPay + "/").push(data).key;
+        //update id as key
+        var dataKey = {
+            id: key
+        };
+        this.db.object(this.basePath + "/" + this.yearPay + "/" + key).update(dataKey)
             .catch(function (error) { return console.log(error); });
-        this.viewCtrl.dismiss({ title: "updated a user" });
+        this.viewCtrl.dismiss({ title: "created an event" });
     };
-    EditUserPage = __decorate([
+    CreateEventPage = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
-            selector: 'page-edit-user',template:/*ion-inline-start:"E:\ionic\taiko1\src\pages\about\edit-user\edit-user.html"*/'<ion-content>\n  <h3>Edit a User</h3>\n  <form [formGroup]="editUserForm" (ngSubmit)="submit()" novalidate>      \n    <ion-row>\n      <ion-item>\n        <ion-label for="displayName"></ion-label>\n        <ion-input type="displayName" value="{{user.displayName}}" placeholder="Display Name" formControlName="displayName"></ion-input>\n      </ion-item>\n      <ion-item>\n        <ion-label for="imageUrl"></ion-label>\n        <ion-select formControlName="imageUrl">\n          <ion-option value="assets/img/speakers/bear.jpg">Bear</ion-option>\n          <ion-option value="assets/img/speakers/cheetah.jpg">Cheetah</ion-option>\n          <ion-option value="assets/img/speakers/duck.jpg">Duck</ion-option>\n          <ion-option value="assets/img/speakers/eagle.jpg">Eagle</ion-option>\n          <ion-option value="assets/img/speakers/elephant.jpg">Elephant</ion-option>\n          <ion-option value="assets/img/speakers/giraffe.jpg">Giraffe</ion-option>\n          <ion-option value="assets/img/speakers/iguana.jpg">Iguana</ion-option>\n          <ion-option value="assets/img/speakers/lion.jpg">Lion</ion-option>\n          <ion-option value="assets/img/speakers/mouse.jpg">Mouse</ion-option>\n          <ion-option value="assets/img/speakers/puppy.jpg">Puppy</ion-option>\n          <ion-option value="assets/img/speakers/rabbit.jpg">Rabbit</ion-option>\n          <ion-option value="assets/img/speakers/turtle.jpg">Turtle</ion-option>\n        </ion-select>\n      </ion-item>\n    </ion-row>\n  </form>\n  <ion-row no-padding>\n    <ion-col>\n      <button ion-button block (click)="edit()">\n        Edit\n      </button>\n    </ion-col>\n    <ion-col text-right>\n      <button ion-button block color="danger" (click)="dismiss()">\n        Cancel\n      </button>\n    </ion-col>\n  </ion-row>\n</ion-content>\n'/*ion-inline-end:"E:\ionic\taiko1\src\pages\about\edit-user\edit-user.html"*/
+            selector: 'page-create-event',template:/*ion-inline-start:"E:\ionic\taiko1\src\pages\contact\create-event\create-event.html"*/'<ion-content>\n  <h3>Create an event</h3>\n  <form [formGroup]="eventCreateForm" (ngSubmit)="submit()" novalidate>      \n    <ion-row>\n      <ion-item>\n        <ion-label for="name"></ion-label>\n        <ion-input type="name" value="" placeholder="Name" formControlName="name"></ion-input>\n      </ion-item>\n      <ion-item>\n        <ion-label for="imageUrl"></ion-label>\n        <ion-input type="imageUrl" value="" placeholder="ImageUrl" formControlName="imageUrl"></ion-input>\n      </ion-item>\n      <ion-item>\n        <ion-label for="date"></ion-label>\n        <ion-datetime displayFormat="MMM DD YYYY" max="2050" formControlName="date"></ion-datetime>\n      </ion-item>\n      <ion-item>\n        <ion-label for="description"></ion-label>\n        <ion-input type="description" value="" placeholder="Description" formControlName="description"></ion-input>\n      </ion-item>  \n    </ion-row>\n  </form>\n  <ion-row no-padding>\n    <ion-col>\n      <button ion-button block (click)="create()">\n        Create\n      </button>\n    </ion-col>\n    <ion-col text-right>\n      <button ion-button block color="danger" (click)="dismiss()">\n        Cancel\n      </button>\n    </ion-col>\n  </ion-row>\n</ion-content>\n'/*ion-inline-end:"E:\ionic\taiko1\src\pages\contact\create-event\create-event.html"*/
         }),
         __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["k" /* ViewController */],
-            __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["i" /* NavParams */],
             __WEBPACK_IMPORTED_MODULE_2__angular_forms__["a" /* FormBuilder */],
+            __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["i" /* NavParams */],
             __WEBPACK_IMPORTED_MODULE_3_angularfire2_database__["a" /* AngularFireDatabase */]])
-    ], EditUserPage);
-    return EditUserPage;
+    ], CreateEventPage);
+    return CreateEventPage;
 }());
 
-//# sourceMappingURL=edit-user.js.map
+//# sourceMappingURL=create-event.js.map
 
 /***/ })
 

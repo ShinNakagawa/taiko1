@@ -2,7 +2,6 @@ import { Component } from '@angular/core';
 import { IonicPage, ViewController, AlertController, NavParams } from 'ionic-angular';
 import { Observable } from 'rxjs/Observable';
 import { AngularFireDatabase } from 'angularfire2/database';
-import { Pay } from '../../../models/pay.model';
 import moment from 'moment';
 
 @IonicPage()
@@ -12,29 +11,27 @@ import moment from 'moment';
 })
 export class PayPage {
   months: Observable<any[]>;
-  yearPay;
   payPath = 'pays';
-  userPath = 'users';
   user: any;
-  payInfo: Array<Pay>;
+  yearPay;
 
   constructor(private db: AngularFireDatabase,
               public viewCtrl:ViewController,
               public navParams: NavParams,
-              private alertCtrl: AlertController
-            ) {
+              private alertCtrl: AlertController) {
     this.user = navParams.get('user');
-    this.yearPay = moment(new Date()).format('YYYY');
-    this.loadingData();
+    this.yearPay = navParams.get('yearPay');
+    this.months = this.db.list(`${this.payPath}/${this.yearPay}/`, ref => ref.orderByChild('userid').equalTo(this.user.uid)).valueChanges();
   }
 
   loadingData() {
-    this.months = this.db.list(`${this.payPath}/${this.yearPay}/`, ref => ref.orderByChild('userid').equalTo(this.user.uid)).valueChanges();
+    let data: Observable<any[]>;
+    data = this.db.list(`${this.payPath}/${this.yearPay}/`, ref => ref.orderByChild('userid').equalTo(this.user.uid)).valueChanges();
+    this.months = data;
     this.months.subscribe(res => {
-      if ( res.length < 1 ) {
-        this.addList();
-      }
+      console.log('res.length = ', res.length);
     })
+    console.log('year=', this.yearPay);
   }
 
   dismiss() {
@@ -70,29 +67,6 @@ export class PayPage {
       });
       alert.present();
     }
-  }
-
-  addList(): void {
-    for (let i = 1; i <= 12; i++) {
-      const data = {
-        userid: this.user.uid,
-        month: i,
-        date: ''
-      };
-      let key = this.db.list(`${this.payPath}/${this.yearPay}/`).push(data).key;
-      //update id as key
-      const dataKey = {
-        id: key
-      };
-      this.db.object(`${this.payPath}/${this.yearPay}/${key}/`).update(dataKey)
-        .catch(error => console.log(error));
-    }
-    let alert = this.alertCtrl.create({
-      title: 'pay',
-      message: 'add pay data:',
-      buttons: ['OK']
-    });
-    alert.present();
   }
 
 }
