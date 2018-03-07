@@ -1,12 +1,12 @@
 webpackJsonp([1],{
 
-/***/ 623:
+/***/ 625:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "SignupPageModule", function() { return SignupPageModule; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__signup__ = __webpack_require__(635);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__signup__ = __webpack_require__(637);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_ionic_angular__ = __webpack_require__(44);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -41,7 +41,7 @@ var SignupPageModule = (function () {
 
 /***/ }),
 
-/***/ 635:
+/***/ 637:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -71,16 +71,21 @@ var SignupPage = (function () {
         this.signupForm = this.fb.group({
             'email': ['', __WEBPACK_IMPORTED_MODULE_2__angular_forms__["f" /* Validators */].compose([__WEBPACK_IMPORTED_MODULE_2__angular_forms__["f" /* Validators */].required, __WEBPACK_IMPORTED_MODULE_2__angular_forms__["f" /* Validators */].pattern(/[a-z0-9!#$%&amp;'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&amp;'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/)])],
             'password': ['', __WEBPACK_IMPORTED_MODULE_2__angular_forms__["f" /* Validators */].compose([__WEBPACK_IMPORTED_MODULE_2__angular_forms__["f" /* Validators */].required, __WEBPACK_IMPORTED_MODULE_2__angular_forms__["f" /* Validators */].minLength(1)])],
-            'username': ['', __WEBPACK_IMPORTED_MODULE_2__angular_forms__["f" /* Validators */].compose([__WEBPACK_IMPORTED_MODULE_2__angular_forms__["f" /* Validators */].required, __WEBPACK_IMPORTED_MODULE_2__angular_forms__["f" /* Validators */].minLength(1)])]
+            'username': ['', __WEBPACK_IMPORTED_MODULE_2__angular_forms__["f" /* Validators */].compose([__WEBPACK_IMPORTED_MODULE_2__angular_forms__["f" /* Validators */].required, __WEBPACK_IMPORTED_MODULE_2__angular_forms__["f" /* Validators */].minLength(1)])],
+            'imageUrl': ['', __WEBPACK_IMPORTED_MODULE_2__angular_forms__["f" /* Validators */].compose([__WEBPACK_IMPORTED_MODULE_2__angular_forms__["f" /* Validators */].required, __WEBPACK_IMPORTED_MODULE_2__angular_forms__["f" /* Validators */].minLength(1)])]
         });
         this.email = this.signupForm.controls['email'];
         this.password = this.signupForm.controls['password'];
         this.username = this.signupForm.controls['username'];
+        this.imageUrl = this.signupForm.controls['imageUrl'];
     }
     SignupPage.prototype.signup = function () {
         var _this = this;
         if (this.signupForm.valid) {
-            var credentials = ({ email: this.email.value, password: this.password.value, username: this.username.value });
+            var credentials = ({ email: this.email.value,
+                password: this.password.value,
+                username: this.username.value,
+                imageUrl: this.imageUrl.value });
             this.auth.registerUser(credentials).subscribe(function (registerData) {
                 //console.log(registerData);
                 //alert('User is registered and logged in.');
@@ -100,7 +105,7 @@ var SignupPage = (function () {
     };
     SignupPage = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
-            selector: 'page-signup',template:/*ion-inline-start:"E:\ionic\taiko1\src\pages\home\signup\signup.html"*/'<ion-content>\n  <form [formGroup]="signupForm" (ngSubmit)="submit()" novalidate>      \n    <ion-row>\n      <ion-item>\n        <ion-label for="email"></ion-label>\n          <ion-input type="email" value="" placeholder="Email" formControlName="email"></ion-input>\n        </ion-item>\n    </ion-row>\n    <ion-row>\n      <ion-item>\n        <ion-label for="password"></ion-label>\n        <ion-input type="password" placeholder="Password" formControlName="password"></ion-input>\n      </ion-item>\n    </ion-row>\n    <ion-row>\n      <ion-item>\n        <ion-label for="username"></ion-label>\n        <ion-input type="username" placeholder="Username" formControlName="username"></ion-input>\n      </ion-item>\n    </ion-row>  \n  </form>\n  <ion-row no-padding>\n    <ion-col>\n      <button ion-button block (click)="signup()">\n        Sign up\n      </button>\n    </ion-col>\n    <ion-col text-right>\n      <button ion-button block color="danger" (click)="dismiss()">\n        Cancel\n      </button>\n    </ion-col>\n  </ion-row>\n</ion-content>\n'/*ion-inline-end:"E:\ionic\taiko1\src\pages\home\signup\signup.html"*/
+            selector: 'page-signup',template:/*ion-inline-start:"E:\ionic\taiko1\src\pages\home\signup\signup.html"*/'<ion-content>\n  <form [formGroup]="signupForm" (ngSubmit)="submit()" novalidate>      \n    <ion-row>\n      <ion-item>\n        <ion-label for="email"></ion-label>\n          <ion-input type="email" value="" placeholder="Email" formControlName="email"></ion-input>\n        </ion-item>\n    </ion-row>\n    <ion-row>\n      <ion-item>\n        <ion-label for="password"></ion-label>\n        <ion-input type="password" placeholder="Password" formControlName="password"></ion-input>\n      </ion-item>\n    </ion-row>\n    <ion-row>\n      <ion-item>\n        <ion-label for="username"></ion-label>\n        <ion-input type="username" placeholder="Username" formControlName="username"></ion-input>\n      </ion-item>\n    </ion-row>\n    <ion-row>\n      <ion-item>\n        <ion-label for="imageUrl"></ion-label>\n        <ion-select formControlName="imageUrl">\n          <ion-option value="assets/img/speakers/bear.jpg">Bear</ion-option>\n          <ion-option value="assets/img/speakers/cheetah.jpg">Cheetah</ion-option>\n          <ion-option value="assets/img/speakers/duck.jpg">Duck</ion-option>\n          <ion-option value="assets/img/speakers/eagle.jpg">Eagle</ion-option>\n          <ion-option value="assets/img/speakers/elephant.jpg">Elephant</ion-option>\n          <ion-option value="assets/img/speakers/giraffe.jpg">Giraffe</ion-option>\n          <ion-option value="assets/img/speakers/iguana.jpg">Iguana</ion-option>\n          <ion-option value="assets/img/speakers/lion.jpg">Lion</ion-option>\n          <ion-option value="assets/img/speakers/mouse.jpg">Mouse</ion-option>\n          <ion-option value="assets/img/speakers/puppy.jpg">Puppy</ion-option>\n          <ion-option value="assets/img/speakers/rabbit.jpg">Rabbit</ion-option>\n          <ion-option value="assets/img/speakers/turtle.jpg">Turtle</ion-option>\n        </ion-select>\n      </ion-item>\n    </ion-row>\n  </form>\n  <ion-row no-padding>\n    <ion-col>\n      <button ion-button block (click)="signup()">\n        Sign up\n      </button>\n    </ion-col>\n    <ion-col text-right>\n      <button ion-button block color="danger" (click)="dismiss()">\n        Cancel\n      </button>\n    </ion-col>\n  </ion-row>\n</ion-content>\n'/*ion-inline-end:"E:\ionic\taiko1\src\pages\home\signup\signup.html"*/
         }),
         __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["k" /* ViewController */],
             __WEBPACK_IMPORTED_MODULE_2__angular_forms__["a" /* FormBuilder */],

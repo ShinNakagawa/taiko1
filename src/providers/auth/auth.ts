@@ -42,18 +42,19 @@ export class AuthProvider {
         observer.next(authData);
         this.authState = authData;
         const status = 'online';
-        this.setUserData(credentials.email, credentials.username, status, authData.uid);        
+        this.setUserData(credentials.email, credentials.username, credentials.imageUrl, status, authData.uid);        
       }).catch(error => {
         observer.error(error);
       });
     });
   }
 
-  setUserData(email: string, displayName: string, status: string, uid: string): void {
+  setUserData(email: string, displayName: string, imageUrl, status: string, uid: string): void {
     const path = `users/${this.currentUserId}`;
     const data = {
       email: email,
       displayName: displayName,
+      imageUrl: imageUrl,
       status: status,
       uid: uid
     };
@@ -67,7 +68,6 @@ export class AuthProvider {
     const data = {
       status: status
     };
-
     this.db.object(path).update(data)
       .catch(error => console.log(error));
   }

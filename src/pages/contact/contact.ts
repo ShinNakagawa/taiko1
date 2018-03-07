@@ -57,4 +57,8 @@ export class ContactPage {
     this.db.object(`${this.basePath}/${this.yearPay}/${item.id}`).remove()
       .catch(error => console.log(error));
   }
+
+  test() {
+    console.log('test');
+  }
 }

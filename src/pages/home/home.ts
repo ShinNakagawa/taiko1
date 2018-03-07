@@ -69,7 +69,7 @@ export class HomePage {
     loginModel.onDidDismiss(data => {
       if (data) {
         console.log("HomePage::openModalLogin login");
-        window.location.reload();
+        //window.location.reload();
       }
     });
     loginModel.present();
@@ -80,7 +80,7 @@ export class HomePage {
     signupModel.onDidDismiss(data => {
       if (data) {
         console.log("HomePage::openModalSignup signup");
-        window.location.reload();        
+        //window.location.reload();        
       }
     });
     signupModel.present();
@@ -88,7 +88,7 @@ export class HomePage {
 
   logout(): void {
     this.auth.logout();
-    window.location.reload();    
+    //window.location.reload();    
   }
 
 }

@@ -25,7 +25,7 @@ export class LoginPage {
   }
 
   login() {
-    //console.log('login() called from Login Pge [' + this.email.value + "][" + this.password.value + "]");
+    console.log('login() called from Login Pge [' + this.email.value + "][" + this.password.value + "]");
     this.auth.login(this.email.value, this.password.value).then(res =>{
       this.viewCtrl.dismiss({title: "login"});
     })

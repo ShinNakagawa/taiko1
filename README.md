@@ -114,34 +114,11 @@ ionic-conference-app/
 │    │    │    └── about.ts              * AboutPage code
 │    │    │    └── about.scss            * AboutPage stylesheet
 │    │    │
-│    │    ├── account/                   * Account page
-│    │    │    ├── account.html          * AccountPage template
-│    │    │    └── account.ts            * AccountPage code
-│    │    │    └── account.scss          * AccountPage stylesheet
-│    │    │
 │    │    │── login/                     * Login page
 │    │    │    ├── login.html            * LoginPage template
 │    │    │    └── login.ts              * LoginPage code
 │    │    │    └── login.scss            * LoginPage stylesheet
 │    │    │
-│    │    │── map/                       * Map tab page
-│    │    │    ├── map.html              * MapPage template
-│    │    │    └── map.ts                * MapPage code
-│    │    │    └── map.scss              * MapPage stylesheet
-│    │    │
-│    │    │── schedule/                  * Schedule tab page
-│    │    │    ├── schedule.html         * SchedulePage template
-│    │    │    └── schedule.ts           * SchedulePage code
-│    │    │    └── schedule.scss         * SchedulePage stylesheet
-│    │    │
-│    │    │── schedule-filter/            * Schedule Filter page
-│    │    │    ├── schedule-filter.html   * ScheduleFilterPage template
-│    │    │    └── schedule-filter.ts     * ScheduleFilterPage code
-│    │    │    └── schedule-filter.scss   * ScheduleFilterPage stylesheet
-│    │    │
-│    │    │── session-detail/            * Session Detail page
-│    │    │    ├── session-detail.html   * SessionDetailPage template
-│    │    │    └── session-detail.ts     * SessionDetailPage code
 │    │    │
 │    │    │── signup/                    * Signup page
 │    │    │    ├── signup.html           * SignupPage template
@@ -262,3 +239,39 @@ $ git commit -am "make it better"
 $ git push heroku master
 $ heroku ps:scale web=1
 ----------------------------------
+
+## Database Structure of Firebase
+
+```
+base-gallery/
+|
+├── events/               * Event Data
+│   ├── 2018              * 2018 events
+|   |   ├── user.uid
+|   |   |   └── name, date, description, id, imageUrl
+|   |   └── user.uid
+│   └── 2019              * 2019 events
+|
+├── pays/                 * Pay Data
+│   ├── 2018              * 2018 pays
+|   |   ├── user.uid
+|   |   |   └── month, date, id, userid
+|   |   └── user.uid
+│   └── 2019              * 2019 pays
+|
+├── songs/                * Song Data
+|    ├── id/
+|    |    ├── name, id, description, imageUrl, userid
+|    |    └── playListID, fullVideoID
+|    └── id/
+|
+├── uploads/              * Storage Data
+|    ├── id/
+|    |    └── name, id, progress, url
+|    └── id/
+|
+└── users/                * User Data
+     ├── id/
+     |    └── email, desplayName, imageUrl, status, uid
+     └── id/
+

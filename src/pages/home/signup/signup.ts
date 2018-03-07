@@ -13,6 +13,7 @@ export class SignupPage {
   email: AbstractControl;
   password: AbstractControl;
   username: AbstractControl;
+  imageUrl: AbstractControl;
   error: any;
   
   constructor(private viewCtrl: ViewController,
@@ -21,16 +22,21 @@ export class SignupPage {
       this.signupForm = this.fb.group({  
         'email': ['', Validators.compose([Validators.required, Validators.pattern(/[a-z0-9!#$%&amp;'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&amp;'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/)])],
         'password': ['', Validators.compose([Validators.required, Validators.minLength(1)])],
-        'username': ['', Validators.compose([Validators.required, Validators.minLength(1)])]
+        'username': ['', Validators.compose([Validators.required, Validators.minLength(1)])],
+        'imageUrl': ['', Validators.compose([Validators.required, Validators.minLength(1)])]
       });
       this.email = this.signupForm.controls['email'];     
       this.password = this.signupForm.controls['password'];
       this.username = this.signupForm.controls['username'];
+      this.imageUrl = this.signupForm.controls['imageUrl'];  
     }
 
   signup() {
     if(this.signupForm.valid) {
-      var credentials = ({email: this.email.value, password: this.password.value, username: this.username.value});
+      var credentials = ({email: this.email.value,
+                          password: this.password.value,
+                          username: this.username.value,
+                          imageUrl: this.imageUrl.value});
       this.auth.registerUser(credentials).subscribe(registerData => {
           //console.log(registerData);
           //alert('User is registered and logged in.');
