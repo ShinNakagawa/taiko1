@@ -37,18 +37,18 @@ _Note: You may need to add “sudo” in front of any global commands to install
 
 ## Add by Shin
 1. install youtube-video-player
-$ ionic cordova plugin add cordova-plugin-youtube-video-player
-$ npm install --save @ionic-native/youtube-video-player
+* Run `ionic cordova plugin add cordova-plugin-youtube-video-player`
+* Run `npm install --save @ionic-native/youtube-video-player`
 
 * add the following into config.xml	
-* <preference name="YouTubeDataApiKey" value="[YOUR YOUTUBE API]" />
+* `<preference name="YouTubeDataApiKey" value="[YOUR YOUTUBE API]" />`
 
 2. add firebase
-$ npm install --save firebase angularfire2
-$ npm install promise-polyfill --save-exact
+* Run `npm install --save firebase angularfire2`
+* Run `npm install promise-polyfill --save-exact`
 
 3. Parse, validate, manipulate, and display dates and times in JavaScript.
-$ npm install --save moment
+* Run `npm install --save moment`
 
 
 ## Publish to Heroku:
@@ -56,41 +56,40 @@ $ npm install --save moment
 1. Edit .gitignore file
 * remove the mentions of www/ so git picks it up
 * add these two lines so platforms browsers folder is picked up
-* --  platforms/*
-* --  !platforms/browser/
-* --  !platforms/browser/www
-* --  !platforms/browser/www/plugins
+* --  `platforms/*`
+* --  `!platforms/browser/`
+* --  `!platforms/browser/www`
+* --  `!platforms/browser/www/plugins`
 
 2. Run the followings to add these 3 libraries
-$ npm install --save connect
-$ npm install --save serve-static
-$ npm install express --save --save-exact
+* Run `npm install --save connect`
+* Run `npm install --save serve-static`
+* Run `npm install express --save --save-exact`
 
 3. Add ["start": "node web.js"] to your npm scripts in package.json
 * Add web.js to your project folder:
 
 4. Add platform browser and build.
-* Run Bash:
-$ ionic cordova platform add browser
-$ ionic cordova build browser
+* Run `ionic cordova platform add browser`
+* Run `ionic cordova build browser`
 
 5. Run Bash:
-$ heroku login
-$ heroku git:remote -a taiko1
-$ git init
-$ git add .
-$ git commit -am "make it better"
-$ git push heroku master
-$ heroku ps:scale web=1
+* Run `heroku login`
+* Run `heroku git:remote -a taiko1`
+* Run `git init`
+* Run `git add .`
+* Run `git commit -am "make it better"`
+* Run `git push heroku master`
+* Run `heroku ps:scale web=1`
 
 
 ## Publish to Git:
 
-$ git init
-$ git add README.md
-$ git commit -am "commit1"
-$ git remote add origin https://github.com/ShinNakagawa/taiko1.git
-$ git push -u origin master
+* Run `git init`
+* Run `git add README.md`
+* Run `git commit -am "commit1"`
+* Run `git remote add origin https://github.com/ShinNakagawa/taiko1.git`
+* Run `git push -u origin master`
 
 ## Database Structure of Firebase
 
