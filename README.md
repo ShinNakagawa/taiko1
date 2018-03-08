@@ -40,8 +40,7 @@ _Note: You may need to add “sudo” in front of any global commands to install
 * Run `ionic cordova plugin add cordova-plugin-youtube-video-player`
 * Run `npm install --save @ionic-native/youtube-video-player`
 
-* add the following into config.xml	
-* `<preference name="YouTubeDataApiKey" value="[YOUR YOUTUBE API]" />`
+* add this into config.xml:	`<preference name="YouTubeDataApiKey" value="[YOUR YOUTUBE API]" />`
 
 2. add firebase
 * Run `npm install --save firebase angularfire2`
@@ -54,7 +53,7 @@ _Note: You may need to add “sudo” in front of any global commands to install
 ## Publish to Heroku:
 
 1. Edit .gitignore file
-* remove the mentions of www/ so git picks it up
+* remove the mentions of `www/` so git picks it up
 * add these two lines so platforms browsers folder is picked up
 * --  `platforms/*`
 * --  `!platforms/browser/`
