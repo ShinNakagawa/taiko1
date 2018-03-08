@@ -73,8 +73,9 @@ $ npm install promise-polyfill --save-exact
 3. Parse, validate, manipulate, and display dates and times in JavaScript.
 $ npm install --save moment
 
-===============================================
-Publish to Heroku:
+
+## Publish to Heroku:
+
 1. Edit .gitignore file
 * remove the mentions of www/ so git picks it up
 * add these two lines so platforms browsers folder is picked up
@@ -96,7 +97,7 @@ $ npm install express --save --save-exact
 $ ionic cordova platform add browser
 $ ionic cordova build browser
 
-Run Bash:
+5. Run Bash:
 $ heroku login
 $ heroku git:remote -a taiko1
 $ git init
@@ -105,8 +106,9 @@ $ git commit -am "make it better"
 $ git push heroku master
 $ heroku ps:scale web=1
 
-===============================================
-Publish to Git:
+
+## Publish to Git:
+
 $ git init
 $ git add README.md
 $ git commit -am "commit1"
