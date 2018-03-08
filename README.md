@@ -5,9 +5,9 @@ This is an Ionic App with TapeScript for a taiko Japanese drum club. It is still
 
 ## Table of Contents
  - [Getting Started](#getting-started)
- - [Use Cases](#use-cases)
  - [App Preview](#app-preview)
- - [File Structure of App](#file-structure-of-app)
+ - [Add by Shin](#add-by-shin)
+ - [Database Structure of Firebase](#database-structure-of-firebase)
 
 
 ## Getting Started
@@ -20,28 +20,6 @@ This is an Ionic App with TapeScript for a taiko Japanese drum club. It is still
 * Profit. :tada:
 
 _Note: You may need to add “sudo” in front of any global commands to install the utilities._
-
-
-## Use Cases
-
-* Action Sheet - [ [template](https://github.com/ionic-team/ionic-conference-app/blob/master/src/pages/speaker-list/speaker-list.html) | [code](https://github.com/ionic-team/ionic-conference-app/blob/master/src/pages/speaker-list/speaker-list.ts) ]
-* Alert - [ [code](https://github.com/ionic-team/ionic-conference-app/blob/master/src/pages/schedule/schedule.ts) ]
-* Cards - [ [template](https://github.com/ionic-team/ionic-conference-app/blob/master/src/pages/speaker-list/speaker-list.html) ]
-* Datetime - [ [template](https://github.com/ionic-team/ionic-conference-app/blob/master/src/pages/about/about.html) ]
-* Grid - [ [template](https://github.com/ionic-team/ionic-conference-app/blob/master/src/pages/login/login.html) ]
-* Inputs - [ [template](https://github.com/ionic-team/ionic-conference-app/blob/master/src/pages/login/login.html) ]
-* Items (Sliding) - [ [template](https://github.com/ionic-team/ionic-conference-app/blob/master/src/pages/schedule/schedule.html) | [code](https://github.com/ionic-team/ionic-conference-app/blob/master/src/pages/schedule/schedule.ts) ]
-* Menu - [ [template](https://github.com/ionic-team/ionic-conference-app/blob/master/src/app/app.template.html) |
-[code](https://github.com/ionic-team/ionic-conference-app/blob/master/src/app/app.component.ts) ]
-* Modal - [ [template](https://github.com/ionic-team/ionic-conference-app/blob/master/src/pages/schedule-filter/schedule-filter.html) | [code](https://github.com/ionic-team/ionic-conference-app/blob/master/src/pages/schedule/schedule.ts) ]
-* Searchbar - [ [template](https://github.com/ionic-team/ionic-conference-app/blob/master/src/pages/schedule/schedule.html) | [code](https://github.com/ionic-team/ionic-conference-app/blob/master/src/pages/schedule/schedule.ts) ]
-* Segment - [ [template](https://github.com/ionic-team/ionic-conference-app/blob/master/src/pages/schedule/schedule.html) | [code](https://github.com/ionic-team/ionic-conference-app/blob/master/src/pages/schedule/schedule.ts) ]
-* Slides - [ [template](https://github.com/ionic-team/ionic-conference-app/blob/master/src/pages/tutorial/tutorial.html) |
-* Sticky headers - [ [template](https://github.com/ionic-team/ionic-conference-app/blob/master/src/pages/schedule/schedule.html) ]
-* Tabs - [ [template](https://github.com/ionic-team/ionic-conference-app/blob/master/src/pages/tabs/tabs.html) | [code](https://github.com/ionic-team/ionic-conference-app/blob/master/src/pages/tabs/tabs.ts) ]
-* Toggle - [ [template](https://github.com/ionic-team/ionic-conference-app/blob/master/src/pages/schedule-filter/schedule-filter.html) ]
-[code](https://github.com/ionic-team/ionic-conference-app/blob/master/src/pages/tutorial/tutorial.ts) ]
-* Using Angular HTTP for JSON - [ [code](https://github.com/ionic-team/ionic-conference-app/blob/master/src/providers/conference-data.ts) | [usage](https://github.com/ionic-team/ionic-conference-app/blob/master/src/pages/schedule/schedule.ts) ]
 
 
 ## App Preview
@@ -58,13 +36,12 @@ _Note: You may need to add “sudo” in front of any global commands to install
 
 
 ## Add by Shin
-1. youtube player
-install youtube-video-player
+1. install youtube-video-player
 $ ionic cordova plugin add cordova-plugin-youtube-video-player
 $ npm install --save @ionic-native/youtube-video-player
 
-add the following into config.xml	
-<preference name="YouTubeDataApiKey" value="[YOUR YOUTUBE API]" />
+* add the following into config.xml	
+* <preference name="YouTubeDataApiKey" value="[YOUR YOUTUBE API]" />
 
 2. add firebase
 $ npm install --save firebase angularfire2
@@ -79,10 +56,10 @@ $ npm install --save moment
 1. Edit .gitignore file
 * remove the mentions of www/ so git picks it up
 * add these two lines so platforms browsers folder is picked up
-*   platforms/*
-*   !platforms/browser/
-*   !platforms/browser/www
-*   !platforms/browser/www/plugins
+* --  platforms/*
+* --  !platforms/browser/
+* --  !platforms/browser/www
+* --  !platforms/browser/www/plugins
 
 2. Run the followings to add these 3 libraries
 $ npm install --save connect
