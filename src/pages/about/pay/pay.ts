@@ -1,8 +1,9 @@
 import { Component } from '@angular/core';
 import { IonicPage, ViewController, AlertController, NavParams } from 'ionic-angular';
-import { Observable } from 'rxjs/Observable';
 import { AngularFireDatabase } from 'angularfire2/database';
 import moment from 'moment';
+import { Pay } from '../../../models/pay.model';
+import { Monthly } from '../../../models/monthly.model';
 
 @IonicPage()
 @Component({
@@ -10,7 +11,8 @@ import moment from 'moment';
   templateUrl: 'pay.html'
 })
 export class PayPage {
-  months: Observable<any[]>;
+  months: Monthly[] = [];
+  pay: Pay = null;
   payPath = 'pays';
   user: any;
   yearPay;
@@ -21,17 +23,14 @@ export class PayPage {
               private alertCtrl: AlertController) {
     this.user = navParams.get('user');
     this.yearPay = navParams.get('yearPay');
-    this.months = this.db.list(`${this.payPath}/${this.yearPay}/`, ref => ref.orderByChild('userid').equalTo(this.user.uid)).valueChanges();
-  }
-
-  loadingData() {
-    let data: Observable<any[]>;
-    data = this.db.list(`${this.payPath}/${this.yearPay}/`, ref => ref.orderByChild('userid').equalTo(this.user.uid)).valueChanges();
-    this.months = data;
-    this.months.subscribe(res => {
-      console.log('res.length = ', res.length);
+    let pays = this.db.list(`${this.payPath}/${this.yearPay}/`, ref => ref.orderByChild('userid').equalTo(this.user.uid)).valueChanges();
+    pays.subscribe(res => {
+      res.forEach(rs1 => {
+        this.pay = rs1;
+        this.months = this.pay.monthly;
+      })
     })
-    console.log('year=', this.yearPay);
+
   }
 
   dismiss() {
@@ -39,13 +38,14 @@ export class PayPage {
   }
 
   clickStar(item): void {
+    console.log('item=', item)
     const date = moment(new Date()).format('MMM Do YYYY');
     if (item.date !== '') {
       //delete payment record
       const data = {
         date: ''
       };
-      this.db.object(`${this.payPath}/${this.yearPay}/${item.id}/`).update(data)
+      this.db.object(`${this.payPath}/${this.yearPay}/${this.pay.id}/monthly/${item.index}`).update(data)
         .catch(error => console.log(error));
       let alert = this.alertCtrl.create({
         title: 'pay',
@@ -58,7 +58,7 @@ export class PayPage {
       const data = {
         date: date
       };
-      this.db.object(`${this.payPath}/${this.yearPay}/${item.id}/`).update(data)
+      this.db.object(`${this.payPath}/${this.yearPay}/${this.pay.id}/monthly/${item.index}`).update(data)
         .catch(error => console.log(error));
       let alert = this.alertCtrl.create({
         title: 'pay',

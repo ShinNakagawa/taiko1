@@ -5,4 +5,6 @@ export class User {
     displayName?: string;
     password?: string;
     status?: string;
+    count?: number;
+    imageUrl?: string;
 }

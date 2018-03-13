@@ -1,7 +1,8 @@
+import { Monthly } from '../models/monthly.model';
 export class Pay {
   id?: string;
   userid?: string;
   month?: number;
-  year?: string;
   date?: string; 
+  monthly?: Array<Monthly>; 
 }

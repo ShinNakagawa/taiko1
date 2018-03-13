@@ -5,21 +5,22 @@
   </ion-header>
   
   <ion-content>
-    <!-- <ion-item>
+    <ion-item>
       <ion-icon name="calendar" item-start></ion-icon>
       <ion-label>Year</ion-label>
       <ion-datetime displayFormat="YYYY" max="2050" [(ngModel)]="yearPay"></ion-datetime>
     </ion-item>
-    <button ion-button (click)="newYear()">New Year</button> -->
+    <button ion-button (click)="newYear()">New Year</button>
       
 
     <ion-list>
-      <ion-item-sliding *ngFor="let user of users | async">
+      <ion-item-sliding *ngFor="let user of users">
         <button ion-item (click)="userTapped($event, user)">
           <ion-avatar item-start>
             <img *ngIf="user.imageUrl" [src]="user.imageUrl" />
           </ion-avatar>
           <h2>{{user.displayName}}</h2>
+          <ion-note item-end>{{user.count}}/12</ion-note>
         </button>
         <ion-item-options>
           <button ion-button clear small color="secondary" icon-left (click)="userEdit(user)">

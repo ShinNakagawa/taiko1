@@ -1,6 +1,6 @@
 webpackJsonp([9],{
 
-/***/ 616:
+/***/ 617:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -8,7 +8,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "NewYearPageModule", function() { return NewYearPageModule; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(44);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__newyear__ = __webpack_require__(628);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__newyear__ = __webpack_require__(629);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -41,7 +41,7 @@ var NewYearPageModule = (function () {
 
 /***/ }),
 
-/***/ 628:
+/***/ 629:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -77,22 +77,22 @@ var NewYearPage = (function () {
     };
     NewYearPage.prototype.addPayList = function () {
         var _this = this;
-        //add Pay data for a new year
+        var monthly = [];
+        for (var i = 0; i < 12; i++) {
+            monthly.push({ date: '', index: i });
+        }
         this.users.subscribe(function (res) {
             res.forEach(function (user) {
-                for (var i = 1; i <= 12; i++) {
-                    var data = {
-                        userid: user.uid,
-                        month: i,
-                        date: ''
-                    };
-                    var key = _this.db.list(_this.payPath + "/" + _this.yearPay + "/").push(data).key;
-                    var dataKey = {
-                        id: key
-                    };
-                    _this.db.object(_this.payPath + "/" + _this.yearPay + "/" + key + "/").update(dataKey)
-                        .catch(function (error) { return console.log(error); });
-                }
+                var data = {
+                    userid: user.uid,
+                    monthly: monthly
+                };
+                var key = _this.db.list(_this.payPath + "/" + _this.yearPay + "/").push(data).key;
+                var dataKey = {
+                    id: key
+                };
+                _this.db.object(_this.payPath + "/" + _this.yearPay + "/" + key + "/").update(dataKey)
+                    .catch(function (error) { return console.log(error); });
             });
         });
         var alert = this.alertCtrl.create();

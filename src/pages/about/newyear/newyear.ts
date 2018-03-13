@@ -27,24 +27,25 @@ export class NewYearPage {
   }
 
   addPayList(): void {
-    //add Pay data for a new year
+    let monthly = [];
+    for (let i = 0; i < 12; i++) {
+      monthly.push({date: '', index: i});
+    }
     this.users.subscribe(res => {
       res.forEach(user => {
-        for (let i = 1; i <= 12; i++) {
-          const data = {
-            userid: user.uid,
-            month: i,
-            date: ''
-          };
-          let key = this.db.list(`${this.payPath}/${this.yearPay}/`).push(data).key;
-          const dataKey = {
-            id: key
-          };
-          this.db.object(`${this.payPath}/${this.yearPay}/${key}/`).update(dataKey)
-            .catch(error => console.log(error));
-        }
+        const data = {
+          userid: user.uid,
+          monthly: monthly
+        };
+        let key = this.db.list(`${this.payPath}/${this.yearPay}/`).push(data).key;
+        const dataKey = {
+          id: key
+        };
+        this.db.object(`${this.payPath}/${this.yearPay}/${key}/`).update(dataKey)
+          .catch(error => console.log(error));
       })
     })
+
     let alert = this.alertCtrl.create();
     alert.setTitle('Add data');
     alert.setMessage('Add pat list data');

@@ -273,39 +273,39 @@ webpackEmptyAsyncContext.id = 160;
 
 var map = {
 	"../pages/about/edit-user/edit-user.module": [
-		615,
+		616,
 		10
 	],
 	"../pages/about/newyear/newyear.module": [
-		616,
+		617,
 		9
 	],
 	"../pages/about/pay/pay.module": [
-		617,
+		618,
 		8
 	],
 	"../pages/contact/create-event/create-event.module": [
-		618,
+		619,
 		7
 	],
 	"../pages/contact/edit-event/edit-event.module": [
-		619,
+		620,
 		6
 	],
 	"../pages/contact/event/event.module": [
-		620,
+		621,
 		5
 	],
 	"../pages/home/create-song/create-song.module": [
-		621,
+		622,
 		4
 	],
 	"../pages/home/edit-song/edit-song.module": [
-		622,
+		623,
 		3
 	],
 	"../pages/home/login/login.module": [
-		623,
+		624,
 		2
 	],
 	"../pages/home/signup/signup.module": [
@@ -313,11 +313,11 @@ var map = {
 		1
 	],
 	"../pages/home/song/song.module": [
-		624,
+		626,
 		0
 	],
 	"../pages/storage/storage.module": [
-		626,
+		627,
 		11
 	]
 };
@@ -390,6 +390,7 @@ var TabsPage = (function () {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_angularfire2_database__ = __webpack_require__(45);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_moment__ = __webpack_require__(1);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_moment___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_moment__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__models_monthly_model__ = __webpack_require__(613);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -403,14 +404,48 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 
 
 
+
 var AboutPage = (function () {
     function AboutPage(db, modalCtrl) {
+        var _this = this;
         this.db = db;
         this.modalCtrl = modalCtrl;
         this.userPath = 'users';
         this.payPath = 'pays';
-        this.users = this.db.list(this.userPath + "/").valueChanges();
         this.yearPay = __WEBPACK_IMPORTED_MODULE_3_moment___default()(new Date()).format('YYYY');
+        var users = this.db.list(this.userPath + "/").valueChanges();
+        users.subscribe(function (res) {
+            _this.users = [];
+            res.forEach(function (rs) {
+                var user = rs;
+                _this.users.push({
+                    uid: user.uid,
+                    email: user.email,
+                    displayName: user.displayName,
+                    imageUrl: user.imageUrl,
+                    count: 0
+                });
+            });
+        });
+        var pays = this.db.list(this.payPath + "/" + this.yearPay + "/").valueChanges();
+        pays.subscribe(function (res) {
+            res.forEach(function (rs1) {
+                var count = 0;
+                var pay = rs1;
+                Object.keys(pay.monthly).map(function (index) {
+                    var monthly = new __WEBPACK_IMPORTED_MODULE_4__models_monthly_model__["a" /* Monthly */];
+                    monthly = pay.monthly[index];
+                    if (monthly.date !== '') {
+                        count++;
+                    }
+                });
+                //console.log('user=', pay.userid, ', count=', count);
+                var check = _this.users.filter(function (item) { return item.uid === pay.userid; });
+                if (check.length > 0) {
+                    check[0].count = count;
+                }
+            });
+        });
     }
     AboutPage.prototype.userTapped = function (event, user) {
         var payModal = this.modalCtrl.create('PayPage', { user: user, yearPay: this.yearPay }, { cssClass: 'inset-modal' });
@@ -448,7 +483,7 @@ var AboutPage = (function () {
     };
     AboutPage = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
-            selector: 'page-about',template:/*ion-inline-start:"E:\ionic\taiko1\src\pages\about\about.html"*/'<ion-header>\n    <ion-navbar>\n      <ion-title>User List</ion-title>\n    </ion-navbar>\n  </ion-header>\n  \n  <ion-content>\n    <!-- <ion-item>\n      <ion-icon name="calendar" item-start></ion-icon>\n      <ion-label>Year</ion-label>\n      <ion-datetime displayFormat="YYYY" max="2050" [(ngModel)]="yearPay"></ion-datetime>\n    </ion-item>\n    <button ion-button (click)="newYear()">New Year</button> -->\n      \n\n    <ion-list>\n      <ion-item-sliding *ngFor="let user of users | async">\n        <button ion-item (click)="userTapped($event, user)">\n          <ion-avatar item-start>\n            <img *ngIf="user.imageUrl" [src]="user.imageUrl" />\n          </ion-avatar>\n          <h2>{{user.displayName}}</h2>\n        </button>\n        <ion-item-options>\n          <button ion-button clear small color="secondary" icon-left (click)="userEdit(user)">\n            <ion-icon name=\'create\'></ion-icon>\n          </button>\n        </ion-item-options>\n      </ion-item-sliding>\n    </ion-list>\n  </ion-content>'/*ion-inline-end:"E:\ionic\taiko1\src\pages\about\about.html"*/
+            selector: 'page-about',template:/*ion-inline-start:"E:\ionic\taiko1\src\pages\about\about.html"*/'<ion-header>\n    <ion-navbar>\n      <ion-title>User List</ion-title>\n    </ion-navbar>\n  </ion-header>\n  \n  <ion-content>\n    <ion-item>\n      <ion-icon name="calendar" item-start></ion-icon>\n      <ion-label>Year</ion-label>\n      <ion-datetime displayFormat="YYYY" max="2050" [(ngModel)]="yearPay"></ion-datetime>\n    </ion-item>\n    <button ion-button (click)="newYear()">New Year</button>\n      \n\n    <ion-list>\n      <ion-item-sliding *ngFor="let user of users">\n        <button ion-item (click)="userTapped($event, user)">\n          <ion-avatar item-start>\n            <img *ngIf="user.imageUrl" [src]="user.imageUrl" />\n          </ion-avatar>\n          <h2>{{user.displayName}}</h2>\n          <ion-note item-end>{{user.count}}/12</ion-note>\n        </button>\n        <ion-item-options>\n          <button ion-button clear small color="secondary" icon-left (click)="userEdit(user)">\n            <ion-icon name=\'create\'></ion-icon>\n          </button>\n        </ion-item-options>\n      </ion-item-sliding>\n    </ion-list>\n  </ion-content>'/*ion-inline-end:"E:\ionic\taiko1\src\pages\about\about.html"*/
         }),
         __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_2_angularfire2_database__["a" /* AngularFireDatabase */],
             __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["g" /* ModalController */]])
@@ -743,9 +778,9 @@ Object(__WEBPACK_IMPORTED_MODULE_0__angular_platform_browser_dynamic__["a" /* pl
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_13_angularfire2_auth__ = __webpack_require__(374);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_14__providers_auth_auth__ = __webpack_require__(147);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_15__angular_http__ = __webpack_require__(376);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_16__ionic_native_youtube_video_player__ = __webpack_require__(613);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_16__ionic_native_youtube_video_player__ = __webpack_require__(614);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_17__providers_yt_yt__ = __webpack_require__(428);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_18__pipes_moment_moment__ = __webpack_require__(614);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_18__pipes_moment_moment__ = __webpack_require__(615);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -814,8 +849,8 @@ var AppModule = (function () {
                         { loadChildren: '../pages/home/create-song/create-song.module#CreateSongPageModule', name: 'CreateSongPage', segment: 'create-song', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/home/edit-song/edit-song.module#EditSongPageModule', name: 'EditSongPage', segment: 'edit-song', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/home/login/login.module#LoginPageModule', name: 'LoginPage', segment: 'login', priority: 'low', defaultHistory: [] },
-                        { loadChildren: '../pages/home/song/song.module#SongPageModule', name: 'SongPage', segment: 'song', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/home/signup/signup.module#SignupPageModule', name: 'SignupPage', segment: 'signup', priority: 'low', defaultHistory: [] },
+                        { loadChildren: '../pages/home/song/song.module#SongPageModule', name: 'SongPage', segment: 'song', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/storage/storage.module#StoragePageModule', name: 'StoragePage', segment: 'storage', priority: 'low', defaultHistory: [] }
                     ]
                 })
@@ -1179,7 +1214,22 @@ var MyApp = (function () {
 
 /***/ }),
 
-/***/ 614:
+/***/ 613:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return Monthly; });
+var Monthly = (function () {
+    function Monthly() {
+    }
+    return Monthly;
+}());
+
+//# sourceMappingURL=monthly.model.js.map
+
+/***/ }),
+
+/***/ 615:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
