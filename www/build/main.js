@@ -1,4 +1,4 @@
-webpackJsonp([12],{
+webpackJsonp([11],{
 
 /***/ 147:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
@@ -274,47 +274,47 @@ webpackEmptyAsyncContext.id = 160;
 var map = {
 	"../pages/about/edit-user/edit-user.module": [
 		616,
-		23
+		9
 	],
 	"../pages/about/pay/pay.module": [
-		618,
-		22
+		617,
+		8
 	],
 	"../pages/contact/create-event/create-event.module": [
-		619,
-		21
+		618,
+		7
 	],
 	"../pages/contact/edit-event/edit-event.module": [
-		620,
-		20
+		619,
+		6
 	],
 	"../pages/contact/event/event.module": [
-		621,
-		19
+		620,
+		5
 	],
 	"../pages/home/create-song/create-song.module": [
-		622,
-		18
+		621,
+		4
 	],
 	"../pages/home/edit-song/edit-song.module": [
-		623,
-		17
+		622,
+		3
 	],
 	"../pages/home/login/login.module": [
-		624,
-		16
+		623,
+		2
 	],
 	"../pages/home/signup/signup.module": [
-		625,
-		15
+		624,
+		1
 	],
 	"../pages/home/song/song.module": [
-		626,
-		14
+		625,
+		0
 	],
 	"../pages/storage/storage.module": [
-		627,
-		24
+		626,
+		10
 	]
 };
 function webpackAsyncContext(req) {
@@ -403,17 +403,13 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 
 var AboutPage = (function () {
     function AboutPage(db, modalCtrl) {
+        var _this = this;
         this.db = db;
         this.modalCtrl = modalCtrl;
         this.userPath = 'users';
         this.payPath = 'pays';
-        this.loadingData();
-    }
-    AboutPage.prototype.loadingData = function () {
-        var _this = this;
         this.yearPay = __WEBPACK_IMPORTED_MODULE_3_moment___default()(new Date()).format('YYYY');
-        var users = this.db.list(this.userPath + "/").valueChanges();
-        users.subscribe(function (res) {
+        this.db.list(this.userPath + "/").valueChanges().subscribe(function (res) {
             _this.users = [];
             res.forEach(function (rs) {
                 var user = rs;
@@ -426,8 +422,11 @@ var AboutPage = (function () {
                 });
             });
         });
-        var pays = this.db.list(this.payPath + "/" + this.yearPay + "/").valueChanges();
-        pays.subscribe(function (res) {
+        this.loadingData();
+    }
+    AboutPage.prototype.loadingData = function () {
+        var _this = this;
+        this.db.list(this.payPath + "/" + this.yearPay + "/").valueChanges().subscribe(function (res) {
             res.forEach(function (rs1) {
                 var count = 0;
                 var pay = rs1;
@@ -442,11 +441,13 @@ var AboutPage = (function () {
                 var check = _this.users.filter(function (item) { return item.uid === pay.userid; });
                 if (check.length > 0) {
                     check[0].count = count;
+                    //console.log('found user=', pay.userid, ', count=', count);
                 }
             });
         });
     };
     AboutPage.prototype.userTapped = function (event, user) {
+        this.doView();
         var payModal = this.modalCtrl.create('PayPage', { user: user, yearPay: this.yearPay }, { cssClass: 'inset-modal' });
         payModal.onDidDismiss(function (data) {
             if (data) {
@@ -466,16 +467,25 @@ var AboutPage = (function () {
     };
     AboutPage.prototype.doView = function () {
         var _this = this;
-        var data = this.db.list(this.payPath + "/" + this.yearPay + "/").valueChanges();
-        data.subscribe(function (rs) {
+        this.db.list(this.payPath + "/" + this.yearPay + "/").valueChanges().subscribe(function (rs) {
             console.log('re.length=', rs.length);
             if (rs.length < 1) {
-                var newYearModal = _this.modalCtrl.create('NewYearPage', { yearPay: _this.yearPay }, { cssClass: 'inset-modal' });
-                newYearModal.onDidDismiss(function (data) {
-                    if (data) {
-                    }
+                var monthly_1 = [];
+                for (var i = 0; i < 12; i++) {
+                    monthly_1.push({ date: '' });
+                }
+                _this.users.forEach(function (user) {
+                    var data = {
+                        userid: user.uid,
+                        monthly: monthly_1
+                    };
+                    var key = _this.db.list(_this.payPath + "/" + _this.yearPay + "/").push(data).key;
+                    var dataKey = {
+                        id: key
+                    };
+                    _this.db.object(_this.payPath + "/" + _this.yearPay + "/" + key + "/").update(dataKey)
+                        .catch(function (error) { return console.log(error); });
                 });
-                newYearModal.present();
             }
         });
         this.loadingData();
@@ -558,9 +568,6 @@ var ContactPage = (function () {
     ContactPage.prototype.deleteItem = function (item) {
         this.db.object(this.basePath + "/" + this.yearPay + "/" + item.id).remove()
             .catch(function (error) { return console.log(error); });
-    };
-    ContactPage.prototype.test = function () {
-        console.log('test');
     };
     ContactPage = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
@@ -840,7 +847,6 @@ var AppModule = (function () {
                 __WEBPACK_IMPORTED_MODULE_2_ionic_angular__["d" /* IonicModule */].forRoot(__WEBPACK_IMPORTED_MODULE_3__app_component__["a" /* MyApp */], {}, {
                     links: [
                         { loadChildren: '../pages/about/edit-user/edit-user.module#EditUserPageModule', name: 'EditUserPage', segment: 'edit-user', priority: 'low', defaultHistory: [] },
-                        { loadChildren: '../pages/about/newyear/newyear.module#NewYearPageModule', name: 'NewYearPage', segment: 'newyear', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/about/pay/pay.module#PayPageModule', name: 'PayPage', segment: 'pay', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/contact/create-event/create-event.module#CreateEventPageModule', name: 'CreateEventPage', segment: 'create-event', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/contact/edit-event/edit-event.module#EditEventPageModule', name: 'EditEventPage', segment: 'edit-event', priority: 'low', defaultHistory: [] },

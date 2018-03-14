@@ -1,14 +1,14 @@
 webpackJsonp([9],{
 
-/***/ 617:
+/***/ 616:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "NewYearPageModule", function() { return NewYearPageModule; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(44);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__newyear__ = __webpack_require__(629);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "EditUserPageModule", function() { return EditUserPageModule; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__edit_user__ = __webpack_require__(627);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_core__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_ionic_angular__ = __webpack_require__(44);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -18,37 +18,38 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 
 
 
-var NewYearPageModule = (function () {
-    function NewYearPageModule() {
+var EditUserPageModule = (function () {
+    function EditUserPageModule() {
     }
-    NewYearPageModule = __decorate([
-        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["I" /* NgModule */])({
+    EditUserPageModule = __decorate([
+        Object(__WEBPACK_IMPORTED_MODULE_1__angular_core__["I" /* NgModule */])({
             declarations: [
-                __WEBPACK_IMPORTED_MODULE_2__newyear__["a" /* NewYearPage */],
+                __WEBPACK_IMPORTED_MODULE_0__edit_user__["a" /* EditUserPage */],
             ],
             imports: [
-                __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["e" /* IonicPageModule */].forChild(__WEBPACK_IMPORTED_MODULE_2__newyear__["a" /* NewYearPage */]),
+                __WEBPACK_IMPORTED_MODULE_2_ionic_angular__["e" /* IonicPageModule */].forChild(__WEBPACK_IMPORTED_MODULE_0__edit_user__["a" /* EditUserPage */]),
             ],
             exports: [
-                __WEBPACK_IMPORTED_MODULE_2__newyear__["a" /* NewYearPage */]
+                __WEBPACK_IMPORTED_MODULE_0__edit_user__["a" /* EditUserPage */]
             ]
         })
-    ], NewYearPageModule);
-    return NewYearPageModule;
+    ], EditUserPageModule);
+    return EditUserPageModule;
 }());
 
-//# sourceMappingURL=newyear.module.js.map
+//# sourceMappingURL=edit-user.module.js.map
 
 /***/ }),
 
-/***/ 629:
+/***/ 627:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return NewYearPage; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return EditUserPage; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(44);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_angularfire2_database__ = __webpack_require__(45);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__angular_forms__ = __webpack_require__(25);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_angularfire2_database__ = __webpack_require__(45);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -61,65 +62,47 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 
 
 
-var NewYearPage = (function () {
-    function NewYearPage(navParams, viewCtrl, db, alertCtrl) {
-        this.navParams = navParams;
+
+var EditUserPage = (function () {
+    function EditUserPage(viewCtrl, navParams, fb, db) {
         this.viewCtrl = viewCtrl;
+        this.navParams = navParams;
+        this.fb = fb;
         this.db = db;
-        this.alertCtrl = alertCtrl;
-        this.userPath = 'users';
-        this.payPath = 'pays';
-        this.yearPay = navParams.get('yearPay');
-        this.users = this.db.list(this.userPath + "/").valueChanges();
+        this.basePath = 'users';
+        this.user = navParams.get('user');
+        this.editUserForm = this.fb.group({
+            'displayName': ['', __WEBPACK_IMPORTED_MODULE_2__angular_forms__["f" /* Validators */].compose([__WEBPACK_IMPORTED_MODULE_2__angular_forms__["f" /* Validators */].required, __WEBPACK_IMPORTED_MODULE_2__angular_forms__["f" /* Validators */].minLength(1)])],
+            'imageUrl': ['', __WEBPACK_IMPORTED_MODULE_2__angular_forms__["f" /* Validators */].compose([__WEBPACK_IMPORTED_MODULE_2__angular_forms__["f" /* Validators */].required, __WEBPACK_IMPORTED_MODULE_2__angular_forms__["f" /* Validators */].minLength(1)])]
+        });
+        this.displayName = this.editUserForm.controls['displayName'];
+        this.imageUrl = this.editUserForm.controls['imageUrl'];
     }
-    NewYearPage.prototype.dismiss = function () {
+    EditUserPage.prototype.dismiss = function () {
         this.viewCtrl.dismiss();
     };
-    NewYearPage.prototype.addPayList = function () {
-        var _this = this;
-        var monthly = [];
-        for (var i = 0; i < 12; i++) {
-            monthly.push({ date: '', index: i });
-        }
-        this.users.subscribe(function (res) {
-            res.forEach(function (user) {
-                var data = {
-                    userid: user.uid,
-                    monthly: monthly
-                };
-                var key = _this.db.list(_this.payPath + "/" + _this.yearPay + "/").push(data).key;
-                var dataKey = {
-                    id: key
-                };
-                _this.db.object(_this.payPath + "/" + _this.yearPay + "/" + key + "/").update(dataKey)
-                    .catch(function (error) { return console.log(error); });
-            });
-        });
-        var alert = this.alertCtrl.create();
-        alert.setTitle('Add data');
-        alert.setMessage('Add pat list data');
-        alert.addButton({
-            text: 'Ok',
-            handler: function (data) {
-                console.log('finish adding data:');
-                _this.viewCtrl.dismiss();
-            }
-        });
-        alert.present();
+    EditUserPage.prototype.edit = function () {
+        var data = {
+            displayName: this.displayName.value,
+            imageUrl: this.imageUrl.value
+        };
+        this.db.object(this.basePath + "/" + this.user.uid).update(data)
+            .catch(function (error) { return console.log(error); });
+        this.viewCtrl.dismiss({ title: "updated a user" });
     };
-    NewYearPage = __decorate([
+    EditUserPage = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
-            selector: 'page-newyear',template:/*ion-inline-start:"E:\ionic\taiko1\src\pages\about\newyear\newyear.html"*/'<ion-header>\n  <ion-navbar>\n    <ion-title>Add Pay List {{yearPay}}</ion-title>\n    <ion-buttons end>\n      <button ion-button icon-only (click)="dismiss()">\n        <ion-icon name=\'close\'></ion-icon>\n      </button>\n    </ion-buttons>\n  </ion-navbar>\n</ion-header>\n\n<ion-content>\n    <button ion-button (click)="addPayList()">START</button>\n</ion-content>\n'/*ion-inline-end:"E:\ionic\taiko1\src\pages\about\newyear\newyear.html"*/
+            selector: 'page-edit-user',template:/*ion-inline-start:"E:\ionic\taiko1\src\pages\about\edit-user\edit-user.html"*/'<ion-content>\n  <h3>Edit a User</h3>\n  <form [formGroup]="editUserForm" (ngSubmit)="submit()" novalidate>      \n    <ion-row>\n      <ion-item>\n        <ion-label for="displayName"></ion-label>\n        <ion-input type="displayName" value="{{user.displayName}}" placeholder="Display Name" formControlName="displayName"></ion-input>\n      </ion-item>\n      <ion-item>\n        <ion-label for="imageUrl"></ion-label>\n        <ion-select formControlName="imageUrl">\n          <ion-option value="assets/img/speakers/bear.jpg">Bear</ion-option>\n          <ion-option value="assets/img/speakers/cheetah.jpg">Cheetah</ion-option>\n          <ion-option value="assets/img/speakers/duck.jpg">Duck</ion-option>\n          <ion-option value="assets/img/speakers/eagle.jpg">Eagle</ion-option>\n          <ion-option value="assets/img/speakers/elephant.jpg">Elephant</ion-option>\n          <ion-option value="assets/img/speakers/giraffe.jpg">Giraffe</ion-option>\n          <ion-option value="assets/img/speakers/iguana.jpg">Iguana</ion-option>\n          <ion-option value="assets/img/speakers/lion.jpg">Lion</ion-option>\n          <ion-option value="assets/img/speakers/mouse.jpg">Mouse</ion-option>\n          <ion-option value="assets/img/speakers/puppy.jpg">Puppy</ion-option>\n          <ion-option value="assets/img/speakers/rabbit.jpg">Rabbit</ion-option>\n          <ion-option value="assets/img/speakers/turtle.jpg">Turtle</ion-option>\n        </ion-select>\n      </ion-item>\n    </ion-row>\n  </form>\n  <ion-row no-padding>\n    <ion-col>\n      <button ion-button block (click)="edit()">\n        Edit\n      </button>\n    </ion-col>\n    <ion-col text-right>\n      <button ion-button block color="danger" (click)="dismiss()">\n        Cancel\n      </button>\n    </ion-col>\n  </ion-row>\n</ion-content>\n'/*ion-inline-end:"E:\ionic\taiko1\src\pages\about\edit-user\edit-user.html"*/
         }),
-        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["i" /* NavParams */],
-            __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["k" /* ViewController */],
-            __WEBPACK_IMPORTED_MODULE_2_angularfire2_database__["a" /* AngularFireDatabase */],
-            __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["a" /* AlertController */]])
-    ], NewYearPage);
-    return NewYearPage;
+        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["k" /* ViewController */],
+            __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["i" /* NavParams */],
+            __WEBPACK_IMPORTED_MODULE_2__angular_forms__["a" /* FormBuilder */],
+            __WEBPACK_IMPORTED_MODULE_3_angularfire2_database__["a" /* AngularFireDatabase */]])
+    ], EditUserPage);
+    return EditUserPage;
 }());
 
-//# sourceMappingURL=newyear.js.map
+//# sourceMappingURL=edit-user.js.map
 
 /***/ })
 

@@ -1,4 +1,4 @@
-webpackJsonp([12],{
+webpackJsonp([11],{
 
 /***/ 147:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
@@ -274,51 +274,47 @@ webpackEmptyAsyncContext.id = 160;
 var map = {
 	"../pages/about/edit-user/edit-user.module": [
 		616,
-		10
-	],
-	"../pages/about/newyear/newyear.module": [
-		617,
 		9
 	],
 	"../pages/about/pay/pay.module": [
-		618,
+		617,
 		8
 	],
 	"../pages/contact/create-event/create-event.module": [
-		619,
+		618,
 		7
 	],
 	"../pages/contact/edit-event/edit-event.module": [
-		620,
+		619,
 		6
 	],
 	"../pages/contact/event/event.module": [
-		621,
+		620,
 		5
 	],
 	"../pages/home/create-song/create-song.module": [
-		622,
+		621,
 		4
 	],
 	"../pages/home/edit-song/edit-song.module": [
-		623,
+		622,
 		3
 	],
 	"../pages/home/login/login.module": [
-		624,
+		623,
 		2
 	],
 	"../pages/home/signup/signup.module": [
-		625,
+		624,
 		1
 	],
 	"../pages/home/song/song.module": [
-		626,
+		625,
 		0
 	],
 	"../pages/storage/storage.module": [
-		627,
-		11
+		626,
+		10
 	]
 };
 function webpackAsyncContext(req) {
@@ -413,8 +409,7 @@ var AboutPage = (function () {
         this.userPath = 'users';
         this.payPath = 'pays';
         this.yearPay = __WEBPACK_IMPORTED_MODULE_3_moment___default()(new Date()).format('YYYY');
-        var users = this.db.list(this.userPath + "/").valueChanges();
-        users.subscribe(function (res) {
+        this.db.list(this.userPath + "/").valueChanges().subscribe(function (res) {
             _this.users = [];
             res.forEach(function (rs) {
                 var user = rs;
@@ -427,8 +422,11 @@ var AboutPage = (function () {
                 });
             });
         });
-        var pays = this.db.list(this.payPath + "/" + this.yearPay + "/").valueChanges();
-        pays.subscribe(function (res) {
+        this.loadingData();
+    }
+    AboutPage.prototype.loadingData = function () {
+        var _this = this;
+        this.db.list(this.payPath + "/" + this.yearPay + "/").valueChanges().subscribe(function (res) {
             res.forEach(function (rs1) {
                 var count = 0;
                 var pay = rs1;
@@ -443,11 +441,13 @@ var AboutPage = (function () {
                 var check = _this.users.filter(function (item) { return item.uid === pay.userid; });
                 if (check.length > 0) {
                     check[0].count = count;
+                    //console.log('found user=', pay.userid, ', count=', count);
                 }
             });
         });
-    }
+    };
     AboutPage.prototype.userTapped = function (event, user) {
+        this.doView();
         var payModal = this.modalCtrl.create('PayPage', { user: user, yearPay: this.yearPay }, { cssClass: 'inset-modal' });
         payModal.onDidDismiss(function (data) {
             if (data) {
@@ -465,25 +465,34 @@ var AboutPage = (function () {
         });
         editUserModel.present();
     };
-    AboutPage.prototype.newYear = function () {
+    AboutPage.prototype.doView = function () {
         var _this = this;
-        var data = this.db.list(this.payPath + "/" + this.yearPay + "/").valueChanges();
-        data.subscribe(function (rs) {
+        this.db.list(this.payPath + "/" + this.yearPay + "/").valueChanges().subscribe(function (rs) {
             console.log('re.length=', rs.length);
             if (rs.length < 1) {
-                var newYearModal = _this.modalCtrl.create('NewYearPage', { yearPay: _this.yearPay }, { cssClass: 'inset-modal' });
-                newYearModal.onDidDismiss(function (data) {
-                    if (data) {
-                        //this.items.add(data);
-                    }
+                var monthly_1 = [];
+                for (var i = 0; i < 12; i++) {
+                    monthly_1.push({ date: '' });
+                }
+                _this.users.forEach(function (user) {
+                    var data = {
+                        userid: user.uid,
+                        monthly: monthly_1
+                    };
+                    var key = _this.db.list(_this.payPath + "/" + _this.yearPay + "/").push(data).key;
+                    var dataKey = {
+                        id: key
+                    };
+                    _this.db.object(_this.payPath + "/" + _this.yearPay + "/" + key + "/").update(dataKey)
+                        .catch(function (error) { return console.log(error); });
                 });
-                newYearModal.present();
             }
         });
+        this.loadingData();
     };
     AboutPage = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
-            selector: 'page-about',template:/*ion-inline-start:"E:\ionic\taiko1\src\pages\about\about.html"*/'<ion-header>\n    <ion-navbar>\n      <ion-title>User List</ion-title>\n    </ion-navbar>\n  </ion-header>\n  \n  <ion-content>\n    <ion-item>\n      <ion-icon name="calendar" item-start></ion-icon>\n      <ion-label>Year</ion-label>\n      <ion-datetime displayFormat="YYYY" max="2050" [(ngModel)]="yearPay"></ion-datetime>\n    </ion-item>\n    <button ion-button (click)="newYear()">New Year</button>\n      \n\n    <ion-list>\n      <ion-item-sliding *ngFor="let user of users">\n        <button ion-item (click)="userTapped($event, user)">\n          <ion-avatar item-start>\n            <img *ngIf="user.imageUrl" [src]="user.imageUrl" />\n          </ion-avatar>\n          <h2>{{user.displayName}}</h2>\n          <ion-note item-end>{{user.count}}/12</ion-note>\n        </button>\n        <ion-item-options>\n          <button ion-button clear small color="secondary" icon-left (click)="userEdit(user)">\n            <ion-icon name=\'create\'></ion-icon>\n          </button>\n        </ion-item-options>\n      </ion-item-sliding>\n    </ion-list>\n  </ion-content>'/*ion-inline-end:"E:\ionic\taiko1\src\pages\about\about.html"*/
+            selector: 'page-about',template:/*ion-inline-start:"E:\ionic\taiko1\src\pages\about\about.html"*/'<ion-header>\n    <ion-navbar>\n      <ion-title>User List</ion-title>\n    </ion-navbar>\n  </ion-header>\n  \n  <ion-content>\n    <ion-item>\n      <ion-icon name="calendar" item-start></ion-icon>\n      <ion-label>Year</ion-label>\n      <ion-datetime displayFormat="YYYY" max="2050" [(ngModel)]="yearPay" (ngModelChange)="doView()"></ion-datetime>\n    </ion-item>    \n\n    <ion-list>\n      <ion-item-sliding *ngFor="let user of users">\n        <button ion-item (click)="userTapped($event, user)">\n          <ion-avatar item-start>\n            <img *ngIf="user.imageUrl" [src]="user.imageUrl" />\n          </ion-avatar>\n          <h2>{{user.displayName}}</h2>\n          <ion-note item-end>{{user.count}}/12</ion-note>\n        </button>\n        <ion-item-options>\n          <button ion-button clear small color="secondary" icon-left (click)="userEdit(user)">\n            <ion-icon name=\'create\'></ion-icon>\n          </button>\n        </ion-item-options>\n      </ion-item-sliding>\n    </ion-list>\n  </ion-content>'/*ion-inline-end:"E:\ionic\taiko1\src\pages\about\about.html"*/
         }),
         __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_2_angularfire2_database__["a" /* AngularFireDatabase */],
             __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["g" /* ModalController */]])
@@ -560,12 +569,9 @@ var ContactPage = (function () {
         this.db.object(this.basePath + "/" + this.yearPay + "/" + item.id).remove()
             .catch(function (error) { return console.log(error); });
     };
-    ContactPage.prototype.test = function () {
-        console.log('test');
-    };
     ContactPage = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
-            selector: 'page-contact',template:/*ion-inline-start:"E:\ionic\taiko1\src\pages\contact\contact.html"*/'<ion-header>\n  <ion-navbar>\n    <ion-title>Event List</ion-title>\n    <ion-buttons end>\n      <button ion-button icon-only (click)="loadingData()">\n        <ion-icon name=\'star\'></ion-icon>\n      </button>\n      <button ion-button icon-only (click)="createItem()">\n        <ion-icon name="add"></ion-icon>\n      </button>\n    </ion-buttons>\n  </ion-navbar>\n</ion-header>\n\n<ion-content>\n  <ion-item>\n    <ion-icon name="calendar" item-start></ion-icon>\n    <ion-label>Year</ion-label>\n    <ion-datetime displayFormat="YYYY" max="2050" [(ngModel)]="yearPay"></ion-datetime>\n  </ion-item>\n\n  <ion-list>\n    <ion-item-sliding *ngFor="let item of items | async">\n      <button ion-item (click)="itemTapped($event, item)">\n        <ion-avatar item-start>\n          <img *ngIf="item.imageUrl" [src]="item.imageUrl" />\n        </ion-avatar>\n        <h2>{{item.name}}</h2>\n        <p item-end>{{item.date}}</p>\n      </button>\n      <ion-item-options>\n        <button ion-button clear small color="danger" icon-left (click)="deleteItem(item)">\n          <ion-icon name=\'trash\'></ion-icon>\n        </button>\n        <button ion-button clear small color="secondary" icon-left (click)="editItem(item)">\n          <ion-icon name=\'create\'></ion-icon>\n        </button>\n      </ion-item-options>\n    </ion-item-sliding>\n  </ion-list>\n</ion-content>'/*ion-inline-end:"E:\ionic\taiko1\src\pages\contact\contact.html"*/
+            selector: 'page-contact',template:/*ion-inline-start:"E:\ionic\taiko1\src\pages\contact\contact.html"*/'<ion-header>\n  <ion-navbar>\n    <ion-title>Event List</ion-title>\n    <ion-buttons end>\n      <button ion-button icon-only (click)="createItem()">\n        <ion-icon name="add"></ion-icon>\n      </button>\n    </ion-buttons>\n  </ion-navbar>\n</ion-header>\n\n<ion-content>\n  <ion-item>\n    <ion-icon name="calendar" item-start></ion-icon>\n    <ion-label>Year</ion-label>\n    <ion-datetime displayFormat="YYYY" max="2050" [(ngModel)]="yearPay" (ngModelChange)="loadingData()"></ion-datetime>\n  </ion-item>\n\n  <ion-list>\n    <ion-item-sliding *ngFor="let item of items | async">\n      <button ion-item (click)="itemTapped($event, item)">\n        <ion-avatar item-start>\n          <img *ngIf="item.imageUrl" [src]="item.imageUrl" />\n        </ion-avatar>\n        <h2>{{item.name}}</h2>\n        <p item-end>{{item.date}}</p>\n      </button>\n      <ion-item-options>\n        <button ion-button clear small color="danger" icon-left (click)="deleteItem(item)">\n          <ion-icon name=\'trash\'></ion-icon>\n        </button>\n        <button ion-button clear small color="secondary" icon-left (click)="editItem(item)">\n          <ion-icon name=\'create\'></ion-icon>\n        </button>\n      </ion-item-options>\n    </ion-item-sliding>\n  </ion-list>\n</ion-content>'/*ion-inline-end:"E:\ionic\taiko1\src\pages\contact\contact.html"*/
         }),
         __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["g" /* ModalController */],
             __WEBPACK_IMPORTED_MODULE_2_angularfire2_database__["a" /* AngularFireDatabase */]])
@@ -841,7 +847,6 @@ var AppModule = (function () {
                 __WEBPACK_IMPORTED_MODULE_2_ionic_angular__["d" /* IonicModule */].forRoot(__WEBPACK_IMPORTED_MODULE_3__app_component__["a" /* MyApp */], {}, {
                     links: [
                         { loadChildren: '../pages/about/edit-user/edit-user.module#EditUserPageModule', name: 'EditUserPage', segment: 'edit-user', priority: 'low', defaultHistory: [] },
-                        { loadChildren: '../pages/about/newyear/newyear.module#NewYearPageModule', name: 'NewYearPage', segment: 'newyear', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/about/pay/pay.module#PayPageModule', name: 'PayPage', segment: 'pay', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/contact/create-event/create-event.module#CreateEventPageModule', name: 'CreateEventPage', segment: 'create-event', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/contact/edit-event/edit-event.module#EditEventPageModule', name: 'EditEventPage', segment: 'edit-event', priority: 'low', defaultHistory: [] },
