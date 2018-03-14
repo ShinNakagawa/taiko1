@@ -1,23 +1,21 @@
 <ion-header>
   <ion-navbar>
     <ion-title>Event Information</ion-title>
-    <ion-buttons end>
-      <button ion-button icon-only (click)="dismiss()">
-        <ion-icon name='close'></ion-icon>
-      </button>
-    </ion-buttons>
   </ion-navbar>
 </ion-header>
 
 <ion-content>
 
   <ion-card>
-    <img *ngIf="item.imageUrl"  [src]="item.imageUrl" />
     <ion-card-content>
+      <img *ngIf="item.imageUrl"  [src]="item.imageUrl" />
       <h2 class="card-title">{{item.name}}</h2>
+      <p>Place: {{place}}</p>
       <p>Date: {{item.date}}</p>
       <p>Description: {{item.description}}</p>
     </ion-card-content>
   </ion-card>
 
+  <h2>{{place}}</h2>
+  <div #map id="map"></div>
 </ion-content>

@@ -7,7 +7,7 @@ import { IonicPageModule } from 'ionic-angular';
     EventPage,
   ],
   imports: [
-    IonicPageModule.forChild(EventPage),
+    IonicPageModule.forChild(EventPage)
   ],
   exports: [
     EventPage

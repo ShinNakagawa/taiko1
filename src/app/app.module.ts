@@ -3,6 +3,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { IonicApp, IonicModule, IonicErrorHandler } from 'ionic-angular';
 import { MyApp } from './app.component';
 
+import { EventPage } from '../pages/contact/event/event';
 import { StoragePage } from '../pages/storage/storage';
 import { AboutPage } from '../pages/about/about';
 import { ContactPage } from '../pages/contact/contact';
@@ -40,7 +41,8 @@ import { MomentPipe } from '../pipes/moment/moment';
     HomePage,
     TabsPage,
     StoragePage,
-    MomentPipe
+    MomentPipe,
+    EventPage
   ],
   imports: [
     BrowserModule,
@@ -58,7 +60,8 @@ import { MomentPipe } from '../pipes/moment/moment';
     ContactPage,
     HomePage,
     StoragePage,
-    TabsPage
+    TabsPage,
+    EventPage
   ],
   providers: [
     StatusBar,

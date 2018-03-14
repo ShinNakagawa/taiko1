@@ -17,17 +17,20 @@ export class StoragePage {
   uploadItems: Observable<any[]>;
   files: FileList;
   upload: Upload;
-  private basePath = '/uploads';
+  basePath = '/uploads';
+  folder;
 
   constructor(public navCtrl: NavController,
     public loadingCtrl: LoadingController,
     private db: AngularFireDatabase,
     private alertCtrl: AlertController) {
-      this.uploadItems = this.db.list(`${this.basePath}/`).valueChanges();
+      this.folder = 'song'
+      this.uploadItems = this.db.list(`${this.basePath}/${this.folder}/`).valueChanges();
   }
 
-  ionViewDidLoad() {
-    console.log('ionViewDidLoad StoragePage');
+  segmentChanged() {
+    console.log('segmentChanged =', this.folder);
+    this.uploadItems = this.db.list(`${this.basePath}/${this.folder}/`).valueChanges();
   }
 
   handleFiles(event) {
@@ -45,7 +48,7 @@ export class StoragePage {
       // console.log(filesToUpload[idx]);
       this.upload = new Upload(filesToUpload[idx]);
       const storageRef = firebase.storage().ref();
-      const uploadTask = storageRef.child(`${this.basePath}/${this.upload.file.name}`)
+      const uploadTask = storageRef.child(`${this.basePath}/${this.folder}/${this.upload.file.name}`)
         .put(this.upload.file);
   
         loader.present();
@@ -75,8 +78,8 @@ export class StoragePage {
   }
 
   private saveFileData(upload: Upload) {
-    let key = this.db.list(`${this.basePath}/`).push(upload).key;
-    const path = `${this.basePath}/${key}`;
+    let key = this.db.list(`${this.basePath}/${this.folder}/`).push(upload).key;
+    const path = `${this.basePath}/${this.folder}/${key}`;
     const data = {
       id: key
     };
@@ -88,7 +91,7 @@ export class StoragePage {
   deleteItem(item): void {
     console.log(item);
     //delete data in list
-    const path = `${this.basePath}/${item.id}`;
+    const path = `${this.basePath}/${this.folder}/${item.id}`;
     this.db.object(path).remove().then( (res) => {
       console.log('Data deleted from database! ' + item.name);
     }).catch (err => {
@@ -96,7 +99,7 @@ export class StoragePage {
     })
 
     //delete file in storage
-    let storageRef = firebase.storage().ref().child(`${this.basePath}/${item.name}`);
+    let storageRef = firebase.storage().ref().child(`${this.basePath}/${this.folder}/${item.name}`);
     storageRef.delete().then( (snapshot) => {
       console.log('File deleted from storage!: ' + item.name);
     }).catch (err => {

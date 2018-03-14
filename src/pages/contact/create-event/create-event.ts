@@ -13,6 +13,7 @@ export class CreateEventPage {
   name: AbstractControl;
   imageUrl: AbstractControl;
   date: AbstractControl;
+  place: AbstractControl;
   description: AbstractControl;
   basePath = 'events';
   yearPay;
@@ -27,11 +28,13 @@ export class CreateEventPage {
         'name': ['', Validators.compose([Validators.required, Validators.minLength(1)])],
         'imageUrl': ['', Validators.compose([Validators.required, Validators.minLength(1)])],
         'date': ['', Validators.compose([Validators.required, Validators.minLength(1)])],
+        'place': ['', Validators.compose([Validators.required, Validators.minLength(1)])],
         'description': ['', Validators.compose([Validators.required, Validators.minLength(1)])]
       });
       this.name = this.eventCreateForm.controls['name'];  
       this.imageUrl = this.eventCreateForm.controls['imageUrl'];  
       this.date = this.eventCreateForm.controls['date'];  
+      this.place = this.eventCreateForm.controls['place'];  
       this.description = this.eventCreateForm.controls['description'];  
     }
 
@@ -44,6 +47,7 @@ export class CreateEventPage {
       name: this.name.value,
       imageUrl: this.imageUrl.value,
       date: this.date.value,
+      place: this.place.value,
       description: this.description.value
     };
     let key = this.db.list(`${this.basePath}/${this.yearPay}/`).push(data).key;

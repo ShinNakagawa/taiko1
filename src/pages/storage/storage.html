@@ -1,7 +1,17 @@
 <ion-header>
-  <ion-navbar>
-    <ion-title>Storage</ion-title>
-  </ion-navbar>
+  <ion-toolbar>
+    <ion-segment [(ngModel)]="folder" color="danger" (ionChange)="segmentChanged($event)">
+      <ion-segment-button value="song">
+        Song
+      </ion-segment-button>
+      <ion-segment-button value="business">
+        Business
+      </ion-segment-button>
+      <ion-segment-button value="others">
+        Others
+      </ion-segment-button>
+    </ion-segment>
+  </ion-toolbar>
 </ion-header>
 
 

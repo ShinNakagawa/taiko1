@@ -1,8 +1,9 @@
 import { Component } from '@angular/core';
-import { ModalController } from 'ionic-angular';
+import { ModalController, NavController } from 'ionic-angular';
 import { Observable } from 'rxjs/Observable';
 import { AngularFireDatabase } from 'angularfire2/database';
 import moment from 'moment';
+import { EventPage } from './event/event';
 
 @Component({
   selector: 'page-contact',
@@ -14,6 +15,7 @@ export class ContactPage {
   yearPay;
 
   constructor(private modalCtrl: ModalController,
+              private navCtrl: NavController,
               private db: AngularFireDatabase) {
     this.yearPay = moment(new Date()).format('YYYY');
     this.loadingData();
@@ -34,13 +36,7 @@ export class ContactPage {
   }
 
   itemTapped(event, item) {
-    let itemModel = this.modalCtrl.create('EventPage', {item: item}, { cssClass: 'inset-modal' });
-    itemModel.onDidDismiss(data => {
-      if (data) {
-        //console.log("test1111");
-      }
-    });
-    itemModel.present();
+    this.navCtrl.push(EventPage, {item: item});
   }
 
   editItem(item) {

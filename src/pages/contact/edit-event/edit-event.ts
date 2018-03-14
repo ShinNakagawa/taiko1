@@ -14,6 +14,7 @@ export class EditEventPage {
   name: AbstractControl;
   imageUrl: AbstractControl;
   date: AbstractControl;
+  place: AbstractControl;
   description: AbstractControl;
   event: Event;
   basePath = 'events';
@@ -30,11 +31,13 @@ export class EditEventPage {
         'name': ['', Validators.compose([Validators.required, Validators.minLength(1)])],
         'imageUrl': ['', Validators.compose([Validators.required, Validators.minLength(1)])],
         'date': ['', Validators.compose([Validators.required, Validators.minLength(1)])],
+        'place': ['', Validators.compose([Validators.required, Validators.minLength(1)])],
         'description': ['', Validators.compose([Validators.required, Validators.minLength(1)])]
       });
       this.name = this.eventEditForm.controls['name'];  
       this.imageUrl = this.eventEditForm.controls['imageUrl'];  
       this.date = this.eventEditForm.controls['date'];  
+      this.place = this.eventEditForm.controls['place'];  
       this.description = this.eventEditForm.controls['description'];  
     }
 
@@ -47,6 +50,7 @@ export class EditEventPage {
       name: this.name.value,
       imageUrl: this.imageUrl.value,
       date: this.date.value,
+      place: this.place.value,
       description: this.description.value
     };
     this.db.object(`${this.basePath}/${this.yearPay}/${this.event.id}`).update(data)

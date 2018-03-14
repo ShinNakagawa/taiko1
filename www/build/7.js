@@ -1,14 +1,14 @@
 webpackJsonp([7],{
 
-/***/ 618:
+/***/ 622:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "CreateEventPageModule", function() { return CreateEventPageModule; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__create_event__ = __webpack_require__(629);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_core__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_ionic_angular__ = __webpack_require__(44);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "PayPageModule", function() { return PayPageModule; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(35);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__pay__ = __webpack_require__(633);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -18,38 +18,39 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 
 
 
-var CreateEventPageModule = (function () {
-    function CreateEventPageModule() {
+var PayPageModule = (function () {
+    function PayPageModule() {
     }
-    CreateEventPageModule = __decorate([
-        Object(__WEBPACK_IMPORTED_MODULE_1__angular_core__["I" /* NgModule */])({
+    PayPageModule = __decorate([
+        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["I" /* NgModule */])({
             declarations: [
-                __WEBPACK_IMPORTED_MODULE_0__create_event__["a" /* CreateEventPage */],
+                __WEBPACK_IMPORTED_MODULE_2__pay__["a" /* PayPage */],
             ],
             imports: [
-                __WEBPACK_IMPORTED_MODULE_2_ionic_angular__["e" /* IonicPageModule */].forChild(__WEBPACK_IMPORTED_MODULE_0__create_event__["a" /* CreateEventPage */]),
+                __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["e" /* IonicPageModule */].forChild(__WEBPACK_IMPORTED_MODULE_2__pay__["a" /* PayPage */]),
             ],
             exports: [
-                __WEBPACK_IMPORTED_MODULE_0__create_event__["a" /* CreateEventPage */]
+                __WEBPACK_IMPORTED_MODULE_2__pay__["a" /* PayPage */]
             ]
         })
-    ], CreateEventPageModule);
-    return CreateEventPageModule;
+    ], PayPageModule);
+    return PayPageModule;
 }());
 
-//# sourceMappingURL=create-event.module.js.map
+//# sourceMappingURL=pay.module.js.map
 
 /***/ }),
 
-/***/ 629:
+/***/ 633:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return CreateEventPage; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return PayPage; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(44);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__angular_forms__ = __webpack_require__(25);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_angularfire2_database__ = __webpack_require__(45);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(35);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_angularfire2_database__ = __webpack_require__(45);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_moment__ = __webpack_require__(1);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_moment___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_moment__);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -63,57 +64,78 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 
 
 
-var CreateEventPage = (function () {
-    function CreateEventPage(viewCtrl, fb, navParams, db) {
-        this.viewCtrl = viewCtrl;
-        this.fb = fb;
-        this.navParams = navParams;
+var PayPage = (function () {
+    function PayPage(db, viewCtrl, 
+        //private alertCtrl: AlertController,
+        navParams) {
+        var _this = this;
         this.db = db;
-        this.basePath = 'events';
+        this.viewCtrl = viewCtrl;
+        this.navParams = navParams;
+        this.payPath = 'pays';
+        this.user = navParams.get('user');
         this.yearPay = navParams.get('yearPay');
-        this.eventCreateForm = this.fb.group({
-            'name': ['', __WEBPACK_IMPORTED_MODULE_2__angular_forms__["f" /* Validators */].compose([__WEBPACK_IMPORTED_MODULE_2__angular_forms__["f" /* Validators */].required, __WEBPACK_IMPORTED_MODULE_2__angular_forms__["f" /* Validators */].minLength(1)])],
-            'imageUrl': ['', __WEBPACK_IMPORTED_MODULE_2__angular_forms__["f" /* Validators */].compose([__WEBPACK_IMPORTED_MODULE_2__angular_forms__["f" /* Validators */].required, __WEBPACK_IMPORTED_MODULE_2__angular_forms__["f" /* Validators */].minLength(1)])],
-            'date': ['', __WEBPACK_IMPORTED_MODULE_2__angular_forms__["f" /* Validators */].compose([__WEBPACK_IMPORTED_MODULE_2__angular_forms__["f" /* Validators */].required, __WEBPACK_IMPORTED_MODULE_2__angular_forms__["f" /* Validators */].minLength(1)])],
-            'description': ['', __WEBPACK_IMPORTED_MODULE_2__angular_forms__["f" /* Validators */].compose([__WEBPACK_IMPORTED_MODULE_2__angular_forms__["f" /* Validators */].required, __WEBPACK_IMPORTED_MODULE_2__angular_forms__["f" /* Validators */].minLength(1)])]
+        var pays = this.db.list(this.payPath + "/" + this.yearPay + "/", function (ref) { return ref.orderByChild('userid').equalTo(_this.user.uid); }).valueChanges();
+        pays.subscribe(function (res) {
+            _this.months = [];
+            res.forEach(function (rs1) {
+                var pay = rs1;
+                _this.payID = pay.id;
+                var i = 0;
+                pay.monthly.forEach(function (rs2) {
+                    _this.months.push({ index: i, date: rs2.date });
+                    i++;
+                });
+            });
         });
-        this.name = this.eventCreateForm.controls['name'];
-        this.imageUrl = this.eventCreateForm.controls['imageUrl'];
-        this.date = this.eventCreateForm.controls['date'];
-        this.description = this.eventCreateForm.controls['description'];
     }
-    CreateEventPage.prototype.dismiss = function () {
+    PayPage.prototype.dismiss = function () {
         this.viewCtrl.dismiss();
     };
-    CreateEventPage.prototype.create = function () {
-        var data = {
-            name: this.name.value,
-            imageUrl: this.imageUrl.value,
-            date: this.date.value,
-            description: this.description.value
-        };
-        var key = this.db.list(this.basePath + "/" + this.yearPay + "/").push(data).key;
-        //update id as key
-        var dataKey = {
-            id: key
-        };
-        this.db.object(this.basePath + "/" + this.yearPay + "/" + key).update(dataKey)
-            .catch(function (error) { return console.log(error); });
-        this.viewCtrl.dismiss({ title: "created an event" });
+    PayPage.prototype.clickStar = function (item) {
+        //console.log('item=', item)
+        var date = __WEBPACK_IMPORTED_MODULE_3_moment___default()(new Date()).format('MMM Do YYYY');
+        if (item.date !== '') {
+            //delete payment record
+            var data = {
+                date: ''
+            };
+            this.db.object(this.payPath + "/" + this.yearPay + "/" + this.payID + "/monthly/" + item.index).update(data)
+                .catch(function (error) { return console.log(error); });
+            // let alert = this.alertCtrl.create({
+            //   title: 'pay',
+            //   message: 'delete pay date:',
+            //   buttons: ['OK']
+            // });
+            // alert.present();
+        }
+        else {
+            //update payment record
+            var data = {
+                date: date
+            };
+            this.db.object(this.payPath + "/" + this.yearPay + "/" + this.payID + "/monthly/" + item.index).update(data)
+                .catch(function (error) { return console.log(error); });
+            // let alert = this.alertCtrl.create({
+            //   title: 'pay',
+            //   message: 'update pay date:',
+            //   buttons: ['OK']
+            // });
+            // alert.present();
+        }
     };
-    CreateEventPage = __decorate([
+    PayPage = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
-            selector: 'page-create-event',template:/*ion-inline-start:"E:\ionic\taiko1\src\pages\contact\create-event\create-event.html"*/'<ion-content>\n  <h3>Create an event</h3>\n  <form [formGroup]="eventCreateForm" (ngSubmit)="submit()" novalidate>      \n    <ion-row>\n      <ion-item>\n        <ion-label for="name"></ion-label>\n        <ion-input type="name" value="" placeholder="Name" formControlName="name"></ion-input>\n      </ion-item>\n      <ion-item>\n        <ion-label for="imageUrl"></ion-label>\n        <ion-input type="imageUrl" value="" placeholder="ImageUrl" formControlName="imageUrl"></ion-input>\n      </ion-item>\n      <ion-item>\n        <ion-label for="date"></ion-label>\n        <ion-datetime displayFormat="MMM DD YYYY" max="2050" formControlName="date"></ion-datetime>\n      </ion-item>\n      <ion-item>\n        <ion-label for="description"></ion-label>\n        <ion-input type="description" value="" placeholder="Description" formControlName="description"></ion-input>\n      </ion-item>  \n    </ion-row>\n  </form>\n  <ion-row no-padding>\n    <ion-col>\n      <button ion-button block (click)="create()">\n        Create\n      </button>\n    </ion-col>\n    <ion-col text-right>\n      <button ion-button block color="danger" (click)="dismiss()">\n        Cancel\n      </button>\n    </ion-col>\n  </ion-row>\n</ion-content>\n'/*ion-inline-end:"E:\ionic\taiko1\src\pages\contact\create-event\create-event.html"*/
+            selector: 'page-pay',template:/*ion-inline-start:"E:\ionic\taiko1\src\pages\about\pay\pay.html"*/'<ion-header>\n  <ion-navbar>\n    <ion-title>{{user.displayName}} : Pay List {{yearPay}}</ion-title>\n    <ion-buttons end>\n      <button ion-button icon-only (click)="dismiss()">\n        <ion-icon name=\'close\'></ion-icon>\n      </button>\n    </ion-buttons>\n  </ion-navbar>\n</ion-header>\n\n<ion-content>\n  <div>\n    <ion-grid>\n      <ion-row>\n        <ion-col>\n          <ion-avatar>\n            <img [src]="\'assets/img/LSTaiko.jpg\'" />\n          </ion-avatar>  \n          <ion-row><button ion-button full>Jan</button></ion-row>\n          <ion-row><button ion-button full>Feb</button></ion-row>\n          <ion-row><button ion-button full>Mar</button></ion-row>\n          <ion-row><button ion-button full>Apr</button></ion-row>\n          <ion-row><button ion-button full>May</button></ion-row>\n          <ion-row><button ion-button full>Jun</button></ion-row>\n          <ion-row><button ion-button full>Jul</button></ion-row>\n          <ion-row><button ion-button full>Aug</button></ion-row>\n          <ion-row><button ion-button full>Sep</button></ion-row>\n          <ion-row><button ion-button full>Oct</button></ion-row>\n          <ion-row><button ion-button full>Nov</button></ion-row>\n          <ion-row><button ion-button full>Dec</button></ion-row>\n        </ion-col>      \n        <ion-col>\n          <ion-avatar>\n            <img [src]="user.imageUrl" />\n          </ion-avatar>\n          <ion-row *ngFor="let item of months">\n            <button ion-button [color]="item.date ? \'danger\' : \'light\'" full (click)="clickStar(item)">\n              <ion-icon name="star"> {{item.date}}</ion-icon>\n            </button>\n          </ion-row>\n        </ion-col>\n      </ion-row>\n    </ion-grid>\n  </div>\n\n</ion-content>\n'/*ion-inline-end:"E:\ionic\taiko1\src\pages\about\pay\pay.html"*/
         }),
-        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["k" /* ViewController */],
-            __WEBPACK_IMPORTED_MODULE_2__angular_forms__["a" /* FormBuilder */],
-            __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["i" /* NavParams */],
-            __WEBPACK_IMPORTED_MODULE_3_angularfire2_database__["a" /* AngularFireDatabase */]])
-    ], CreateEventPage);
-    return CreateEventPage;
+        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_2_angularfire2_database__["a" /* AngularFireDatabase */],
+            __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["k" /* ViewController */],
+            __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["i" /* NavParams */]])
+    ], PayPage);
+    return PayPage;
 }());
 
-//# sourceMappingURL=create-event.js.map
+//# sourceMappingURL=pay.js.map
 
 /***/ })
 

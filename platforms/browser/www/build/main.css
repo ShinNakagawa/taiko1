@@ -25682,6 +25682,10 @@ page-pay .col {
   border: thin solid black;
 }
 
+page-event #map {
+  height: 50%;
+}
+
 page-login .scroll-content {
   overflow: hidden;
 }
