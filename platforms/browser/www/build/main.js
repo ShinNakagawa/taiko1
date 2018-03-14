@@ -531,7 +531,6 @@ var AboutPage = (function () {
         });
     };
     AboutPage.prototype.userTapped = function (event, user) {
-        this.doView();
         var payModal = this.modalCtrl.create('PayPage', { user: user, yearPay: this.yearPay }, { cssClass: 'inset-modal' });
         payModal.onDidDismiss(function (data) {
             if (data) {

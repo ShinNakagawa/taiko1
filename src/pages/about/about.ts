@@ -59,8 +59,6 @@ export class AboutPage {
   }
 
   userTapped(event, user) {
-    this.doView();
-
     let payModal = this.modalCtrl.create('PayPage', {user: user, yearPay: this.yearPay}, { cssClass: 'inset-modal' });
     payModal.onDidDismiss(data => {
       if (data) {
