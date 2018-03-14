@@ -97,31 +97,31 @@ base-gallery/
 |
 ├── events/               * Event Data
 │   ├── 2018              * 2018 events
-|   |   ├── user.uid
-|   |   |   └── name, date, description, id, imageUrl
-|   |   └── user.uid
+|   |   ├── id/
+|   |   |   └── id, name, date, description, imageUrl, place
+|   |   └── id/
 │   └── 2019              * 2019 events
 |
 ├── pays/                 * Pay Data
 │   ├── 2018              * 2018 pays
-|   |   ├── user.uid
-|   |   |   └── month, date, id, userid
-|   |   └── user.uid
+|   |   ├── id/
+|   |   |   └── id, userid, Array<monthly[date]>
+|   |   └── id/
 │   └── 2019              * 2019 pays
 |
 ├── songs/                * Song Data
 |    ├── id/
-|    |    ├── name, id, description, imageUrl, userid
-|    |    └── playListID, fullVideoID
+|    |    └── id, name, description, imageUrl, userid
+|    |        playListID, fullVideoID
 |    └── id/
 |
 ├── uploads/              * Storage Data
 |    ├── id/
-|    |    └── name, id, progress, url
+|    |    └── id, name, progress, url
 |    └── id/
 |
 └── users/                * User Data
-     ├── id/
-     |    └── email, desplayName, imageUrl, status, uid
-     └── id/
+     ├── userid/
+     |    └── uid, email, desplayName, imageUrl, status
+     └── userid/
 

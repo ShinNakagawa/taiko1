@@ -274,51 +274,47 @@ webpackEmptyAsyncContext.id = 160;
 var map = {
 	"../pages/about/edit-user/edit-user.module": [
 		616,
-		10
-	],
-	"../pages/about/newyear/newyear.module": [
-		617,
-		9
+		23
 	],
 	"../pages/about/pay/pay.module": [
 		618,
-		8
+		22
 	],
 	"../pages/contact/create-event/create-event.module": [
 		619,
-		7
+		21
 	],
 	"../pages/contact/edit-event/edit-event.module": [
 		620,
-		6
+		20
 	],
 	"../pages/contact/event/event.module": [
 		621,
-		5
+		19
 	],
 	"../pages/home/create-song/create-song.module": [
 		622,
-		4
+		18
 	],
 	"../pages/home/edit-song/edit-song.module": [
 		623,
-		3
+		17
 	],
 	"../pages/home/login/login.module": [
 		624,
-		2
+		16
 	],
 	"../pages/home/signup/signup.module": [
 		625,
-		1
+		15
 	],
 	"../pages/home/song/song.module": [
 		626,
-		0
+		14
 	],
 	"../pages/storage/storage.module": [
 		627,
-		11
+		24
 	]
 };
 function webpackAsyncContext(req) {
@@ -407,11 +403,14 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 
 var AboutPage = (function () {
     function AboutPage(db, modalCtrl) {
-        var _this = this;
         this.db = db;
         this.modalCtrl = modalCtrl;
         this.userPath = 'users';
         this.payPath = 'pays';
+        this.loadingData();
+    }
+    AboutPage.prototype.loadingData = function () {
+        var _this = this;
         this.yearPay = __WEBPACK_IMPORTED_MODULE_3_moment___default()(new Date()).format('YYYY');
         var users = this.db.list(this.userPath + "/").valueChanges();
         users.subscribe(function (res) {
@@ -446,7 +445,7 @@ var AboutPage = (function () {
                 }
             });
         });
-    }
+    };
     AboutPage.prototype.userTapped = function (event, user) {
         var payModal = this.modalCtrl.create('PayPage', { user: user, yearPay: this.yearPay }, { cssClass: 'inset-modal' });
         payModal.onDidDismiss(function (data) {
@@ -465,7 +464,7 @@ var AboutPage = (function () {
         });
         editUserModel.present();
     };
-    AboutPage.prototype.newYear = function () {
+    AboutPage.prototype.doView = function () {
         var _this = this;
         var data = this.db.list(this.payPath + "/" + this.yearPay + "/").valueChanges();
         data.subscribe(function (rs) {
@@ -474,16 +473,16 @@ var AboutPage = (function () {
                 var newYearModal = _this.modalCtrl.create('NewYearPage', { yearPay: _this.yearPay }, { cssClass: 'inset-modal' });
                 newYearModal.onDidDismiss(function (data) {
                     if (data) {
-                        //this.items.add(data);
                     }
                 });
                 newYearModal.present();
             }
         });
+        this.loadingData();
     };
     AboutPage = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
-            selector: 'page-about',template:/*ion-inline-start:"E:\ionic\taiko1\src\pages\about\about.html"*/'<ion-header>\n    <ion-navbar>\n      <ion-title>User List</ion-title>\n    </ion-navbar>\n  </ion-header>\n  \n  <ion-content>\n    <ion-item>\n      <ion-icon name="calendar" item-start></ion-icon>\n      <ion-label>Year</ion-label>\n      <ion-datetime displayFormat="YYYY" max="2050" [(ngModel)]="yearPay"></ion-datetime>\n    </ion-item>\n    <button ion-button (click)="newYear()">New Year</button>\n      \n\n    <ion-list>\n      <ion-item-sliding *ngFor="let user of users">\n        <button ion-item (click)="userTapped($event, user)">\n          <ion-avatar item-start>\n            <img *ngIf="user.imageUrl" [src]="user.imageUrl" />\n          </ion-avatar>\n          <h2>{{user.displayName}}</h2>\n          <ion-note item-end>{{user.count}}/12</ion-note>\n        </button>\n        <ion-item-options>\n          <button ion-button clear small color="secondary" icon-left (click)="userEdit(user)">\n            <ion-icon name=\'create\'></ion-icon>\n          </button>\n        </ion-item-options>\n      </ion-item-sliding>\n    </ion-list>\n  </ion-content>'/*ion-inline-end:"E:\ionic\taiko1\src\pages\about\about.html"*/
+            selector: 'page-about',template:/*ion-inline-start:"E:\ionic\taiko1\src\pages\about\about.html"*/'<ion-header>\n    <ion-navbar>\n      <ion-title>User List</ion-title>\n    </ion-navbar>\n  </ion-header>\n  \n  <ion-content>\n    <ion-item>\n      <ion-icon name="calendar" item-start></ion-icon>\n      <ion-label>Year</ion-label>\n      <ion-datetime displayFormat="YYYY" max="2050" [(ngModel)]="yearPay" (ngModelChange)="doView()"></ion-datetime>\n    </ion-item>    \n\n    <ion-list>\n      <ion-item-sliding *ngFor="let user of users">\n        <button ion-item (click)="userTapped($event, user)">\n          <ion-avatar item-start>\n            <img *ngIf="user.imageUrl" [src]="user.imageUrl" />\n          </ion-avatar>\n          <h2>{{user.displayName}}</h2>\n          <ion-note item-end>{{user.count}}/12</ion-note>\n        </button>\n        <ion-item-options>\n          <button ion-button clear small color="secondary" icon-left (click)="userEdit(user)">\n            <ion-icon name=\'create\'></ion-icon>\n          </button>\n        </ion-item-options>\n      </ion-item-sliding>\n    </ion-list>\n  </ion-content>'/*ion-inline-end:"E:\ionic\taiko1\src\pages\about\about.html"*/
         }),
         __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_2_angularfire2_database__["a" /* AngularFireDatabase */],
             __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["g" /* ModalController */]])
@@ -565,7 +564,7 @@ var ContactPage = (function () {
     };
     ContactPage = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
-            selector: 'page-contact',template:/*ion-inline-start:"E:\ionic\taiko1\src\pages\contact\contact.html"*/'<ion-header>\n  <ion-navbar>\n    <ion-title>Event List</ion-title>\n    <ion-buttons end>\n      <button ion-button icon-only (click)="loadingData()">\n        <ion-icon name=\'star\'></ion-icon>\n      </button>\n      <button ion-button icon-only (click)="createItem()">\n        <ion-icon name="add"></ion-icon>\n      </button>\n    </ion-buttons>\n  </ion-navbar>\n</ion-header>\n\n<ion-content>\n  <ion-item>\n    <ion-icon name="calendar" item-start></ion-icon>\n    <ion-label>Year</ion-label>\n    <ion-datetime displayFormat="YYYY" max="2050" [(ngModel)]="yearPay"></ion-datetime>\n  </ion-item>\n\n  <ion-list>\n    <ion-item-sliding *ngFor="let item of items | async">\n      <button ion-item (click)="itemTapped($event, item)">\n        <ion-avatar item-start>\n          <img *ngIf="item.imageUrl" [src]="item.imageUrl" />\n        </ion-avatar>\n        <h2>{{item.name}}</h2>\n        <p item-end>{{item.date}}</p>\n      </button>\n      <ion-item-options>\n        <button ion-button clear small color="danger" icon-left (click)="deleteItem(item)">\n          <ion-icon name=\'trash\'></ion-icon>\n        </button>\n        <button ion-button clear small color="secondary" icon-left (click)="editItem(item)">\n          <ion-icon name=\'create\'></ion-icon>\n        </button>\n      </ion-item-options>\n    </ion-item-sliding>\n  </ion-list>\n</ion-content>'/*ion-inline-end:"E:\ionic\taiko1\src\pages\contact\contact.html"*/
+            selector: 'page-contact',template:/*ion-inline-start:"E:\ionic\taiko1\src\pages\contact\contact.html"*/'<ion-header>\n  <ion-navbar>\n    <ion-title>Event List</ion-title>\n    <ion-buttons end>\n      <button ion-button icon-only (click)="createItem()">\n        <ion-icon name="add"></ion-icon>\n      </button>\n    </ion-buttons>\n  </ion-navbar>\n</ion-header>\n\n<ion-content>\n  <ion-item>\n    <ion-icon name="calendar" item-start></ion-icon>\n    <ion-label>Year</ion-label>\n    <ion-datetime displayFormat="YYYY" max="2050" [(ngModel)]="yearPay" (ngModelChange)="loadingData()"></ion-datetime>\n  </ion-item>\n\n  <ion-list>\n    <ion-item-sliding *ngFor="let item of items | async">\n      <button ion-item (click)="itemTapped($event, item)">\n        <ion-avatar item-start>\n          <img *ngIf="item.imageUrl" [src]="item.imageUrl" />\n        </ion-avatar>\n        <h2>{{item.name}}</h2>\n        <p item-end>{{item.date}}</p>\n      </button>\n      <ion-item-options>\n        <button ion-button clear small color="danger" icon-left (click)="deleteItem(item)">\n          <ion-icon name=\'trash\'></ion-icon>\n        </button>\n        <button ion-button clear small color="secondary" icon-left (click)="editItem(item)">\n          <ion-icon name=\'create\'></ion-icon>\n        </button>\n      </ion-item-options>\n    </ion-item-sliding>\n  </ion-list>\n</ion-content>'/*ion-inline-end:"E:\ionic\taiko1\src\pages\contact\contact.html"*/
         }),
         __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["g" /* ModalController */],
             __WEBPACK_IMPORTED_MODULE_2_angularfire2_database__["a" /* AngularFireDatabase */]])

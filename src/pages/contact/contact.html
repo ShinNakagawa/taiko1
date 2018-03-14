@@ -2,9 +2,6 @@
   <ion-navbar>
     <ion-title>Event List</ion-title>
     <ion-buttons end>
-      <button ion-button icon-only (click)="loadingData()">
-        <ion-icon name='star'></ion-icon>
-      </button>
       <button ion-button icon-only (click)="createItem()">
         <ion-icon name="add"></ion-icon>
       </button>
@@ -16,7 +13,7 @@
   <ion-item>
     <ion-icon name="calendar" item-start></ion-icon>
     <ion-label>Year</ion-label>
-    <ion-datetime displayFormat="YYYY" max="2050" [(ngModel)]="yearPay"></ion-datetime>
+    <ion-datetime displayFormat="YYYY" max="2050" [(ngModel)]="yearPay" (ngModelChange)="loadingData()"></ion-datetime>
   </ion-item>
 
   <ion-list>

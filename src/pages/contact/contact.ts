@@ -58,7 +58,4 @@ export class ContactPage {
       .catch(error => console.log(error));
   }
 
-  test() {
-    console.log('test');
-  }
 }

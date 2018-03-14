@@ -8,10 +8,8 @@
     <ion-item>
       <ion-icon name="calendar" item-start></ion-icon>
       <ion-label>Year</ion-label>
-      <ion-datetime displayFormat="YYYY" max="2050" [(ngModel)]="yearPay"></ion-datetime>
-    </ion-item>
-    <button ion-button (click)="newYear()">New Year</button>
-      
+      <ion-datetime displayFormat="YYYY" max="2050" [(ngModel)]="yearPay" (ngModelChange)="doView()"></ion-datetime>
+    </ion-item>    
 
     <ion-list>
       <ion-item-sliding *ngFor="let user of users">

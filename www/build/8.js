@@ -65,22 +65,27 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 
 
 var PayPage = (function () {
-    function PayPage(db, viewCtrl, navParams, alertCtrl) {
+    function PayPage(db, viewCtrl, 
+        //private alertCtrl: AlertController,
+        navParams) {
         var _this = this;
         this.db = db;
         this.viewCtrl = viewCtrl;
         this.navParams = navParams;
-        this.alertCtrl = alertCtrl;
-        this.months = [];
-        this.pay = null;
         this.payPath = 'pays';
         this.user = navParams.get('user');
         this.yearPay = navParams.get('yearPay');
         var pays = this.db.list(this.payPath + "/" + this.yearPay + "/", function (ref) { return ref.orderByChild('userid').equalTo(_this.user.uid); }).valueChanges();
         pays.subscribe(function (res) {
+            _this.months = [];
             res.forEach(function (rs1) {
-                _this.pay = rs1;
-                _this.months = _this.pay.monthly;
+                var pay = rs1;
+                _this.payID = pay.id;
+                var i = 0;
+                pay.monthly.forEach(function (rs2) {
+                    _this.months.push({ index: i, date: rs2.date });
+                    i++;
+                });
             });
         });
     }
@@ -88,47 +93,45 @@ var PayPage = (function () {
         this.viewCtrl.dismiss();
     };
     PayPage.prototype.clickStar = function (item) {
-        console.log('item=', item);
+        //console.log('item=', item)
         var date = __WEBPACK_IMPORTED_MODULE_3_moment___default()(new Date()).format('MMM Do YYYY');
         if (item.date !== '') {
             //delete payment record
             var data = {
                 date: ''
             };
-            this.db.object(this.payPath + "/" + this.yearPay + "/" + this.pay.id + "/monthly/" + item.index).update(data)
+            this.db.object(this.payPath + "/" + this.yearPay + "/" + this.payID + "/monthly/" + item.index).update(data)
                 .catch(function (error) { return console.log(error); });
-            var alert_1 = this.alertCtrl.create({
-                title: 'pay',
-                message: 'delete pay date:',
-                buttons: ['OK']
-            });
-            alert_1.present();
+            // let alert = this.alertCtrl.create({
+            //   title: 'pay',
+            //   message: 'delete pay date:',
+            //   buttons: ['OK']
+            // });
+            // alert.present();
         }
         else {
             //update payment record
             var data = {
                 date: date
             };
-            this.db.object(this.payPath + "/" + this.yearPay + "/" + this.pay.id + "/monthly/" + item.index).update(data)
+            this.db.object(this.payPath + "/" + this.yearPay + "/" + this.payID + "/monthly/" + item.index).update(data)
                 .catch(function (error) { return console.log(error); });
-            var alert_2 = this.alertCtrl.create({
-                title: 'pay',
-                message: 'update pay date:',
-                buttons: ['OK']
-            });
-            alert_2.present();
+            // let alert = this.alertCtrl.create({
+            //   title: 'pay',
+            //   message: 'update pay date:',
+            //   buttons: ['OK']
+            // });
+            // alert.present();
         }
     };
     PayPage = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
             selector: 'page-pay',template:/*ion-inline-start:"E:\ionic\taiko1\src\pages\about\pay\pay.html"*/'<ion-header>\n  <ion-navbar>\n    <ion-title>{{user.displayName}} : Pay List {{yearPay}}</ion-title>\n    <ion-buttons end>\n      <button ion-button icon-only (click)="dismiss()">\n        <ion-icon name=\'close\'></ion-icon>\n      </button>\n    </ion-buttons>\n  </ion-navbar>\n</ion-header>\n\n<ion-content>\n  <div>\n    <ion-grid>\n      <ion-row>\n        <ion-col>\n          <ion-avatar>\n            <img [src]="\'assets/img/LSTaiko.jpg\'" />\n          </ion-avatar>  \n          <ion-row><button ion-button full>Jan</button></ion-row>\n          <ion-row><button ion-button full>Feb</button></ion-row>\n          <ion-row><button ion-button full>Mar</button></ion-row>\n          <ion-row><button ion-button full>Apr</button></ion-row>\n          <ion-row><button ion-button full>May</button></ion-row>\n          <ion-row><button ion-button full>Jun</button></ion-row>\n          <ion-row><button ion-button full>Jul</button></ion-row>\n          <ion-row><button ion-button full>Aug</button></ion-row>\n          <ion-row><button ion-button full>Sep</button></ion-row>\n          <ion-row><button ion-button full>Oct</button></ion-row>\n          <ion-row><button ion-button full>Nov</button></ion-row>\n          <ion-row><button ion-button full>Dec</button></ion-row>\n        </ion-col>      \n        <ion-col>\n          <ion-avatar>\n            <img [src]="user.imageUrl" />\n          </ion-avatar>\n          <ion-row *ngFor="let item of months">\n            <button ion-button [color]="item.date ? \'danger\' : \'light\'" full (click)="clickStar(item)">\n              <ion-icon name="star"> {{item.date}}</ion-icon>\n            </button>\n          </ion-row>\n        </ion-col>\n      </ion-row>\n    </ion-grid>\n  </div>\n\n</ion-content>\n'/*ion-inline-end:"E:\ionic\taiko1\src\pages\about\pay\pay.html"*/
         }),
-        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_2_angularfire2_database__["a" /* AngularFireDatabase */],
-            __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["k" /* ViewController */],
-            __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["i" /* NavParams */],
-            __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["a" /* AlertController */]])
+        __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_2_angularfire2_database__["a" /* AngularFireDatabase */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2_angularfire2_database__["a" /* AngularFireDatabase */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["k" /* ViewController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["k" /* ViewController */]) === "function" && _b || Object, typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["i" /* NavParams */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["i" /* NavParams */]) === "function" && _c || Object])
     ], PayPage);
     return PayPage;
+    var _a, _b, _c;
 }());
 
 //# sourceMappingURL=pay.js.map

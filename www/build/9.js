@@ -79,7 +79,7 @@ var NewYearPage = (function () {
         var _this = this;
         var monthly = [];
         for (var i = 0; i < 12; i++) {
-            monthly.push({ date: '', index: i });
+            monthly.push({ date: '' });
         }
         this.users.subscribe(function (res) {
             res.forEach(function (user) {
@@ -102,7 +102,7 @@ var NewYearPage = (function () {
             text: 'Ok',
             handler: function (data) {
                 console.log('finish adding data:');
-                _this.viewCtrl.dismiss();
+                _this.viewCtrl.dismiss({ title: "new year was added" });
             }
         });
         alert.present();

@@ -18,25 +18,26 @@ export class AboutPage {
 
   constructor(private db: AngularFireDatabase,
               private modalCtrl: ModalController) {
-    this.yearPay = moment(new Date()).format('YYYY');
-    let users = this.db.list(`${this.userPath}/`).valueChanges();
+                this.yearPay = moment(new Date()).format('YYYY');
+                this.db.list(`${this.userPath}/`).valueChanges().subscribe(res => {
+                  this.users = [];
+                  res.forEach(rs => {
+                    let user: User = rs;
+                    this.users.push({
+                      uid: user.uid,
+                      email: user.email,
+                      displayName: user.displayName,
+                      imageUrl: user.imageUrl,
+                      count: 0
+                    });
+                  })
+                })
 
-    users.subscribe(res => {
-      this.users = [];
-      res.forEach(rs => {
-        let user: User = rs;
-        this.users.push({
-          uid: user.uid,
-          email: user.email,
-          displayName: user.displayName,
-          imageUrl: user.imageUrl,
-          count: 0
-        });
-      })
-    })
+                this.loadingData();
+  }
 
-    let pays = this.db.list(`${this.payPath}/${this.yearPay}/`).valueChanges();
-    pays.subscribe(res => {
+  loadingData() {
+    this.db.list(`${this.payPath}/${this.yearPay}/`).valueChanges().subscribe(res => {
       res.forEach(rs1 => {
         let count = 0;
         let pay: Pay = rs1;
@@ -51,12 +52,15 @@ export class AboutPage {
         let check = this.users.filter(item => item.uid === pay.userid);
         if (check.length > 0) {
           check[0].count = count;
+          //console.log('found user=', pay.userid, ', count=', count);
         }
       })
     })
   }
 
   userTapped(event, user) {
+    this.doView();
+
     let payModal = this.modalCtrl.create('PayPage', {user: user, yearPay: this.yearPay}, { cssClass: 'inset-modal' });
     payModal.onDidDismiss(data => {
       if (data) {
@@ -76,21 +80,29 @@ export class AboutPage {
     editUserModel.present();
   }
 
-  newYear(): void {
-    let data = this.db.list(`${this.payPath}/${this.yearPay}/`).valueChanges();
-    data.subscribe(rs => {
+  doView(): void {
+    this.db.list(`${this.payPath}/${this.yearPay}/`).valueChanges().subscribe(rs => {
       console.log('re.length=', rs.length);
       if (rs.length < 1) {
-        let newYearModal = this.modalCtrl.create('NewYearPage', {yearPay: this.yearPay}, { cssClass: 'inset-modal' });
-        newYearModal.onDidDismiss(data => {
-          if (data) {
-            //this.items.add(data);
-          }
+        let monthly = [];
+        for (let i = 0; i < 12; i++) {
+          monthly.push({date: ''});
+        }
+        this.users.forEach(user => {
+          const data = {
+            userid: user.uid,
+            monthly: monthly
+          };
+          let key = this.db.list(`${this.payPath}/${this.yearPay}/`).push(data).key;
+          const dataKey = {
+            id: key
+          };
+          this.db.object(`${this.payPath}/${this.yearPay}/${key}/`).update(dataKey)
+            .catch(error => console.log(error));
         })
-        newYearModal.present();
       }
     })
-
+    this.loadingData();
   }
 
 }
